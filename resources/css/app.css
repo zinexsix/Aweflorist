@@ -9,9 +9,80 @@
 
 @theme {
     --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+
+    /* ------------------------------------------------------------------
+     * Florify design tokens (Sprint 1)
+     * Sumber: doc/florify-html/panduan-visual.html
+     * Dokumentasi: doc/SPRINT_1_DESIGN_SYSTEM.md
+     * Jangan menulis nilai hex langsung di komponen; pakai token ini.
+     * ------------------------------------------------------------------ */
+
+    /* Tipografi */
+    --font-display: 'Fraunces', ui-serif, Georgia, serif;
+
+    --text-display: 3.75rem; /* 60px hero desktop */
+    --text-display--line-height: 1.05;
+    --text-h1: 3rem; /* 48px judul halaman */
+    --text-h1--line-height: 1.1;
+    --text-h2: 2.75rem; /* 44px judul section desktop */
+    --text-h2--line-height: 1.1;
+    --text-h3: 1.375rem; /* 22px judul kartu */
+    --text-h3--line-height: 1.25;
+    --text-eyebrow: 0.8125rem; /* 13px label kapital */
+    --text-eyebrow--line-height: 1.4;
+
+    /* Warna merek */
+    --color-brand-50: #fff7f9; /* latar halaman */
+    --color-brand-100: #fbe3ea; /* blush: panel hero, badge */
+    --color-brand-200: #f4c6d4; /* placeholder foto, aksen */
+    --color-brand-300: #e8c5d0; /* border kuat */
+    --color-brand-600: #a3274d; /* kartu di atas panel maroon */
+    --color-brand-700: #8a1538; /* maroon: tombol, link, aksen */
+    --color-brand-800: #74112f; /* hover tombol */
+    --color-brand-900: #5e0e26; /* maroon tua: judul, footer */
+
+    /* Netral */
+    --color-surface: #ffffff;
+    --color-ink: #2a1a20; /* teks utama */
+    --color-ink-muted: #5a4650; /* teks sekunder/deskripsi */
+    --color-ink-subtle: #6b5560; /* caption, meta */
+    --color-line: #f1dce3; /* border default */
+
+    /* Aksen floral (latar foto/kartu kategori) */
+    --color-petal-cream: #f7e7d6;
+    --color-petal-sun: #fbe9c4;
+    --color-petal-sage: #e4eed8;
+    --color-petal-lilac: #efddf0;
+
+    /* Status */
+    --color-success: #2f7a4d;
+    --color-success-soft: #e3f2e8;
+    --color-warning: #8a5a00;
+    --color-warning-soft: #fdf1d6;
+
+    /* Radius */
+    --radius-media: 1rem; /* 16px foto di dalam kartu */
+    --radius-card: 1.375rem; /* 22px kartu */
+    --radius-panel: 1.75rem; /* 28px panel besar (hero, promo) */
+
+    /* Shadow */
+    --shadow-card:
+        0 1px 2px rgb(94 14 38 / 0.04), 0 4px 16px rgb(94 14 38 / 0.04);
+    --shadow-lift:
+        0 2px 4px rgb(94 14 38 / 0.06), 0 16px 32px rgb(94 14 38 / 0.1);
+
+    /* Layout */
+    --container-site: 77.5rem; /* 1240px lebar konten maksimum */
+    --spacing-section: 6rem; /* 96px jarak antarseksi desktop */
+    --spacing-section-sm: 3.5rem; /* 56px jarak antarseksi mobile */
+    --spacing-gutter: 1.5rem; /* 24px padding sisi container */
+    --spacing-tap: 2.75rem; /* 44px tinggi minimum elemen yang bisa diklik */
+
+    /* Gerak */
+    --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -139,5 +210,16 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+
+    /* Anchor (#produk, #faq, ...) tidak tertutup navbar sticky. */
+    [id] {
+        scroll-margin-top: 5.5rem;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        html {
+            scroll-behavior: smooth;
+        }
     }
 }
