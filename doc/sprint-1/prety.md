@@ -1,173 +1,180 @@
-# Sprint 1 — Tugas Prety (Section Informasi & Konten)
+# Tugas Prety — Konten & Informasi
 
-Peranmu: membuat konten pendukung yang membantu pelanggan mengenal AweFlorist dan memahami cara memesan.
-User story: **US-02** (profil singkat), **US-03** (promo event & kontak di footer), **US-08** (cara pemesanan, FAQ, kontak), dan kategori/acara (**FR-06**).
+Kamu mengerjakan bagian **informasi**: Tentang kami, kategori/acara, promo, cara pemesanan, FAQ, kontak, dan halaman buket custom.
+Story yang kamu pegang: US-02 (profil), US-03 (promo dan kontak), US-08 (cara pesan, FAQ, kontak).
 
-Dokumen acuan: [PRD](../../PRD_Florify.md) (bagian 4.1 FR-06, FR-09, 10.2, 15) · [Design system](../SPRINT_1_DESIGN_SYSTEM.md) (§3.6–3.10) · [Pembagian kerja lengkap](../SPRINT_1_WORK_DISTRIBUTION.md)
+Semua bagian ini **sudah jadi dan sudah jalan**. Tugasmu mengisi dengan data asli dan merapikan, bukan membuat dari awal.
 
-> Versi awal semua section milikmu **sudah ada dan sudah berjalan**. Tugasmu melengkapi isinya dengan data resmi dan merapikannya, bukan membuat dari nol.
-> Mulai **setelah** Rofiq mengumumkan bahwa PR fondasi sudah di-merge ke `main`.
+Bacaan sebelum mulai (10 menit):
+- [Design system](../SPRINT_1_DESIGN_SYSTEM.md) — bagian 3.6 sampai 3.10
+- [PRD](../../PRD_Florify.md) — bagian 3.2 (alur buket custom)
 
 ---
 
-## 1. File yang boleh kamu ubah
+## 1. Kondisi sekarang (sudah ada di `main`)
 
-| File | Isi |
+- Beranda, katalog, detail, `/informasi`, dan `/buket-custom` sudah jalan.
+- Foto toko AweFlorist sudah terpasang di bagian "Tentang kami".
+- Alamat, jam buka, dan media sosial **masih kosong** (disembunyikan otomatis). Jangan diisi dengan data karangan.
+- Formulir buket custom sudah ada: pelanggan mengisi, lalu WhatsApp terbuka dengan pesan siap kirim. **Datanya belum disimpan ke database** (itu Sprint 2).
+
+## 2. File yang boleh kamu ubah
+
+| File | Isinya |
 |---|---|
-| `resources/js/components/home/about-section.tsx` | Section "Tentang kami" di landing page |
+| `resources/js/components/home/about-section.tsx` | Tentang kami |
 | `resources/js/components/home/occasions-section.tsx` | Kartu kategori/acara |
-| `resources/js/components/home/promo-section.tsx` | Promo/informasi unggulan |
-| `resources/js/components/home/order-info-section.tsx` | Cara pesan, FAQ ringkas, CTA kontak di landing page |
-| `resources/js/pages/public/info.tsx` | Halaman `/informasi` (cara pesan, FAQ, kontak) |
-| `resources/js/pages/public/custom-bouquet.tsx` | Halaman `/buket-custom` (formulir buket custom) |
-| `resources/js/data/info.ts` | Isi langkah pemesanan & FAQ |
-| `resources/js/data/catalog.ts` | **Hanya** bagian `occasions` (bagian `categories` milik Latif) |
-| `resources/js/config/site.ts` | **Hanya** field `address`, `openingHours`, `instagram`, `tiktok` (file milik Rofiq) |
+| `resources/js/components/home/promo-section.tsx` | Promo / informasi unggulan |
+| `resources/js/components/home/order-info-section.tsx` | Cara pesan, FAQ ringkas, ajakan kontak di beranda |
+| `resources/js/pages/public/info.tsx` | Halaman `/informasi` |
+| `resources/js/pages/public/custom-bouquet.tsx` | Halaman `/buket-custom` (teks penjelasan di sekitar formulir) |
+| `resources/js/data/info.ts` | Isi langkah pesan dan FAQ |
+| `resources/js/data/catalog.ts` | Hanya bagian `occasions` |
+| `resources/js/config/site.ts` | Hanya 4 baris: `address`, `openingHours`, `instagram`, `tiktok` |
 
-Perlu mengubah file lain? Tanya Rofiq di grup dulu.
+**Formulirnya sendiri** ada di `components/florify/custom-bouquet-form.tsx` milik Rofiq. Mau ubah isi formulir (kolom, pilihan, pesan)? Minta ke Rofiq.
+
+File di luar daftar ini: tanya Rofiq dulu.
 
 ---
 
-## 2. Daftar tugas (urut)
+## 3. Yang harus dikerjakan (urut)
 
-### Tugas 1 — Siapkan lingkungan (hari 1)
-- [ ] Ikuti §4 langkah A (clone/pull, buat branch).
-- [ ] Jalankan aplikasi, buka `http://localhost:8000` dan `http://localhost:8000/informasi`, pahami file-file di §1.
+### Tugas 1 — Siapkan laptop
+Ikuti bagian 5 langkah A. Lalu jalankan `composer dev` dan buka http://localhost:8000 dan http://localhost:8000/informasi.
 
-### Tugas 2 — Kumpulkan data dari PO (bersama Rofiq)
-- [ ] Cerita singkat AweFlorist (sejak kapan, lokasi, keunggulan).
+### Tugas 2 — Kumpulkan data dari pemilik toko (lewat Rofiq)
+- [ ] Cerita singkat AweFlorist.
 - [ ] Alamat, jam buka, Instagram, TikTok.
-- [ ] Promo yang sedang/akan berjalan: nama, periode, syarat.
-- [ ] Kebijakan: berapa hari sebelum hari H harus memesan, pengiriman vs ambil sendiri, metode pembayaran, uang muka.
-- [ ] **Jangan mengarang** — jika belum ada jawaban, biarkan teks yang sekarang.
+- [ ] Promo yang sedang berjalan (nama, tanggal, syarat), kalau ada.
+- [ ] Aturan toko: pesan berapa hari sebelumnya, kirim atau ambil sendiri, cara bayar.
 
-### Tugas 3 — Profil singkat "Tentang kami" (task jobsheet #6)
-- [ ] Ganti paragraf di `about-section.tsx` dengan cerita resmi.
-- [ ] Sesuaikan 3 kotak highlight. Jangan menambah angka/statistik yang belum pasti.
+Belum ada jawabannya? Biarkan tulisan yang sekarang. **Jangan mengarang.**
 
-### Tugas 4 — Kategori/acara (FR-06)
-- [ ] Rapikan deskripsi `occasions` di `data/catalog.ts`.
-- [ ] Pastikan setiap kartu di `occasions-section.tsx` membuka katalog yang terfilter (klik → cek URL `/katalog?acara=…`).
-- [ ] Jika PO menambah acara (mis. Hari Ibu), diskusikan dengan Rofiq & Latif dulu karena tipe datanya bersama.
+### Tugas 3 — Tentang kami
+- [ ] Ganti paragraf di `about-section.tsx` dengan cerita asli.
+- [ ] Jangan menulis angka (tahun berdiri, jumlah pesanan) kalau belum dikonfirmasi.
 
-### Tugas 5 — Promo event (task #8)
-- [ ] Jika promo resmi sudah ada: ganti `eyebrow`, `title`, `description` di `promo-section.tsx` (tetap pakai `PromoBanner` dan `WhatsAppButton variant="inverse"`).
-- [ ] Jika belum: biarkan informasi "buket custom" yang sekarang. Jangan menulis diskon/periode palsu.
+### Tugas 4 — Kategori/acara
+- [ ] Rapikan tulisan `occasions` di `data/catalog.ts`.
+- [ ] Klik tiap kartu di beranda. Pastikan katalog yang terbuka sudah terfilter (alamatnya `/katalog?acara=...`).
+- [ ] Kartu "Buket Custom" harus membuka halaman `/buket-custom`.
 
-### Tugas 6 — Cara pemesanan & FAQ (task #15)
-- [ ] Sesuaikan langkah di `orderSteps` (`data/info.ts`) dengan proses toko yang sebenarnya.
-- [ ] Perbarui jawaban `faqs` dengan kebijakan resmi; tambah pertanyaan bila perlu (mis. pengiriman, pembayaran).
-- [ ] Ingat aturan PRD: pesanan **belum** dianggap terkonfirmasi hanya karena pelanggan mengirim chat WhatsApp.
-- [ ] Cek accordion FAQ bisa dibuka dengan keyboard: `Tab` ke pertanyaan → `Enter`.
+### Tugas 5 — Promo
+- [ ] Ada promo resmi? Ubah tulisan di `promo-section.tsx`.
+- [ ] Belum ada? Biarkan seperti sekarang (ajakan pesan buket custom). **Jangan menulis diskon atau tanggal palsu.**
 
-### Tugas 7 — Kontak (task #16, bagian kontak US-03)
-- [ ] Isi 4 field di `config/site.ts`:
+### Tugas 6 — Cara pesan dan FAQ
+- [ ] Sesuaikan `orderSteps` dan `faqs` di `data/info.ts` dengan aturan toko yang asli.
+- [ ] Tambah pertanyaan tentang buket custom kalau perlu.
+- [ ] Ingat: pesanan **belum pasti** hanya karena pelanggan mengirim chat. Pesanan pasti setelah admin dan pelanggan sepakat soal detail dan harga.
+- [ ] Uji FAQ dengan keyboard: tombol `Tab` ke pertanyaan, lalu `Enter`.
+
+### Tugas 7 — Kontak
+- [ ] Isi 4 baris ini di `config/site.ts` (jangan ubah baris lain):
   ```ts
-  address: 'Jl. …',
-  openingHours: 'Senin–Sabtu, 08.00–20.00',
-  instagram: '@aweflorist',
-  tiktok: '@aweflorist',
+  address: 'isi alamat asli',
+  openingHours: 'isi jam buka asli',
+  instagram: '@akun_asli',
+  tiktok: '@akun_asli',
   ```
-  (contoh format saja — isi dengan data resmi). Field lain di `site.ts` jangan diubah.
+- [ ] Buat **commit terpisah** untuk file ini, lalu kabari Rofiq (file ini miliknya).
 - [ ] Cek hasilnya di footer (semua halaman) dan di `/informasi#kontak`.
-- [ ] Opsional jika disetujui tim: peta lokasi di `/informasi#kontak`.
 
-### Tugas 8 — Formulir buket custom (FR-19, FR-20)
-Versi awal sudah dibuat Rofiq di `/buket-custom`. Isi: jenis buket, anggaran, warna/tema, tanggal dibutuhkan, catatan; divalidasi di browser lalu dikirim lewat WhatsApp. **Data belum disimpan ke basis data** (itu Sprint 2).
+### Tugas 8 — Halaman buket custom
+- [ ] Buka `/buket-custom`. Coba kirim kosong (harus muncul pesan merah), lalu isi lengkap (WhatsApp harus terbuka dengan pesan yang rapi).
+- [ ] Rapikan tulisan penjelasan di `custom-bouquet.tsx` kalau perlu.
+- [ ] Ada saran untuk kolom atau pilihan di formulir? Kirim ke Rofiq.
+- [ ] Jangan menambah fitur upload gambar atau simpan data (itu Sprint 2).
 
-- [ ] Coba isi formulir: kirim kosong (pesan galat muncul, fokus pindah ke kolom pertama yang salah), lalu isi lengkap (WhatsApp terbuka dengan pesan rapi).
-- [ ] Sesuaikan pilihan jenis buket, teks petunjuk, dan batas anggaran minimal (`MIN_BUDGET`) dengan data PO.
-- [ ] Jangan menambah unggah gambar atau penyimpanan data (di luar scope Sprint 1).
-- [ ] Uji di 320 px dan 1440 px.
-
-### Tugas 9 — Uji responsif
-- [ ] DevTools → Toggle device toolbar: 320, 375, 768, 1024, 1440 px.
-- [ ] Kartu kategori, langkah pemesanan, FAQ, dan panel kontak tidak terpotong dan tidak membuat scroll horizontal.
-- [ ] Console (F12) bebas error.
+### Tugas 9 — Uji
+- [ ] Buka beranda, `/informasi`, dan `/buket-custom` di lebar 320, 375, 768, dan 1440 px (F12 → ikon ponsel).
+- [ ] Tidak ada geser kanan-kiri, tidak ada tulisan terpotong.
+- [ ] Tidak ada tulisan merah di Console (F12).
+- [ ] Jalankan: `npm run check`, `npm run types:check`, `php artisan test`. Semua harus lulus.
 
 ---
 
-## 3. Kriteria selesai
+## 4. Selesai kalau
 
-- Formulir `/buket-custom` memvalidasi isian dan membuka WhatsApp dengan detail permintaan.
-- Profil singkat dan promo/informasi unggulan tampil di landing page dengan data resmi (atau teks netral jika data belum ada).
-- Halaman `/informasi` berisi cara pemesanan, FAQ, dan kontak; footer menampilkan kontak yang sudah dikonfirmasi.
-- Tidak ada informasi bisnis palsu.
-- Rapi di 320 px dan 1440 px. `npm run check`, `npm run types:check`, `php artisan test` lulus.
-- Hanya memakai token & komponen design system (tidak ada warna hex baru, tidak ada dependensi baru).
+- Tentang kami dan promo tampil dengan isi asli (atau tulisan netral kalau data belum ada).
+- `/informasi` berisi cara pesan, FAQ, dan kontak. Footer menampilkan kontak yang sudah pasti.
+- Tidak ada informasi bisnis karangan.
+- Rapi di ponsel dan desktop, tiga perintah uji lulus.
 
 ---
 
-## 4. Panduan push
+## 5. Git — semua kamu jalankan sendiri
 
-### A. Mulai kerja (sekali, setelah fondasi Rofiq di-merge)
+Tidak ada yang push untukmu. **Jangan push ke `main`.** Selalu lewat branch lalu Pull Request.
 
-Belum punya proyek di laptop:
+### A. Mulai (sekali)
 
+Belum punya proyek:
 ```bash
 git clone https://github.com/zinexsix/Aweflorist.git
 cd Aweflorist
-git config --global user.name "<Nama Lengkap>"
-git config --global user.email "<email-github>"
 composer setup
 ```
 
-Sudah punya:
-
+Sudah punya proyek:
 ```bash
 cd Aweflorist
 git switch main
 git pull origin main
+npm install
 ```
 
 Lalu buat branch milikmu:
-
 ```bash
 git switch -c feature/prety-content-sections
-npm install
-composer dev               # buka http://localhost:8000/informasi
 ```
 
 ### B. Setiap selesai satu bagian
 
 ```bash
-git status                 # pastikan hanya file milikmu yang berubah
-git diff                   # baca perubahanmu (tekan q untuk keluar)
-npm run check && npm run types:check && php artisan test
-
-git add resources/js/data/info.ts
-git commit -m "feat(info): perbarui cara pemesanan dan FAQ sesuai kebijakan toko"
-git push -u origin feature/prety-content-sections    # -u hanya saat push PERTAMA
+git status                  # lihat file apa saja yang berubah
+git diff                    # baca perubahannya (tekan q untuk keluar)
+npm run check
+npm run types:check
+php artisan test
 ```
 
-Perubahan `config/site.ts` (file milik Rofiq) dibuat **dalam commit terpisah** supaya mudah di-review:
+Kalau semua lulus, simpan:
+```bash
+git add resources/js/data/info.ts
+git commit -m "feat(info): sesuaikan FAQ dengan aturan toko"
+git push -u origin feature/prety-content-sections
+```
+`-u` hanya dipakai saat push **pertama**. Setelah itu cukup `git push`.
 
+Tambah satu file per commit, ganti nama file dan pesannya sesuai yang kamu ubah. **Jangan** pakai `git add .`.
+
+Perubahan kontak di `config/site.ts` dibuat commit sendiri:
 ```bash
 git add resources/js/config/site.ts
-git commit -m "feat(kontak): isi alamat, jam buka, dan media sosial AweFlorist"
+git commit -m "feat(kontak): isi alamat, jam buka, dan media sosial"
 git push
 ```
 
-Section lain:
+> Jika `git status` menampilkan `package-lock.json` berubah dan kamu tidak menambah paket, batalkan: `git restore package-lock.json`.
+
+### C. Kalau `main` sudah berubah (misalnya PR Latif sudah masuk)
 
 ```bash
-git add resources/js/components/home/about-section.tsx resources/js/components/home/promo-section.tsx
-git commit -m "feat(landing): perbarui profil singkat dan informasi promo"
-git push
-```
-
-### C. Hari berikutnya / jika `main` sudah berubah
-
-```bash
-git switch feature/prety-content-sections
 git fetch origin
-git merge origin/main      # jika konflik: lihat Pembagian kerja §D.1, JANGAN reset --hard
+git merge origin/main
 git push
 ```
+Kalau ada konflik, jangan panik dan jangan pakai `reset --hard`. Kabari Rofiq di grup.
 
 ### D. Buat Pull Request
 
-GitHub `zinexsix/Aweflorist` → **Compare & pull request** → base `main` ← compare `feature/prety-content-sections` → salin checklist dari [Pembagian kerja §F](../SPRINT_1_WORK_DISTRIBUTION.md) → reviewer: **Rofiq** → **Create pull request**.
+1. Buka https://github.com/zinexsix/Aweflorist
+2. Klik **Compare & pull request** pada branch milikmu.
+3. Base: `main`. Compare: `feature/prety-content-sections`.
+4. Isi: apa yang diubah, dan cara mengujinya.
+5. Klik **Create pull request**, lalu minta **Rofiq** me-review.
 
 ### E. Setelah PR di-merge
 
@@ -177,38 +184,24 @@ git pull origin main
 git branch -d feature/prety-content-sections
 ```
 
-**Jangan pernah:** push ke `main`, `git push --force`, `git reset --hard`, `git add .` (bisa ikut menambahkan file orang lain atau `.env`).
+### Dilarang
+`git push --force`, `git reset --hard`, `git add .`, dan push ke `main`.
 
 ---
 
-## 5. Prompt OpenCode (opsional)
+## 6. Kalau memakai OpenCode (boleh, tidak wajib)
 
-OpenCode hanya alat bantu. Kalau tidak bisa dipakai, kerjakan manual — sebagian besar tugasmu adalah mengganti teks di file data. Selalu cek `git diff` sebelum commit, dan commit/push sendiri.
+OpenCode hanya membantu menulis kode. **Kamu yang memeriksa hasilnya dan menjalankan semua perintah Git sendiri.** AI tidak boleh menjalankan `git add`, `git commit`, atau `git push`.
 
-**FAQ & kontak:**
-
+Contoh perintah ke OpenCode:
 ```text
-Kamu membantu proyek Florify (Laravel 13 + Inertia + React 19 + TypeScript + Tailwind 4).
-Jangan mengganti framework dan jangan menambah dependensi.
-1. Baca: PRD_Florify.md (4.1 FR-09, 10.2, 15), doc/SPRINT_1_DESIGN_SYSTEM.md, doc/sprint-1/prety.md.
-2. Baca: resources/js/data/info.ts, resources/js/pages/public/info.tsx,
-   resources/js/components/florify/faq-list.tsx, resources/js/config/site.ts.
-3. Tugas: perbarui jawaban FAQ di data/info.ts dengan kebijakan resmi berikut:
-   <tempel kebijakan: waktu pemesanan, pengiriman, pembayaran>.
-   Isi field address, openingHours, instagram, tiktok di config/site.ts dengan:
-   <tempel data kontak resmi>. Jangan mengubah field lain di site.ts.
-4. HANYA ubah resources/js/data/info.ts dan resources/js/config/site.ts.
-5. Jangan mengarang informasi. Jika data tidak ada, biarkan nilai lama / null.
-6. Laporkan file yang berubah dan cara mengujinya. Jangan menjalankan git commit atau git push.
+Proyek Laravel + Inertia + React + TypeScript + Tailwind 4. Jangan ganti framework dan jangan tambah paket.
+Baca doc/SPRINT_1_DESIGN_SYSTEM.md dan doc/sprint-1/prety.md.
+Baca resources/js/data/info.ts dan resources/js/pages/public/info.tsx.
+Tugas: ganti jawaban FAQ di data/info.ts dengan aturan toko berikut: <tempel aturan dari pemilik toko>.
+Jangan mengarang informasi. Kalau datanya tidak ada, biarkan isi lama.
+Hanya ubah data/info.ts. Jangan jalankan perintah git.
+Setelah selesai, sebutkan file yang berubah dan cara mengujinya.
 ```
 
-**Tentang kami:**
-
-```text
-Proyek Florify (Laravel + Inertia + React + TS + Tailwind 4). Baca doc/SPRINT_1_DESIGN_SYSTEM.md,
-doc/sprint-1/prety.md, dan resources/js/components/home/about-section.tsx.
-Ganti paragraf dan tiga highlight dengan cerita AweFlorist berikut: <tempel teks dari PO>.
-Pertahankan struktur komponen, class token, dan heading; jangan menambah angka/statistik yang tidak ada di teks.
-Hanya ubah about-section.tsx. Laporkan file yang berubah dan cara menguji di 375px dan 1440px.
-Jangan menjalankan git commit atau git push.
-```
+Setelah AI selesai: cek `git diff`, pastikan hanya file milikmu yang berubah. Kalau ada file lain berubah, batalkan dengan `git restore <nama-file>`.
