@@ -24,9 +24,9 @@ Baca dokumen ini sampai selesai sebelum menulis kode. Dokumen lain yang wajib di
 | **Teknologi** | Laravel 13 + Inertia + React 19 (TypeScript) + Tailwind CSS 4. Jangan mengganti framework. |
 | **Branch utama** | `main` (remote `origin` = `https://github.com/zinexsix/Aweflorist.git`) |
 
-### A.1 Status awal (sudah dikerjakan Rofiq, belum di-commit)
+### A.1 Status saat ini (sudah ada di `main`)
 
-Fondasi sudah tersedia dan berjalan: design tokens, 15 komponen bersama, layout publik, rute `/`, `/katalog`, `/katalog/{slug}`, `/informasi`, landing page lengkap (versi awal), 16 produk contoh, test otomatis. Tugas Latif dan Prety adalah **menyempurnakan** bagian masing-masing — bukan membuat dari nol.
+Fondasi sudah tersedia dan berjalan: design tokens, komponen bersama, layout publik, rute `/`, `/katalog`, `/katalog/{slug}`, `/informasi`, `/buket-custom`, landing page lengkap (versi awal), 16 produk contoh dengan foto sementara, formulir buket custom (kirim lewat WhatsApp), dan test otomatis. Tugas Latif dan Prety adalah **menyempurnakan** bagian masing-masing — bukan membuat dari nol.
 
 ### A.2 Definition of Done (PRD Sprint 1 + kesepakatan tim)
 
