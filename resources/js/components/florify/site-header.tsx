@@ -6,7 +6,7 @@ import { Container } from '@/components/florify/section';
 import { WhatsAppButton } from '@/components/florify/whatsapp-button';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { cn } from '@/lib/utils';
-import { home, info } from '@/routes';
+import { custom, home, info } from '@/routes';
 import { index as catalog } from '@/routes/catalog';
 
 type NavItem = {
@@ -20,6 +20,7 @@ const navItems: NavItem[] = [
     { label: 'Beranda', href: home.url(), activePath: home.url() },
     { label: 'Katalog', href: catalog.url(), activePath: catalog.url() },
     { label: 'Kategori', href: `${home.url()}#kategori` },
+    { label: 'Buket Custom', href: custom.url(), activePath: custom.url() },
     {
         label: 'Cara Pemesanan',
         href: `${info.url()}#cara-pesan`,

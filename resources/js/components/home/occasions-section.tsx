@@ -1,7 +1,7 @@
 import { OccasionCard } from '@/components/florify/occasion-card';
 import { Section, SectionHeading } from '@/components/florify/section';
 import { occasions } from '@/data/catalog';
-import { customBouquetMessage, whatsappUrl } from '@/lib/whatsapp';
+import { custom } from '@/routes';
 import { index as catalog } from '@/routes/catalog';
 import type { Tone } from '@/types';
 
@@ -39,9 +39,8 @@ export function OccasionsSection() {
                     <OccasionCard
                         title="Buket Custom"
                         description="Konsultasikan warna, tema, dan anggaran."
-                        href={whatsappUrl(customBouquetMessage)}
+                        href={custom()}
                         tone="cream"
-                        external
                     />
                 </li>
             </ul>

@@ -95,7 +95,15 @@ Selalu gunakan `ProductImage` (bukan `<img>` langsung):
 
 ## 6. Daftar aset yang perlu disiapkan Rofiq
 
-Status awal: **belum ada satu pun foto** — semua tampil sebagai placeholder.
+Status: sudah ada **foto sementara** (dipasang acak dari foto yang dikirim tim) untuk hero, tentang kami, dan 6 produk. Foto-foto ini belum cocok dengan nama produknya — **ganti dengan foto produk yang sebenarnya** memakai nama file yang sama (atau ubah path di `products.ts`).
+
+| Sudah terpasang (sementara) | Dipakai di |
+|---|---|
+| `hero/hero-florist.webp`, `hero/hero-bouquet-best-seller.webp` | Hero |
+| `banners/about-aweflorist.webp` (foto toko AweFlorist) | Tentang kami |
+| `products/buket-mawar-pink-01.webp`, `buket-wisuda-sunflower-01.webp`, `buket-ulang-tahun-pastel-01.webp`, `buket-tulip-mix-01.webp`, `buket-lily-putih-01.webp`, `buket-custom-tema-warna-01.webp` | 6 produk |
+
+Produk lain memakai ulang keenam foto itu secara acak (path yang sama di `products.ts`) agar tidak ada kotak foto kosong. Saat foto asli tersedia, simpan sebagai `<slug>-01.webp` dan ubah `image` produk tersebut ke path barunya.
 
 | No | File | Dipakai di | Prioritas |
 |---|---|---|---|

@@ -6,6 +6,10 @@ const rupiah = new Intl.NumberFormat('id-ID', {
     maximumFractionDigits: 0,
 });
 
+export function formatRupiah(amount: number): string {
+    return rupiah.format(amount);
+}
+
 export function formatPrice(
     product: Pick<Product, 'price' | 'priceFrom'>,
 ): string {

@@ -19,9 +19,11 @@ export const site = {
     tiktok: null as string | null,
     /** Foto non-produk. Isi path setelah file ada di public/images (lihat doc/SPRINT_1_ASSET_GUIDE.md). */
     images: {
-        hero: null as string | null, // '/images/hero/hero-florist.webp'
-        heroSecondary: null as string | null, // '/images/hero/hero-bouquet-best-seller.webp'
-        about: null as string | null, // '/images/banners/about-aweflorist.webp'
+        hero: '/images/hero/hero-florist.webp' as string | null,
+        heroSecondary: '/images/hero/hero-bouquet-best-seller.webp' as
+            | string
+            | null,
+        about: '/images/banners/about-aweflorist.webp' as string | null,
     },
     /** Tampilkan catatan bahwa produk & harga masih data contoh Sprint 1. */
     isSampleData: true,

@@ -1,8 +1,9 @@
 import { PromoBanner } from '@/components/florify/promo-banner';
 import { Section } from '@/components/florify/section';
-import { WhatsAppButton } from '@/components/florify/whatsapp-button';
+import { Link } from '@inertiajs/react';
+import { BrandButton } from '@/components/florify/brand-button';
 import { occasions } from '@/data/catalog';
-import { customBouquetMessage } from '@/lib/whatsapp';
+import { custom } from '@/routes';
 
 /**
  * Pemilik: Prety. US-03 — promo event / informasi unggulan.
@@ -17,13 +18,9 @@ export function PromoSection() {
                 title="Punya ide buket sendiri? Kami bantu wujudkan"
                 description="Ceritakan acara, warna favorit, dan anggaran Anda. Admin akan membantu memilih rangkaian yang paling sesuai."
                 action={
-                    <WhatsAppButton
-                        variant="inverse"
-                        size="lg"
-                        message={customBouquetMessage}
-                    >
-                        Konsultasi Buket Custom
-                    </WhatsAppButton>
+                    <BrandButton asChild variant="inverse" size="lg">
+                        <Link href={custom()}>Pesan Buket Custom</Link>
+                    </BrandButton>
                 }
                 aside={
                     <ul className="grid grid-cols-3 gap-3">

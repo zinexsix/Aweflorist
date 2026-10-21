@@ -19,6 +19,7 @@ Dokumen acuan: [PRD](../../PRD_Florify.md) (bagian 4.1 FR-06, FR-09, 10.2, 15) �
 | `resources/js/components/home/promo-section.tsx` | Promo/informasi unggulan |
 | `resources/js/components/home/order-info-section.tsx` | Cara pesan, FAQ ringkas, CTA kontak di landing page |
 | `resources/js/pages/public/info.tsx` | Halaman `/informasi` (cara pesan, FAQ, kontak) |
+| `resources/js/pages/public/custom-bouquet.tsx` | Halaman `/buket-custom` (formulir buket custom) |
 | `resources/js/data/info.ts` | Isi langkah pemesanan & FAQ |
 | `resources/js/data/catalog.ts` | **Hanya** bagian `occasions` (bagian `categories` milik Latif) |
 | `resources/js/config/site.ts` | **Hanya** field `address`, `openingHours`, `instagram`, `tiktok` (file milik Rofiq) |
@@ -71,7 +72,15 @@ Perlu mengubah file lain? Tanya Rofiq di grup dulu.
 - [ ] Cek hasilnya di footer (semua halaman) dan di `/informasi#kontak`.
 - [ ] Opsional jika disetujui tim: peta lokasi di `/informasi#kontak`.
 
-### Tugas 8 — Uji responsif
+### Tugas 8 — Formulir buket custom (FR-19, FR-20)
+Versi awal sudah dibuat Rofiq di `/buket-custom`. Isi: jenis buket, anggaran, warna/tema, tanggal dibutuhkan, catatan; divalidasi di browser lalu dikirim lewat WhatsApp. **Data belum disimpan ke basis data** (itu Sprint 2).
+
+- [ ] Coba isi formulir: kirim kosong (pesan galat muncul, fokus pindah ke kolom pertama yang salah), lalu isi lengkap (WhatsApp terbuka dengan pesan rapi).
+- [ ] Sesuaikan pilihan jenis buket, teks petunjuk, dan batas anggaran minimal (`MIN_BUDGET`) dengan data PO.
+- [ ] Jangan menambah unggah gambar atau penyimpanan data (di luar scope Sprint 1).
+- [ ] Uji di 320 px dan 1440 px.
+
+### Tugas 9 — Uji responsif
 - [ ] DevTools → Toggle device toolbar: 320, 375, 768, 1024, 1440 px.
 - [ ] Kartu kategori, langkah pemesanan, FAQ, dan panel kontak tidak terpotong dan tidak membuat scroll horizontal.
 - [ ] Console (F12) bebas error.
@@ -80,6 +89,7 @@ Perlu mengubah file lain? Tanya Rofiq di grup dulu.
 
 ## 3. Kriteria selesai
 
+- Formulir `/buket-custom` memvalidasi isian dan membuka WhatsApp dengan detail permintaan.
 - Profil singkat dan promo/informasi unggulan tampil di landing page dengan data resmi (atau teks netral jika data belum ada).
 - Halaman `/informasi` berisi cara pemesanan, FAQ, dan kontak; footer menampilkan kontak yang sudah dikonfirmasi.
 - Tidak ada informasi bisnis palsu.
