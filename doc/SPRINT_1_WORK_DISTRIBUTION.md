@@ -19,8 +19,8 @@ Baca dokumen ini sampai selesai sebelum menulis kode. Dokumen lain yang wajib di
 |---|---|
 | **Sprint goal** (jobsheet) | Sprint ini bernilai bagi klien untuk meningkatkan pemasaran secara digital. |
 | **Durasi** | 1 minggu (jobsheet J-01; PRD menyebut 2 minggu — ikut jobsheet). Sprint Planning: Selasa, 06 Oktober 2026. |
-| **Scope** | Halaman publik: landing page, katalog (≥ 15 produk statis), detail produk, tombol WhatsApp, cara pemesanan, FAQ, kontak. Responsif ponsel & desktop. |
-| **Di luar scope** | Database produk, formulir pemesanan, login admin, pembayaran, unggah gambar (Sprint 2–3). |
+| **Scope** | Halaman publik: landing page, katalog (≥ 15 produk statis), detail produk, tombol WhatsApp, formulir buket custom (kirim via WhatsApp), cara pemesanan, FAQ, kontak. Responsif ponsel & desktop. |
+| **Di luar scope** | Database produk, penyimpanan pesanan/permintaan custom ke basis data, formulir pemesanan produk, login admin, pembayaran, unggah gambar referensi (Sprint 2–3). Formulir buket custom Sprint 1 hanya mengirim detail lewat WhatsApp. |
 | **Teknologi** | Laravel 13 + Inertia + React 19 (TypeScript) + Tailwind CSS 4. Jangan mengganti framework. |
 | **Branch utama** | `main` (remote `origin` = `https://github.com/zinexsix/Aweflorist.git`) |
 
@@ -77,6 +77,7 @@ Latif & Prety: PR selesai            ──►  Rofiq review, merge, uji akhir, 
 | 14 | Tombol Pesan Sekarang ke WhatsApp | Latif | Selesai di detail; perlu nomor WA |
 | 15 | Halaman cara pemesanan & FAQ | Prety | Versi awal ada |
 | 16 | Halaman kontak | Prety | Digabung di `/informasi#kontak`; tunggu data |
+| — | Formulir buket custom (tambahan, PRD FR-19/20) | Rofiq (dibuat), Prety (isi & uji) | Versi awal ada di `/buket-custom`; kirim lewat WhatsApp, belum disimpan |
 
 ---
 

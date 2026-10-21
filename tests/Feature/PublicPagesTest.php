@@ -31,3 +31,9 @@ test('info page is accessible without login', function () {
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page->component('public/info'));
 });
+
+test('custom bouquet form page is accessible without login', function () {
+    $this->get(route('custom'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page->component('public/custom-bouquet'));
+});

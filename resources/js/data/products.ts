@@ -8,6 +8,9 @@ import type { Product } from '@/types';
  * Aturan:
  * - `slug` unik, huruf kecil, dipisah tanda hubung (dipakai di URL /katalog/{slug}).
  * - `image` diisi hanya jika file sudah ada di public/images/products/.
+ * - Semua foto saat ini SEMENTARA: 6 file dipakai ulang secara acak sehingga tidak
+ *   ada kotak foto kosong dan belum cocok dengan nama produk. Ganti satu per satu
+ *   dengan foto asli (file `<slug>-01.webp`) dan ubah path `image` produk tersebut.
  * - `price: null` untuk produk yang harganya dikonfirmasi via WhatsApp.
  */
 export const products: Product[] = [
@@ -19,7 +22,7 @@ export const products: Product[] = [
         description:
             'Rangkaian mawar merah segar dengan wrapping elegan, cocok untuk ungkapan sayang.',
         price: 250000,
-        image: null,
+        image: '/images/products/buket-custom-tema-warna-01.webp',
         featured: true,
     },
     {
@@ -30,7 +33,7 @@ export const products: Product[] = [
         description:
             'Mawar pink lembut dengan aksen daun hijau untuk kejutan yang manis.',
         price: 230000,
-        image: null,
+        image: '/images/products/buket-mawar-pink-01.webp',
     },
     {
         slug: 'buket-tulip-mix',
@@ -39,7 +42,7 @@ export const products: Product[] = [
         occasions: ['ulang-tahun'],
         description: 'Perpaduan tulip warna-warni dalam rangkaian yang ceria.',
         price: 320000,
-        image: null,
+        image: '/images/products/buket-tulip-mix-01.webp',
     },
     {
         slug: 'buket-baby-breath',
@@ -49,7 +52,7 @@ export const products: Product[] = [
         description:
             'Baby breath putih yang ringan dan manis, mudah dipadukan.',
         price: 150000,
-        image: null,
+        image: '/images/products/buket-ulang-tahun-pastel-01.webp',
     },
     {
         slug: 'buket-wisuda-sunflower',
@@ -59,7 +62,7 @@ export const products: Product[] = [
         description:
             'Bunga matahari cerah sebagai simbol semangat untuk sang wisudawan.',
         price: 180000,
-        image: null,
+        image: '/images/products/buket-wisuda-sunflower-01.webp',
         featured: true,
     },
     {
@@ -70,7 +73,7 @@ export const products: Product[] = [
         description:
             'Buket bunga dengan boneka wisuda kecil sebagai kenang-kenangan.',
         price: 210000,
-        image: null,
+        image: '/images/products/buket-mawar-pink-01.webp',
     },
     {
         slug: 'buket-lily-putih',
@@ -79,7 +82,7 @@ export const products: Product[] = [
         occasions: ['anniversary'],
         description: 'Lily putih yang anggun dengan wangi lembut.',
         price: 280000,
-        image: null,
+        image: '/images/products/buket-lily-putih-01.webp',
     },
     {
         slug: 'buket-ulang-tahun-pastel',
@@ -89,7 +92,7 @@ export const products: Product[] = [
         description: 'Kombinasi bunga bernuansa pastel untuk hari spesial.',
         price: 200000,
         priceFrom: true,
-        image: null,
+        image: '/images/products/buket-ulang-tahun-pastel-01.webp',
         featured: true,
     },
     {
@@ -100,7 +103,7 @@ export const products: Product[] = [
         description:
             'Uang dilipat membentuk kipas dan dirangkai bersama bunga. Nominal uang sesuai permintaan.',
         price: null,
-        image: null,
+        image: '/images/products/buket-lily-putih-01.webp',
         featured: true,
     },
     {
@@ -111,7 +114,7 @@ export const products: Product[] = [
         description:
             'Uang dilipat menyerupai kelopak mawar. Nominal uang sesuai permintaan.',
         price: null,
-        image: null,
+        image: '/images/products/buket-custom-tema-warna-01.webp',
     },
     {
         slug: 'buket-uang-wisuda',
@@ -121,7 +124,7 @@ export const products: Product[] = [
         description:
             'Buket uang dengan aksen toga untuk hadiah kelulusan. Nominal uang sesuai permintaan.',
         price: null,
-        image: null,
+        image: '/images/products/buket-wisuda-sunflower-01.webp',
     },
     {
         slug: 'mawar-satu-tangkai',
@@ -130,7 +133,7 @@ export const products: Product[] = [
         occasions: ['anniversary', 'wisuda'],
         description: 'Satu tangkai mawar dengan wrapping sederhana dan pita.',
         price: 35000,
-        image: null,
+        image: '/images/products/buket-tulip-mix-01.webp',
     },
     {
         slug: 'sunflower-satu-tangkai',
@@ -139,7 +142,7 @@ export const products: Product[] = [
         occasions: ['wisuda'],
         description: 'Satu tangkai bunga matahari yang cerah dan ringkas.',
         price: 45000,
-        image: null,
+        image: '/images/products/buket-ulang-tahun-pastel-01.webp',
     },
     {
         slug: 'tulip-satu-tangkai',
@@ -148,7 +151,7 @@ export const products: Product[] = [
         occasions: ['ulang-tahun'],
         description: 'Satu tangkai tulip dengan wrapping kertas korea.',
         price: 55000,
-        image: null,
+        image: '/images/products/buket-mawar-pink-01.webp',
     },
     {
         slug: 'buket-custom-tema-warna',
@@ -158,7 +161,7 @@ export const products: Product[] = [
         description:
             'Pilih warna, tema, dan anggaran. Detail dan harga dikonfirmasi admin melalui WhatsApp.',
         price: null,
-        image: null,
+        image: '/images/products/buket-custom-tema-warna-01.webp',
     },
     {
         slug: 'buket-custom-foto',
@@ -168,7 +171,7 @@ export const products: Product[] = [
         description:
             'Buket dengan sisipan foto kenangan. Detail dan harga dikonfirmasi admin melalui WhatsApp.',
         price: null,
-        image: null,
+        image: '/images/products/buket-lily-putih-01.webp',
     },
 ];
 

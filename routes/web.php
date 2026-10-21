@@ -8,6 +8,7 @@ Route::inertia('katalog', 'public/catalog')->name('catalog.index');
 Route::get('katalog/{slug}', fn (string $slug) => inertia('public/product-detail', ['slug' => $slug]))
     ->where('slug', '[a-z0-9-]+')
     ->name('catalog.show');
+Route::inertia('buket-custom', 'public/custom-bouquet')->name('custom');
 Route::inertia('informasi', 'public/info')->name('info');
 
 Route::middleware(['auth', 'verified'])->group(function () {

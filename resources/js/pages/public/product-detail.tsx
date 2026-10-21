@@ -1,5 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import { BrandButton } from '@/components/florify/brand-button';
+import { CustomBouquetForm } from '@/components/florify/custom-bouquet-form';
 import { EmptyState } from '@/components/florify/empty-state';
 import { PageHeader } from '@/components/florify/page-header';
 import { ProductGrid } from '@/components/florify/product-card';
@@ -71,7 +72,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
                         src={product.image}
                         alt={product.name}
                         priority
-                        className="rounded-panel"
+                        className="rounded-panel md:sticky md:top-24 md:self-start"
                     />
                     <div className="flex min-w-0 flex-col items-start gap-5">
                         <CategoryBadge variant="pill">
@@ -87,17 +88,33 @@ export default function ProductDetail({ slug }: { slug: string }) {
                         <p className="text-base leading-relaxed text-ink-muted md:text-[1.0625rem]">
                             {product.description}
                         </p>
-                        <WhatsAppButton
-                            size="lg"
-                            message={productOrderMessage(product)}
-                            className="w-full sm:w-auto"
-                        >
-                            Pesan Sekarang via WhatsApp
-                        </WhatsAppButton>
-                        <p className="text-sm text-ink-subtle">
-                            Pesanan dikonfirmasi setelah admin menyetujui detail
-                            dan harga.
-                        </p>
+                        {product.category === 'buket-custom' ? (
+                            <div className="flex w-full flex-col gap-3">
+                                <h2 className="font-display text-h3 text-brand-900">
+                                    Isi detail buket custom Anda
+                                </h2>
+                                <CustomBouquetForm reference={product.name} />
+                                <p className="text-sm text-ink-subtle">
+                                    Permintaan custom belum dianggap pesanan
+                                    final sebelum Anda dan admin menyepakati
+                                    detail dan harga.
+                                </p>
+                            </div>
+                        ) : (
+                            <>
+                                <WhatsAppButton
+                                    size="lg"
+                                    message={productOrderMessage(product)}
+                                    className="w-full sm:w-auto"
+                                >
+                                    Pesan Sekarang via WhatsApp
+                                </WhatsAppButton>
+                                <p className="text-sm text-ink-subtle">
+                                    Pesanan dikonfirmasi setelah admin
+                                    menyetujui detail dan harga.
+                                </p>
+                            </>
+                        )}
                     </div>
                 </div>
             </Section>

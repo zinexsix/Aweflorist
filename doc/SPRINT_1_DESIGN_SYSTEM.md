@@ -223,10 +223,22 @@ Langkah bernomor 1 → 2 → 4 kolom. `steps` diambil dari `data/info.ts`.
 - Footer hanya menampilkan alamat/jam buka/media sosial bila sudah diisi di `config/site.ts` (tidak ada data palsu).
 - `FlowerMark` = ikon bunga garis dari mockup; dipakai di logo, placeholder, dekorasi.
 
+### 3.11a `FormField` — `form-field.tsx`
+
+Label + kontrol + petunjuk + pesan galat, dengan `id`, `aria-invalid`, dan `aria-describedby` otomatis. Dipakai oleh formulir buket custom.
+
+```tsx
+<FormField label="Warna atau tema" required error={errors.themeColor}>
+    {(props) => <input {...props} name="themeColor" type="text" />}
+</FormField>
+```
+
+`props.className` sudah berisi gaya input (`fieldClass`); tempelkan apa adanya ke `<input>`, `<select>`, atau `<textarea>`. Label menambahkan tanda `*` untuk wajib dan "(opsional)" untuk sisanya.
+
 ### 3.12 Loading & form
 
 - Sprint 1 tidak memuat data dari server, jadi belum ada loading state. Jika dibutuhkan (Sprint 2), pakai `components/ui/skeleton.tsx`.
-- Form (Sprint 2): pakai `components/ui/input.tsx`, `label.tsx`, `input-error.tsx` yang sudah ada; setiap input wajib punya `<Label htmlFor>`.
+- Form halaman publik: pakai `FormField` (§3.11a). Setiap input wajib punya label.
 
 ### 3.13 Ikon
 
@@ -264,6 +276,7 @@ Gunakan `lucide-react` (sudah terpasang). Jangan memakai emoji sebagai ikon. Iko
 | Katalog `/katalog` | `pages/public/catalog.tsx` | Latif | US-04, US-05 |
 | Detail `/katalog/{slug}` | `pages/public/product-detail.tsx` | Latif | US-06, US-07 |
 | Informasi `/informasi` | `pages/public/info.tsx` | Prety | US-08 |
+| Buket custom `/buket-custom` | `pages/public/custom-bouquet.tsx` | Rofiq (dibuat), Prety (penyempurnaan) | FR-19, FR-20 |
 
 Urutan landing page: Hero → Tentang → Produk unggulan → Kategori/acara → Informasi unggulan → Cara pemesanan → FAQ → CTA kontak → Footer.
 
@@ -277,4 +290,5 @@ Urutan landing page: Hero → Tentang → Produk unggulan → Kategori/acara →
 | Kategori | Buket segar, uang, satu tangkai, custom; acara wisuda/ulang tahun/anniversary | Mockup: Bunga Papan, Bunga Meja, Hampers | Ikut **PRD**. Tambahkan kategori lain hanya jika PO mengonfirmasi. |
 | Durasi sprint | 2 minggu | Jobsheet: 1 minggu | Ikut **jobsheet** (1 minggu). |
 | Harga/kontak/promo | Belum dikonfirmasi (PRD §15) | Mockup memakai `[placeholder]` | Data contoh dengan catatan "data contoh"; kontak `null` sampai dikonfirmasi. |
+| Formulir buket custom | Must (FR-19/20), dijadwalkan Sprint 2 | Tidak ada di backlog Sprint 1 | **Versi Sprint 1 ditambahkan** di `/buket-custom`: validasi di browser, dikirim lewat WhatsApp, belum disimpan ke basis data. Penyimpanan, validasi server, dan unggah gambar tetap Sprint 2. |
 | Halaman kontak terpisah (task 16) | Cara pesan, FAQ, kontak | — | Digabung di `/informasi#kontak`. |
