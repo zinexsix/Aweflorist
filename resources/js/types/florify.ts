@@ -4,13 +4,9 @@
  * events) supaya mudah dipindah ke basis data pada Sprint 2.
  */
 
-export type ProductCategorySlug =
-    | 'buket-bunga'
-    | 'buket-uang'
-    | 'buket-satu-tangkai'
-    | 'buket-custom';
+export type ProductCategorySlug = string;
 
-export type OccasionSlug = 'wisuda' | 'ulang-tahun' | 'anniversary';
+export type OccasionSlug = string;
 
 export type ProductCategory = {
     slug: ProductCategorySlug;
