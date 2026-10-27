@@ -1,0 +1,4 @@
+@import '../../css/app.css';
+
+/* Root Vite build statis adalah folder ini, jadi pindai seluruh resources/js secara eksplisit. */
+@source '..';
