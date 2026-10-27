@@ -5,6 +5,8 @@
     "scripts": {
         "build": "vp build",
         "build:ssr": "vp build && vp build --ssr",
+        "build:static": "vite build --config vite.static.config.ts",
+        "preview:static": "vite preview --config vite.static.config.ts",
         "dev": "vp dev",
         "check": "vp check",
         "check:fix": "vp check --fix",
