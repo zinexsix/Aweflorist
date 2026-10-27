@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\CustomerFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,13 +11,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Fillable(['name', 'phone', 'email', 'notes'])]
 class Customer extends Model
 {
+    /** @use HasFactory<CustomerFactory> */
     use HasFactory;
 
+    /**
+     * @return HasMany<Order, $this>
+     */
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * @return HasMany<CustomRequest, $this>
+     */
     public function customRequests(): HasMany
     {
         return $this->hasMany(CustomRequest::class);
@@ -28,7 +36,7 @@ class Customer extends Model
      */
     public static function normalizePhone(string $phone): string
     {
-        $phone = preg_replace('/[^0-9]/', '', $phone);
+        $phone = (string) preg_replace('/[^0-9]/', '', $phone);
 
         if (str_starts_with($phone, '0')) {
             $phone = '62'.substr($phone, 1);

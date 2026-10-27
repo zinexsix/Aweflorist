@@ -17,7 +17,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = 'Buket '.fake()->unique()->words(3, true);
+        $name = 'Buket '.fake()->unique()->word().' '.fake()->word().' '.fake()->word();
 
         return [
             'category_id' => Category::factory(),

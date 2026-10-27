@@ -16,7 +16,7 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name = 'Buket '.fake()->unique()->words(2, true);
+        $name = 'Buket '.fake()->unique()->word().' '.fake()->word();
 
         return [
             'name' => Str::title($name),

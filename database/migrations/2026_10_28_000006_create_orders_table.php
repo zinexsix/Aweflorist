@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-           $table->id();
+            $table->id();
             $table->string('order_number', 20)->unique();
             $table->foreignId('customer_id')->constrained()->restrictOnDelete();
             $table->string('order_status', 30)->default('menunggu_konfirmasi');

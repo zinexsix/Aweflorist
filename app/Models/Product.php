@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 #[Fillable(['category_id', 'name', 'slug', 'description', 'price', 'price_from', 'image_path', 'is_featured', 'is_active'])]
 class Product extends Model
 {
+    /** @use HasFactory<ProductFactory> */
     use HasFactory;
 
     protected function casts(): array
@@ -25,22 +27,34 @@ class Product extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<Category, $this>
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * @return BelongsToMany<Event, $this>
+     */
     public function events(): BelongsToMany
     {
         return $this->belongsToMany(Event::class);
     }
 
+    /**
+     * @param  Builder<Product>  $query
+     */
     #[Scope]
     protected function active(Builder $query): void
     {
         $query->where('is_active', true);
     }
 
+    /**
+     * @param  Builder<Product>  $query
+     */
     #[Scope]
     protected function featured(Builder $query): void
     {
@@ -50,6 +64,8 @@ class Product extends Model
     /**
      * Bentuk data yang sama dengan tipe Product di resources/js/types/florify.ts.
      * Muat relasi dengan with(['category', 'events']) sebelum memanggil method ini.
+     *
+     * @return array<string, mixed>
      */
     public function toCatalogArray(): array
     {

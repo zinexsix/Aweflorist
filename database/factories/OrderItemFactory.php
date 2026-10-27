@@ -20,7 +20,7 @@ class OrderItemFactory extends Factory
         return [
             'order_id' => Order::factory(),
             'product_id' => Product::factory(),
-            'product_name_snapshot' => 'Buket '.fake()->words(2, true),
+            'product_name_snapshot' => 'Buket '.fake()->word().' '.fake()->word(),
             'unit_price_snapshot' => fake()->numberBetween(3, 50) * 10000,
             'quantity' => fake()->numberBetween(1, 5),
             'subtotal' => fn (array $attributes) => $attributes['unit_price_snapshot'] === null

@@ -54,9 +54,8 @@ class CatalogSeeder extends Seeder
                 ],
             );
 
-            $product->events()->sync(
-                collect($data['occasions'])->map(fn (string $slug) => $eventIds[$slug])->all(),
-            );
+            $product->events()->sync($eventIds->only($data['occasions'])->all());
+
         }
     }
 
