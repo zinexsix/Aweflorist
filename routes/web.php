@@ -11,6 +11,16 @@ Route::get('katalog/{slug}', fn (string $slug) => inertia('public/product-detail
 Route::inertia('buket-custom', 'public/custom-bouquet')->name('custom');
 Route::inertia('informasi', 'public/info')->name('info');
 
+// --- US-10 Latif: beranda & katalog dari database ---
+
+// --- US-12 Suci: simpan pesanan ---
+
+// --- US-13 Suci: formulir pesanan ---
+
+// --- US-14 Nabila: konfirmasi pesanan ---
+
+// --- US-15 Prety: buket custom ---
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
 });
