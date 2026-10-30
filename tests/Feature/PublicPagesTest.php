@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\CatalogSeeder;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('landing page renders the public home component', function () {
@@ -14,12 +15,14 @@ test('catalog page is accessible without login', function () {
         ->assertInertia(fn (Assert $page) => $page->component('public/catalog'));
 });
 
-test('product detail page receives the slug', function () {
+test('product detail page receives the product', function () {
+    $this->seed(CatalogSeeder::class);
+
     $this->get(route('catalog.show', 'buket-mawar-merah'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('public/product-detail')
-            ->where('slug', 'buket-mawar-merah'));
+            ->where('product.slug', 'buket-mawar-merah'));
 });
 
 test('product detail rejects invalid slugs', function () {

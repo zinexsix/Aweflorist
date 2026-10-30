@@ -4,11 +4,11 @@ import { EmptyState, Notice } from '@/components/florify/empty-state';
 import { ProductGrid } from '@/components/florify/product-card';
 import { Section, SectionHeading } from '@/components/florify/section';
 import { site } from '@/config/site';
-import { featuredProducts } from '@/data/products';
 import { index as catalog } from '@/routes/catalog';
+import type { Product } from '@/types';
 
-/** Pemilik: Latif. US-02 — produk unggulan di landing page. */
-export function FeaturedProductsSection() {
+/** Pemilik: Latif. US-02, US-10 — produk unggulan dari server. */
+export function FeaturedProductsSection({ products }: { products: Product[] }) {
     return (
         <Section id="produk" aria-labelledby="produk-title" flush>
             <SectionHeading
@@ -28,8 +28,8 @@ export function FeaturedProductsSection() {
                     harga resmi {site.name}.
                 </Notice>
             )}
-            {featuredProducts.length > 0 ? (
-                <ProductGrid products={featuredProducts} />
+            {products.length > 0 ? (
+                <ProductGrid products={products} />
             ) : (
                 <EmptyState
                     title="Produk unggulan belum tersedia"
