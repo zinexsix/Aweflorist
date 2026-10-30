@@ -1,7 +1,5 @@
-import { Head, Link } from '@inertiajs/react';
-import { BrandButton } from '@/components/florify/brand-button';
+import { Head } from '@inertiajs/react';
 import { CustomBouquetForm } from '@/components/florify/custom-bouquet-form';
-import { EmptyState } from '@/components/florify/empty-state';
 import { PageHeader } from '@/components/florify/page-header';
 import { ProductGrid } from '@/components/florify/product-card';
 import { ProductImage } from '@/components/florify/product-image';
@@ -9,53 +7,25 @@ import { CategoryBadge, PriceLabel } from '@/components/florify/product-meta';
 import { Section, SectionHeading } from '@/components/florify/section';
 import { WhatsAppButton } from '@/components/florify/whatsapp-button';
 import { categoryName } from '@/data/catalog';
-import { findProduct, products } from '@/data/products';
 import { productOrderMessage } from '@/lib/whatsapp';
 import { home } from '@/routes';
 import { index as catalog } from '@/routes/catalog';
+import type { Product } from '@/types';
 
 /**
- * Halaman detail produk (pemilik: Latif). US-06, US-07.
+ * Halaman detail produk (pemilik: Latif). US-06, US-07, US-10.
+ * Produk dan produk serupa dikirim CatalogController. Slug yang tidak ada
+ * atau produk nonaktif sudah dijawab 404 oleh server.
  * TODO Latif: galeri beberapa foto, kolom catatan kartu ucapan yang ikut
  * masuk ke pesan WhatsApp (lihat doc/florify-html/detail.html).
  */
-export default function ProductDetail({ slug }: { slug: string }) {
-    const product = findProduct(slug);
-
-    if (!product) {
-        return (
-            <>
-                <Head title="Produk tidak ditemukan" />
-                <PageHeader
-                    breadcrumbs={[
-                        { label: 'Beranda', href: home.url() },
-                        { label: 'Katalog', href: catalog.url() },
-                        { label: 'Tidak ditemukan' },
-                    ]}
-                />
-                <Section flush aria-label="Produk tidak ditemukan">
-                    <EmptyState
-                        title="Produk tidak ditemukan"
-                        description="Produk mungkin sudah tidak tersedia atau alamatnya salah."
-                        action={
-                            <BrandButton asChild>
-                                <Link href={catalog()}>Kembali ke katalog</Link>
-                            </BrandButton>
-                        }
-                    />
-                </Section>
-            </>
-        );
-    }
-
-    const related = products
-        .filter(
-            (item) =>
-                item.slug !== product.slug &&
-                item.category === product.category,
-        )
-        .slice(0, 3);
-
+export default function ProductDetail({
+    product,
+    related,
+}: {
+    product: Product;
+    related: Product[];
+}) {
     return (
         <>
             <Head title={product.name} />

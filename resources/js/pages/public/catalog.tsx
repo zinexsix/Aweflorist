@@ -1,36 +1,38 @@
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { BrandButton } from '@/components/florify/brand-button';
 import { EmptyState, Notice } from '@/components/florify/empty-state';
 import { PageHeader } from '@/components/florify/page-header';
 import { ProductGrid } from '@/components/florify/product-card';
 import { Section } from '@/components/florify/section';
 import { site } from '@/config/site';
-import { categories, occasions } from '@/data/catalog';
-import { products } from '@/data/products';
 import { home } from '@/routes';
 import { index as catalog } from '@/routes/catalog';
+import type { Occasion, Product, ProductCategory } from '@/types';
+
+type CatalogProps = {
+    products: Product[];
+    categories: ProductCategory[];
+    occasions: Occasion[];
+    filters: {
+        kategori: string | null;
+        acara: string | null;
+        q: string | null;
+    };
+};
 
 /**
- * Halaman katalog (pemilik: Latif). US-04, US-05.
- * Sudah mendukung filter lewat URL: /katalog?kategori=buket-uang atau ?acara=wisuda.
- * TODO Latif: chip filter kategori, pencarian nama (FR-07), urutan harga.
+ * Halaman katalog (pemilik: Latif). US-04, US-05, US-10.
+ * Produk sudah difilter server: /katalog?kategori=buket-uang atau ?acara=wisuda.
+ * TODO Latif (US-11): chip filter kategori dan pencarian nama (FR-07).
  */
-export default function Catalog() {
-    const { url } = usePage();
-    const params = new URLSearchParams(url.split('?')[1] ?? '');
-    const category = categories.find(
-        (item) => item.slug === params.get('kategori'),
-    );
-    const occasion = occasions.find(
-        (item) => item.slug === params.get('acara'),
-    );
-
-    const visibleProducts = products.filter(
-        (product) =>
-            (!category || product.category === category.slug) &&
-            (!occasion || product.occasions.includes(occasion.slug)),
-    );
-
+export default function Catalog({
+    products,
+    categories,
+    occasions,
+    filters,
+}: CatalogProps) {
+    const category = categories.find((item) => item.slug === filters.kategori);
+    const occasion = occasions.find((item) => item.slug === filters.acara);
     const activeFilter = category?.name ?? occasion?.name;
 
     return (
@@ -58,7 +60,7 @@ export default function Catalog() {
                         className="text-[0.9375rem] text-ink-muted"
                         aria-live="polite"
                     >
-                        Menampilkan {visibleProducts.length} produk
+                        Menampilkan {products.length} produk
                         {activeFilter && ` untuk ${activeFilter}`}
                     </p>
                     {activeFilter && (
@@ -67,8 +69,8 @@ export default function Catalog() {
                         </BrandButton>
                     )}
                 </div>
-                {visibleProducts.length > 0 ? (
-                    <ProductGrid products={visibleProducts} />
+                {products.length > 0 ? (
+                    <ProductGrid products={products} />
                 ) : (
                     <EmptyState
                         title="Produk belum tersedia"
