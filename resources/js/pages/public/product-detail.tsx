@@ -1,6 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
 import { BrandButton } from '@/components/florify/brand-button';
-import { CustomBouquetForm } from '@/components/florify/custom-bouquet-form';
 import { PageHeader } from '@/components/florify/page-header';
 import { ProductGrid } from '@/components/florify/product-card';
 import { ProductImage } from '@/components/florify/product-image';
@@ -9,7 +8,7 @@ import { Section, SectionHeading } from '@/components/florify/section';
 import { WhatsAppButton } from '@/components/florify/whatsapp-button';
 import { categoryName } from '@/data/catalog';
 import { productOrderMessage } from '@/lib/whatsapp';
-import { home } from '@/routes';
+import { custom, home } from '@/routes';
 import { index as catalog } from '@/routes/catalog';
 import { create as createOrder } from '@/routes/orders';
 import type { Product } from '@/types';
@@ -61,17 +60,36 @@ export default function ProductDetail({
                             {product.description}
                         </p>
                         {product.category === 'buket-custom' ? (
-                            <div className="flex w-full flex-col gap-3">
-                                <h2 className="font-display text-h3 text-brand-900">
-                                    Isi detail buket custom Anda
-                                </h2>
-                                <CustomBouquetForm reference={product.name} />
+                            <>
+                                <div className="flex w-full flex-col gap-3 sm:flex-row">
+                                    <BrandButton
+                                        asChild
+                                        size="lg"
+                                        className="w-full sm:w-auto"
+                                    >
+                                        <Link
+                                            href={custom({
+                                                query: { produk: product.slug },
+                                            })}
+                                        >
+                                            Isi Formulir Custom
+                                        </Link>
+                                    </BrandButton>
+                                    <WhatsAppButton
+                                        variant="secondary"
+                                        size="lg"
+                                        message={productOrderMessage(product)}
+                                        className="w-full sm:w-auto"
+                                    >
+                                        Tanya via WhatsApp
+                                    </WhatsAppButton>
+                                </div>
                                 <p className="text-sm text-ink-subtle">
                                     Permintaan custom belum dianggap pesanan
                                     final sebelum Anda dan admin menyepakati
                                     detail dan harga.
                                 </p>
-                            </div>
+                            </>
                         ) : (
                             <>
                                 <div className="flex w-full flex-col gap-3 sm:flex-row">
