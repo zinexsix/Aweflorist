@@ -13,7 +13,8 @@ use Inertia\Response;
 class CatalogController extends Controller
 {
     /**
-     * Katalog produk aktif, bisa difilter ?kategori=<slug> dan ?acara=<slug>.
+     * Katalog produk aktif, bisa difilter ?kategori=<slug>, ?acara=<slug>,
+     * dan dicari berdasarkan nama lewat ?q=<kata> (US-11).
      */
     public function index(Request $request): Response
     {
@@ -24,10 +25,15 @@ class CatalogController extends Controller
         $kategori = $categories->firstWhere('slug', $request->string('kategori')->toString())?->slug;
         $acara = $occasions->firstWhere('slug', $request->string('acara')->toString())?->slug;
 
+        // Kata pencarian dibatasi 100 karakter; kosong berarti tidak mencari.
+        $q = mb_substr(trim($request->string('q')->toString()), 0, 100);
+        $q = $q === '' ? null : $q;
+
         $products = Product::active()
             ->with(['category', 'events'])
             ->when($kategori !== null, fn ($query) => $query->whereHas('category', fn ($q) => $q->where('slug', $kategori)))
             ->when($acara !== null, fn ($query) => $query->whereHas('events', fn ($q) => $q->where('slug', $acara)))
+            ->when($q !== null, fn ($query) => $query->where('name', 'like', '%'.$q.'%'))
             ->orderBy('id')
             ->get();
 
@@ -45,7 +51,7 @@ class CatalogController extends Controller
             'filters' => [
                 'kategori' => $kategori,
                 'acara' => $acara,
-                'q' => null,
+                'q' => $q,
             ],
         ]);
     }

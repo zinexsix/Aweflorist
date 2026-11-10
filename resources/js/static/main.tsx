@@ -48,10 +48,12 @@ function catalogPage(params: URLSearchParams): React.ReactNode {
     const acara =
         occasions.find((item) => item.slug === params.get('acara'))?.slug ??
         null;
+    const q = (params.get('q') ?? '').trim().slice(0, 100) || null;
     const visibleProducts = products.filter(
         (product) =>
             (!kategori || product.category === kategori) &&
-            (!acara || product.occasions.includes(acara)),
+            (!acara || product.occasions.includes(acara)) &&
+            (!q || product.name.toLowerCase().includes(q.toLowerCase())),
     );
 
     return (
@@ -59,7 +61,7 @@ function catalogPage(params: URLSearchParams): React.ReactNode {
             products={visibleProducts}
             categories={categories}
             occasions={occasions}
-            filters={{ kategori, acara, q: null }}
+            filters={{ kategori, acara, q }}
         />
     );
 }

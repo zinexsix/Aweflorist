@@ -105,3 +105,60 @@ test('product detail returns 404 for an inactive product', function () {
 
     $this->get(route('catalog.show', $product->slug))->assertNotFound();
 });
+
+test('catalog searches products by name', function () {
+    $this->seed(CatalogSeeder::class);
+
+    $this->get(route('catalog.index', ['q' => 'mawar']))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('products', 4)
+            ->where('filters.q', 'mawar'));
+});
+
+test('catalog search is case insensitive', function () {
+    $this->seed(CatalogSeeder::class);
+
+    $this->get(route('catalog.index', ['q' => 'MAWAR']))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page->has('products', 4));
+});
+
+test('catalog search can be combined with a category filter', function () {
+    $this->seed(CatalogSeeder::class);
+
+    $this->get(route('catalog.index', ['q' => 'mawar', 'kategori' => 'buket-uang']))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('products', 1)
+            ->where('products.0.slug', 'buket-uang-mawar')
+            ->where('filters.q', 'mawar')
+            ->where('filters.kategori', 'buket-uang'));
+});
+
+test('catalog search without results returns an empty list', function () {
+    $this->seed(CatalogSeeder::class);
+
+    $this->get(route('catalog.index', ['q' => 'xyz']))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page->has('products', 0));
+});
+
+test('search longer than 100 characters does not cause an error', function () {
+    $this->seed(CatalogSeeder::class);
+
+    $this->get(route('catalog.index', ['q' => str_repeat('a', 150)]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('filters.q', str_repeat('a', 100)));
+});
+
+test('blank search shows all products', function () {
+    $this->seed(CatalogSeeder::class);
+
+    $this->get(route('catalog.index', ['q' => '   ']))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('products', 16)
+            ->where('filters.q', null));
+});
