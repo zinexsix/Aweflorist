@@ -1,5 +1,5 @@
 import { site } from '@/config/site';
-import type { OrderSummary, Product } from '@/types';
+import type { CustomRequestSummary, OrderSummary, Product } from '@/types';
 import { formatPrice, formatRupiah } from '@/lib/format';
 
 function formatIndoDate(isoDate: string): string {
@@ -41,38 +41,6 @@ export function productOrderMessage(product: Product, note?: string): string {
     return lines.join('\n');
 }
 
-export type CustomRequest = {
-    /** Nama produk/model acuan (opsional), mis. dari halaman detail. */
-    reference?: string;
-    bouquetType: string;
-    budget: number;
-    themeColor: string;
-    neededAt: string; // YYYY-MM-DD
-    notes: string;
-};
-
-/** Pesan WhatsApp dari formulir buket custom (/buket-custom). */
-export function customRequestMessage(request: CustomRequest): string {
-    const date = formatIndoDate(request.neededAt);
-
-    const lines = [
-        `Halo ${site.name}, saya ingin memesan buket custom:`,
-        ...(request.reference ? [`• Model acuan: ${request.reference}`] : []),
-        `• Jenis buket: ${request.bouquetType}`,
-        `• Anggaran: ${formatRupiah(request.budget)}`,
-        `• Warna/tema: ${request.themeColor}`,
-        `• Tanggal dibutuhkan: ${date}`,
-    ];
-
-    if (request.notes) {
-        lines.push(`• Catatan: ${request.notes}`);
-    }
-
-    lines.push('Mohon info ketersediaan dan harga akhirnya. Terima kasih.');
-
-    return lines.join('\n');
-}
-
 /** Pesan WhatsApp lanjutan dari halaman konfirmasi pesanan (US-14). */
 export function orderFollowUpMessage(order: OrderSummary): string {
     const lines = [
@@ -100,6 +68,31 @@ export function orderFollowUpMessage(order: OrderSummary): string {
             : `• Total: ${formatRupiah(order.totalAmount)}`,
     );
     lines.push('Mohon konfirmasi detail dan harganya. Terima kasih.');
+
+    return lines.join('\n');
+}
+
+/** Pesan WhatsApp lanjutan dari halaman konfirmasi buket custom (US-15). */
+export function customRequestFollowUpMessage(
+    request: CustomRequestSummary,
+): string {
+    const lines = [
+        `Halo ${site.name}, saya sudah mengirim permintaan buket custom nomor ${request.requestNumber}.`,
+        `• Nama: ${request.customerName}`,
+        ...(request.referenceProductName
+            ? [`• Model acuan: ${request.referenceProductName}`]
+            : []),
+        `• Jenis buket: ${request.bouquetType}`,
+        `• Anggaran: ${formatRupiah(request.budget)}`,
+        `• Warna/tema: ${request.themeColor}`,
+        `• Tanggal dibutuhkan: ${formatIndoDate(request.neededAt)}`,
+    ];
+
+    if (request.notes) {
+        lines.push(`• Catatan: ${request.notes}`);
+    }
+
+    lines.push('Mohon info ketersediaan dan harganya. Terima kasih.');
 
     return lines.join('\n');
 }

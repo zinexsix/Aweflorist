@@ -19,6 +19,7 @@ composer install
 cp .env.example .env
 php artisan key:generate
 php artisan migrate
+php artisan storage:link   # agar gambar referensi custom bisa dibuka
 npm install
 npm run dev        # terminal 1
 php artisan serve  # terminal 2
