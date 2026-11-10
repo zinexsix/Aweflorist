@@ -6,6 +6,8 @@ use App\Models\Customer;
 use App\Models\CustomRequest;
 use App\Models\Product;
 use App\Support\BouquetTypes;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Inertia\Testing\AssertableInertia as Assert;
 
@@ -186,4 +188,84 @@ test('halaman konfirmasi tanpa tanda tangan ditolak', function () {
     $customRequest = CustomRequest::factory()->create();
 
     $this->get(route('custom.confirmation', $customRequest))->assertForbidden();
+});
+
+test('gambar referensi valid tersimpan dengan nama acak', function () {
+    Storage::fake('public');
+
+    $this->post(route('custom.store'), customRequestPayload([
+        'reference_image' => UploadedFile::fake()->image('foto saya.jpg', 800, 1000)->size(500),
+    ]))->assertRedirect();
+
+    $path = CustomRequest::sole()->reference_image_path;
+
+    expect($path)->toStartWith('custom-references/')
+        ->and($path)->not->toContain('foto saya');
+
+    Storage::disk('public')->assertExists($path);
+});
+
+test('gambar referensi format webp dan png diterima', function (string $file) {
+    Storage::fake('public');
+
+    $this->post(route('custom.store'), customRequestPayload([
+        'reference_image' => UploadedFile::fake()->image($file),
+    ]))->assertRedirect();
+
+    expect(CustomRequest::sole()->reference_image_path)->not->toBeNull();
+})->with(['ref.png', 'ref.webp']);
+
+test('gambar referensi lebih dari 2 MB ditolak', function () {
+    Storage::fake('public');
+
+    $this->post(route('custom.store'), customRequestPayload([
+        'reference_image' => UploadedFile::fake()->image('besar.jpg')->size(2049),
+    ]))->assertSessionHasErrors(['reference_image' => 'Ukuran gambar referensi maksimal 2 MB.']);
+
+    expect(CustomRequest::count())->toBe(0);
+    expect(Storage::disk('public')->allFiles())->toBe([]);
+});
+
+test('file PDF ditolak sebagai gambar referensi', function () {
+    Storage::fake('public');
+
+    $this->post(route('custom.store'), customRequestPayload([
+        'reference_image' => UploadedFile::fake()->create('ref.pdf', 100, 'application/pdf'),
+    ]))->assertSessionHasErrors('reference_image');
+
+    expect(CustomRequest::count())->toBe(0);
+});
+
+test('file berekstensi jpg yang bukan gambar ditolak', function () {
+    Storage::fake('public');
+
+    // File sungguhan (bukan UploadedFile::fake) supaya tipe dibaca dari isi file, bukan dari nama.
+    $path = tempnam(sys_get_temp_dir(), 'palsu');
+    file_put_contents($path, 'ini bukan gambar');
+
+    $this->post(route('custom.store'), customRequestPayload([
+        'reference_image' => new UploadedFile($path, 'palsu.jpg', 'image/jpeg', null, true),
+    ]))->assertSessionHasErrors('reference_image');
+
+    unlink($path);
+
+    expect(CustomRequest::count())->toBe(0);
+});
+
+test('permintaan tanpa gambar referensi tetap tersimpan', function () {
+    Storage::fake('public');
+
+    $this->post(route('custom.store'), customRequestPayload())->assertRedirect();
+
+    expect(CustomRequest::sole()->reference_image_path)->toBeNull();
+});
+
+test('konfirmasi menandai gambar referensi terlampir', function () {
+    $customRequest = CustomRequest::factory()->create([
+        'reference_image_path' => 'custom-references/contoh.jpg',
+    ]);
+
+    $this->get(URL::signedRoute('custom.confirmation', $customRequest))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page->where('customRequest.hasReferenceImage', true)->etc());
 });
