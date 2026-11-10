@@ -87,12 +87,8 @@ function productPage(slug: string): React.ReactNode {
 
 function customPage(params: URLSearchParams): React.ReactNode {
     const reference = findProduct(params.get('produk') ?? '');
-    const bouquetTypes = [
-        ...categories
-            .filter((category) => category.slug !== 'buket-custom')
-            .map((category) => category.name),
-        'Lainnya (jelaskan di catatan)',
-    ];
+    // Sama dengan App\Support\BouquetTypes.
+    const bouquetTypes = ['Wisuda', 'Other Occasion'];
 
     return (
         <CustomBouquet
