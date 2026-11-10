@@ -7,7 +7,7 @@ Disusun oleh: Rofiq (Scrum Master). Product Owner: Nabila.
 > 1. Baca **Bagian 1–4** sampai selesai (semua anggota).
 > 2. Cari user story milikmu di **Bagian 5**.
 > 3. Ikuti **Git** di bagian story itu. Semua perintah Git **kamu jalankan sendiri**.
-> 4. Boleh memakai OpenCode: berikan file ini dan prompt di bagian story-mu. OpenCode hanya menulis kode, **tidak boleh** menjalankan `git add`, `git commit`, atau `git push`.
+> 4. Boleh memakai OpenCode: salin template di **Bagian 9**. OpenCode hanya menulis kode, **tidak boleh** menjalankan `git add`, `git commit`, atau `git push`.
 
 ---
 
@@ -21,6 +21,7 @@ Disusun oleh: Rofiq (Scrum Master). Product Owner: Nabila.
 6. [Git & GitHub — panduan umum](#6-git--github--panduan-umum)
 7. [Checklist Pull Request](#7-checklist-pull-request)
 8. [Tugas Rofiq (koordinator)](#8-tugas-rofiq-koordinator)
+9. [Template prompt OpenCode (salin-tempel)](#9-template-prompt-opencode-salin-tempel)
 
 ---
 
@@ -1178,3 +1179,195 @@ composer dev
 git switch main
 ```
 Merge lewat tombol **Merge pull request** di GitHub (bukan dari terminal), lalu **Delete branch**.
+
+---
+
+## 9. Template prompt OpenCode (salin-tempel)
+
+### 9.0 Cara pakai
+
+1. Pastikan kamu sudah di branch story-mu (Bagian 6.2). Cek dengan `git branch --show-current`.
+2. Buka terminal di folder proyek, jalankan `opencode`.
+3. Salin **Prompt A** dulu (sekali di awal sesi), tunggu jawabannya.
+4. Lalu salin **Prompt B** dan ganti bagian `<...>`.
+5. Pakai Prompt C–G bila perlu.
+6. Setelah OpenCode selesai: **baca `git diff`**, jalankan test sendiri, lalu commit dan push **sendiri** (Bagian 6.2).
+
+> Ganti hanya teks di dalam `<...>`. Jangan hapus aturan di dalam prompt.
+
+---
+
+### Prompt A — Pembuka sesi (wajib, sekali per sesi)
+
+```text
+Kamu membantu proyek Florify (website florist AweFlorist).
+Stack: Laravel 13, PHP 8.3, Inertia v3, React 19, TypeScript, Tailwind CSS 4, Pest. Database lokal SQLite, produksi MySQL.
+
+Sebelum menulis kode, baca file berikut:
+1. doc/SPRINT_2_WORK_DISTRIBUTION.md — bagian 1, 2, dan 4 (kontrak bersama) WAJIB dibaca penuh.
+2. doc/SPRINT_1_DESIGN_SYSTEM.md — token warna dan komponen yang wajib dipakai.
+3. PRD_Florify.md — bagian 6 (aturan bisnis) dan 9 (rancangan data).
+
+Aturan yang harus kamu ikuti selama sesi ini:
+- Ikuti kontrak di bagian 4 PERSIS: nama tabel, kolom, model, enum, rute, nama rute, nama halaman Inertia, dan bentuk props. Jangan mengganti nama.
+- Hanya ubah file milik story yang saya sebutkan (lihat tabel 4.8 dan bagian story). Jika perlu mengubah file lain, BERHENTI dan tanya saya dulu.
+- Pakai komponen yang sudah ada (BrandButton, FormField, ProductCard, ProductGrid, ProductImage, PriceLabel, EmptyState, Notice, PageHeader, Section, SectionHeading, WhatsAppButton). Jangan membuat komponen tombol/kartu/input baru.
+- Pakai class token design system. Jangan menulis warna hex.
+- Jangan menambah paket composer atau npm. Jangan mengganti framework.
+- Validasi di server memakai FormRequest. Pesan galat dalam Bahasa Indonesia.
+- Jangan mengarang data bisnis (harga, alamat, promo).
+- JANGAN menjalankan perintah git apa pun (git add, commit, push, merge, reset, checkout, switch, stash). Saya yang menjalankan git sendiri.
+- Jangan menjalankan php artisan migrate:fresh tanpa memberi tahu saya dulu (perintah itu menghapus data lokal).
+
+Setelah membaca, jawab singkat:
+1. Ringkasan kontrak bagian 4 dalam 5 poin.
+2. Komponen apa saja yang tersedia di resources/js/components/florify.
+Belum perlu menulis kode.
+```
+
+---
+
+### Prompt B — Mengerjakan satu user story
+
+```text
+Saya <NAMA>. Kerjakan <US-XX> dari doc/SPRINT_2_WORK_DISTRIBUTION.md bagian 5.
+
+Langkah:
+1. Baca bagian "<US-XX>" sampai habis, termasuk tabel file, kriteria selesai, dan daftar test.
+2. Baca semua file yang disebut di bagian itu dan di prompt OpenCode milik story tersebut.
+3. Sebelum menulis kode, tampilkan RENCANA singkat: daftar file yang akan dibuat/diubah dan isi utamanya. Tunggu saya menjawab "lanjut".
+4. Setelah saya jawab "lanjut", kerjakan sesuai rencana.
+5. Tulis test Pest sesuai daftar test story itu.
+6. Jalankan dan laporkan hasil:
+   php artisan test
+   npm run check
+   npm run types:check
+   (tambahkan npm run build:static jika story ini menyebutnya)
+7. Laporan akhir berisi:
+   - daftar file yang dibuat/diubah,
+   - kriteria selesai mana yang sudah terpenuhi (centang) dan mana yang belum,
+   - cara saya menguji manual di browser (URL dan langkah),
+   - hal yang perlu saya tanyakan ke Rofiq.
+
+Ingat aturan Prompt A. Jangan menjalankan perintah git.
+```
+
+**Contoh yang sudah diisi (story pertama tiap orang):**
+
+| Orang | Isi baris pertama Prompt B |
+|---|---|
+| Latif | `Saya Latif. Kerjakan US-09 dari doc/SPRINT_2_WORK_DISTRIBUTION.md bagian 5.` |
+| Suci | `Saya Suci. Kerjakan US-12 dari doc/SPRINT_2_WORK_DISTRIBUTION.md bagian 5.` |
+| Nabila | `Saya Nabila. Kerjakan US-14 dari doc/SPRINT_2_WORK_DISTRIBUTION.md bagian 5.` |
+| Prety | `Saya Prety. Kerjakan US-15 dari doc/SPRINT_2_WORK_DISTRIBUTION.md bagian 5.` |
+
+Story berikutnya: Latif US-10 lalu US-11 · Suci US-13 · Nabila US-17 · Prety US-16.
+
+---
+
+### Prompt C — Test atau pemeriksaan gagal
+
+```text
+Perintah berikut gagal:
+<tempel perintahnya, misalnya: php artisan test>
+
+Pesan galatnya:
+<tempel seluruh pesan galat dari terminal>
+
+Cari penyebabnya dan perbaiki HANYA di file milik <US-XX>.
+Jika penyebabnya ada di file milik orang lain (misalnya model/migration milik Latif, atau rute milik story lain),
+JANGAN ubah file itu. Jelaskan masalahnya supaya saya bisa menyampaikan ke pemiliknya.
+Jangan mengubah atau menghapus test agar lulus, kecuali test itu memang salah menurut kontrak bagian 4.
+Setelah memperbaiki, jalankan ulang perintahnya dan laporkan hasilnya. Jangan menjalankan perintah git.
+```
+
+---
+
+### Prompt D — Cek mandiri sebelum membuat Pull Request
+
+```text
+Saya akan membuat Pull Request untuk <US-XX>. Periksa pekerjaan saya, JANGAN mengubah file apa pun dulu.
+
+1. Jalankan: git diff --stat origin/main   (perintah ini hanya MEMBACA, boleh dijalankan)
+2. Bandingkan daftar file yang berubah dengan file milik <US-XX> di doc/SPRINT_2_WORK_DISTRIBUTION.md.
+   Sebutkan file yang berubah padahal BUKAN milik story ini.
+3. Cek kesesuaian dengan kontrak bagian 4: nama tabel/kolom, nama rute, nama halaman Inertia, bentuk props.
+4. Cek checklist bagian 7 satu per satu, beri tanda [x] atau [ ] beserta alasannya.
+5. Cari: warna hex baru, paket baru, console.log, kode yang dikomentari, teks bahasa Inggris di tampilan,
+   data bisnis karangan, file .env atau database.sqlite.
+6. Tuliskan draf deskripsi PR memakai template bagian 7 (bagian "Cara menguji" diisi lengkap).
+
+Hanya laporkan. Jangan memperbaiki tanpa izin saya. Jangan menjalankan git add/commit/push.
+```
+
+---
+
+### Prompt E — Membantu menyelesaikan konflik merge
+
+Pakai setelah kamu sendiri menjalankan `git fetch origin` dan `git merge origin/main`, lalu muncul konflik.
+
+```text
+Saya sedang merge origin/main ke branch <NAMA-BRANCH> dan ada konflik di file:
+<tempel daftar file dari "git status" bagian "both modified">
+
+Untuk setiap file konflik:
+1. Jelaskan bagian "<<<<<<< HEAD" (perubahan saya) dan bagian ">>>>>>> origin/main" (perubahan orang lain).
+2. Usulkan hasil gabungan yang MEMPERTAHANKAN perubahan kedua pihak jika keduanya diperlukan
+   (contoh: di routes/web.php rute dari story lain dan rute saya sama-sama dipertahankan di bawah penandanya masing-masing).
+3. Setelah saya setuju, tulis hasil gabungannya ke file dan pastikan tidak ada lagi tanda <<<<<<<, =======, >>>>>>>.
+4. Jalankan php artisan test, npm run check, npm run types:check dan laporkan hasilnya.
+
+JANGAN menjalankan git add, git commit, git merge --abort, git checkout, atau git reset. Saya yang menjalankannya.
+```
+
+Setelah OpenCode selesai, kamu sendiri yang menjalankan:
+```bash
+git add <file-yang-konflik>
+git commit
+git push
+```
+
+---
+
+### Prompt F — Memperbaiki komentar review dari Rofiq
+
+```text
+Rofiq memberi komentar review di Pull Request <US-XX>:
+<tempel semua komentar review dari GitHub, lengkap dengan nama file dan baris>
+
+Untuk setiap komentar:
+1. Jelaskan apa yang diminta.
+2. Perbaiki di file yang disebut (hanya file milik <US-XX>).
+3. Jika menurutmu komentar itu bertentangan dengan kontrak bagian 4, jangan diubah; jelaskan alasannya supaya saya bisa membalas di GitHub.
+Setelah selesai jalankan php artisan test, npm run check, npm run types:check dan laporkan hasilnya.
+Jangan menjalankan perintah git.
+```
+
+Setelah itu kamu sendiri: `git add <file>` → `git commit -m "fix(<area>): perbaikan review (US-XX)"` → `git push`. PR ter-update otomatis.
+
+---
+
+### Prompt G — Menjelaskan kode (persiapan review & demo)
+
+```text
+Jelaskan pekerjaan <US-XX> kepada saya dengan bahasa sederhana, seperti menjelaskan ke teman yang baru belajar Laravel.
+1. Alur dari pengguna membuka halaman sampai data tersimpan/tampil: rute → controller → (request/action) → model → halaman React.
+2. Untuk setiap file yang dibuat/diubah di story ini: apa fungsinya dalam 1-2 kalimat.
+3. Bagian yang paling penting untuk keamanan/kebenaran data (validasi, transaksi, signed URL, snapshot harga) dan kenapa.
+4. Tiga pertanyaan yang mungkin ditanyakan dosen saat demo, beserta jawabannya.
+Jangan mengubah file apa pun.
+```
+
+---
+
+### 9.1 Hal yang harus kamu lakukan sendiri (bukan OpenCode)
+
+| Langkah | Perintah / tindakan |
+|---|---|
+| Membuat branch | `git switch -c feature/<nama>-<us-xx>-<topik>` |
+| Membaca hasil AI | `git status`, `git diff` |
+| Membatalkan file yang tidak seharusnya berubah | `git restore <file>` |
+| Menyimpan | `git add <file>` + `git commit -m "..."` |
+| Mengirim | `git push` |
+| Membuat PR, merespons review | di GitHub (Bagian 6.4) |
+| Menguji di browser | `composer dev`, buka di HP & desktop |
