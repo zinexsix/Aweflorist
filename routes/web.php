@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Public\CatalogController;
 use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\OrderController;
 use Illuminate\Support\Facades\Route;
 
 // Halaman publik Florify (Sprint 1: data produk masih statis di resources/js/data).
@@ -14,8 +15,12 @@ Route::get('katalog', [CatalogController::class, 'index'])->name('catalog.index'
 Route::get('katalog/{product:slug}', [CatalogController::class, 'show'])->name('catalog.show');
 
 // --- US-12 Suci: simpan pesanan ---
+Route::post('pesan/{product:slug}', [OrderController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('orders.store');
 
 // --- US-13 Suci: formulir pesanan ---
+Route::get('pesan/{product:slug}', [OrderController::class, 'create'])->name('orders.create');
 
 // --- US-14 Nabila: konfirmasi pesanan ---
 

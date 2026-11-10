@@ -1,4 +1,5 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
+import { BrandButton } from '@/components/florify/brand-button';
 import { CustomBouquetForm } from '@/components/florify/custom-bouquet-form';
 import { PageHeader } from '@/components/florify/page-header';
 import { ProductGrid } from '@/components/florify/product-card';
@@ -10,6 +11,7 @@ import { categoryName } from '@/data/catalog';
 import { productOrderMessage } from '@/lib/whatsapp';
 import { home } from '@/routes';
 import { index as catalog } from '@/routes/catalog';
+import { create as createOrder } from '@/routes/orders';
 import type { Product } from '@/types';
 
 /**
@@ -72,13 +74,25 @@ export default function ProductDetail({
                             </div>
                         ) : (
                             <>
-                                <WhatsAppButton
-                                    size="lg"
-                                    message={productOrderMessage(product)}
-                                    className="w-full sm:w-auto"
-                                >
-                                    Pesan Sekarang via WhatsApp
-                                </WhatsAppButton>
+                                <div className="flex w-full flex-col gap-3 sm:flex-row">
+                                    <BrandButton
+                                        asChild
+                                        size="lg"
+                                        className="w-full sm:w-auto"
+                                    >
+                                        <Link href={createOrder(product.slug)}>
+                                            Pesan Sekarang
+                                        </Link>
+                                    </BrandButton>
+                                    <WhatsAppButton
+                                        variant="secondary"
+                                        size="lg"
+                                        message={productOrderMessage(product)}
+                                        className="w-full sm:w-auto"
+                                    >
+                                        Tanya via WhatsApp
+                                    </WhatsAppButton>
+                                </div>
                                 <p className="text-sm text-ink-subtle">
                                     Pesanan dikonfirmasi setelah admin
                                     menyetujui detail dan harga.
