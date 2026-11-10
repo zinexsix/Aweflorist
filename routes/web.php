@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Public\CatalogController;
 use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\OrderConfirmationController;
 use App\Http\Controllers\Public\OrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,9 @@ Route::post('pesan/{product:slug}', [OrderController::class, 'store'])
 Route::get('pesan/{product:slug}', [OrderController::class, 'create'])->name('orders.create');
 
 // --- US-14 Nabila: konfirmasi pesanan ---
+Route::get('pesanan/{order:order_number}', OrderConfirmationController::class)
+    ->middleware('signed')
+    ->name('orders.confirmation');
 
 // --- US-15 Prety: buket custom ---
 
