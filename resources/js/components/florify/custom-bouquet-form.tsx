@@ -1,31 +1,12 @@
-import { MessageCircle } from 'lucide-react';
-import { useRef, useState } from 'react';
-import type * as React from 'react';
+import { Form } from '@inertiajs/react';
 import { BrandButton } from '@/components/florify/brand-button';
 import { FormField } from '@/components/florify/form-field';
-import { categories } from '@/data/catalog';
 import { cn } from '@/lib/utils';
-import { customRequestMessage, whatsappUrl } from '@/lib/whatsapp';
-
-const bouquetTypes = [
-    ...categories
-        .filter((category) => category.slug !== 'buket-custom')
-        .map((category) => category.name),
-    'Lainnya (jelaskan di catatan)',
-];
+import { store } from '@/routes/custom';
 
 const MIN_BUDGET = 10000;
 
-type Errors = Partial<
-    Record<'bouquetType' | 'budget' | 'themeColor' | 'neededAt', string>
->;
-
-function text(data: FormData, name: string): string {
-    const value = data.get(name);
-
-    return typeof value === 'string' ? value : '';
-}
-
+/** Tanggal hari ini dalam format YYYY-MM-DD untuk atribut min input date. */
 function todayIso(): string {
     const now = new Date();
     const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -35,179 +16,178 @@ function todayIso(): string {
 }
 
 /**
- * Formulir permintaan buket custom (PRD 3.2, FR-19/FR-20).
- * Dipakai di /buket-custom dan di detail produk kategori "Buket Custom".
- *
- * Sprint 1: divalidasi di browser lalu dikirim lewat WhatsApp. Data BELUM
- * disimpan ke basis data; validasi server dan penyimpanan masuk Sprint 2
- * (FR-15, FR-16). Unggah gambar referensi (FR-21) juga Sprint 2.
+ * Formulir permintaan buket custom (PRD 3.2, FR-19/FR-20, US-15).
+ * Dikirim ke server (CustomRequestController@store), divalidasi
+ * StoreCustomRequestRequest, lalu diarahkan ke halaman konfirmasi.
  */
 export function CustomBouquetForm({
-    reference,
+    bouquetTypes,
+    reference = null,
     className,
 }: {
-    /** Nama model/produk acuan, mis. "Buket Custom Tema Warna". Ikut masuk ke pesan. */
-    reference?: string;
+    /** Pilihan jenis buket dari server (BouquetTypes::all()). */
+    bouquetTypes: string[];
+    /** Produk acuan jika formulir dibuka dari halaman detail produk. */
+    reference?: { slug: string; name: string } | null;
     className?: string;
 }) {
-    const formRef = useRef<HTMLFormElement>(null);
-    const [errors, setErrors] = useState<Errors>({});
-
-    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-
-        const data = new FormData(event.currentTarget);
-        const bouquetType = text(data, 'bouquetType');
-        const budget = Number(text(data, 'budget'));
-        const themeColor = text(data, 'themeColor').trim();
-        const neededAt = text(data, 'neededAt');
-        const notes = text(data, 'notes').trim();
-
-        const next: Errors = {};
-
-        if (!bouquetType) {
-            next.bouquetType = 'Pilih jenis buket.';
-        }
-
-        if (!Number.isFinite(budget) || budget < MIN_BUDGET) {
-            next.budget = `Masukkan anggaran minimal Rp ${MIN_BUDGET.toLocaleString('id-ID')}.`;
-        }
-
-        if (!themeColor) {
-            next.themeColor = 'Tulis warna atau tema yang diinginkan.';
-        }
-
-        if (!neededAt) {
-            next.neededAt = 'Pilih tanggal buket dibutuhkan.';
-        } else if (neededAt < todayIso()) {
-            next.neededAt = 'Tanggal tidak boleh sebelum hari ini.';
-        }
-
-        setErrors(next);
-
-        const firstInvalid = (
-            ['bouquetType', 'budget', 'themeColor', 'neededAt'] as const
-        ).find((name) => next[name]);
-
-        if (firstInvalid) {
-            formRef.current
-                ?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)
-                ?.focus();
-
-            return;
-        }
-
-        window.open(
-            whatsappUrl(
-                customRequestMessage({
-                    reference,
-                    bouquetType,
-                    budget,
-                    themeColor,
-                    neededAt,
-                    notes,
-                }),
-            ),
-            '_blank',
-            'noopener,noreferrer',
-        );
-    }
-
     return (
-        <form
-            ref={formRef}
-            onSubmit={handleSubmit}
-            noValidate
+        <Form
+            {...store.form()}
             className={cn(
                 'flex flex-col gap-6 rounded-panel border border-line bg-surface p-5 sm:p-8',
                 className,
             )}
         >
-            <FormField label="Jenis buket" required error={errors.bouquetType}>
-                {(props) => (
-                    <select {...props} name="bouquetType" defaultValue="">
-                        <option value="" disabled>
-                            Pilih jenis buket
-                        </option>
-                        {bouquetTypes.map((type) => (
-                            <option key={type} value={type}>
-                                {type}
-                            </option>
-                        ))}
-                    </select>
-                )}
-            </FormField>
+            {({ processing, errors }) => (
+                <>
+                    {reference && (
+                        <input
+                            type="hidden"
+                            name="product"
+                            value={reference.slug}
+                        />
+                    )}
 
-            <FormField
-                label="Anggaran (Rp)"
-                required
-                hint="Perkiraan anggaran Anda. Harga akhir dikonfirmasi admin."
-                error={errors.budget}
-            >
-                {(props) => (
-                    <input
-                        {...props}
-                        name="budget"
-                        type="number"
-                        inputMode="numeric"
-                        min={MIN_BUDGET}
-                        step={5000}
-                        placeholder="Contoh: 250000"
-                    />
-                )}
-            </FormField>
+                    <FormField label="Nama" required error={errors.name}>
+                        {(field) => (
+                            <input
+                                {...field}
+                                type="text"
+                                name="name"
+                                autoComplete="name"
+                                maxLength={100}
+                                placeholder="Nama lengkap"
+                            />
+                        )}
+                    </FormField>
 
-            <FormField
-                label="Warna atau tema"
-                required
-                error={errors.themeColor}
-            >
-                {(props) => (
-                    <input
-                        {...props}
-                        name="themeColor"
-                        type="text"
-                        maxLength={100}
-                        placeholder="Contoh: biru pastel, tema wisuda"
-                    />
-                )}
-            </FormField>
+                    <FormField
+                        label="Nomor WhatsApp"
+                        required
+                        hint="Contoh: 0812-3456-7890"
+                        error={errors.phone}
+                    >
+                        {(field) => (
+                            <input
+                                {...field}
+                                type="tel"
+                                inputMode="tel"
+                                autoComplete="tel"
+                                name="phone"
+                                placeholder="0812-3456-7890"
+                            />
+                        )}
+                    </FormField>
 
-            <FormField
-                label="Tanggal dibutuhkan"
-                required
-                error={errors.neededAt}
-            >
-                {(props) => (
-                    <input
-                        {...props}
-                        name="neededAt"
-                        type="date"
-                        min={todayIso()}
-                    />
-                )}
-            </FormField>
+                    <FormField
+                        label="Jenis buket"
+                        required
+                        error={errors.bouquet_type}
+                    >
+                        {(field) => (
+                            <select
+                                {...field}
+                                name="bouquet_type"
+                                defaultValue=""
+                            >
+                                <option value="" disabled>
+                                    Pilih jenis buket
+                                </option>
+                                {bouquetTypes.map((type) => (
+                                    <option key={type} value={type}>
+                                        {type}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    </FormField>
 
-            <FormField label="Catatan tambahan">
-                {(props) => (
-                    <textarea
-                        {...props}
-                        name="notes"
-                        rows={4}
-                        maxLength={500}
-                        placeholder="Jenis bunga favorit, ucapan di kartu, dan permintaan lain"
-                    />
-                )}
-            </FormField>
+                    <FormField
+                        label="Anggaran (Rp)"
+                        required
+                        hint="Perkiraan anggaran Anda. Harga akhir dikonfirmasi admin."
+                        error={errors.budget}
+                    >
+                        {(field) => (
+                            <input
+                                {...field}
+                                type="number"
+                                inputMode="numeric"
+                                name="budget"
+                                min={MIN_BUDGET}
+                                step={5000}
+                                placeholder="Contoh: 250000"
+                            />
+                        )}
+                    </FormField>
 
-            <BrandButton
-                type="submit"
-                size="lg"
-                className="w-full sm:w-auto sm:self-start"
-            >
-                <MessageCircle />
-                Kirim lewat WhatsApp
-            </BrandButton>
-        </form>
+                    <FormField
+                        label="Warna atau tema"
+                        required
+                        error={errors.theme_color}
+                    >
+                        {(field) => (
+                            <input
+                                {...field}
+                                type="text"
+                                name="theme_color"
+                                maxLength={100}
+                                placeholder="Contoh: biru pastel, tema wisuda"
+                            />
+                        )}
+                    </FormField>
+
+                    <FormField
+                        label="Tanggal dibutuhkan"
+                        required
+                        error={errors.needed_at}
+                    >
+                        {(field) => (
+                            <input
+                                {...field}
+                                type="date"
+                                name="needed_at"
+                                min={todayIso()}
+                            />
+                        )}
+                    </FormField>
+
+                    <FormField
+                        label="Catatan tambahan"
+                        hint="Maksimal 500 huruf. Boleh dikosongkan."
+                        error={errors.notes}
+                    >
+                        {(field) => (
+                            <textarea
+                                {...field}
+                                name="notes"
+                                rows={4}
+                                maxLength={500}
+                                placeholder="Jenis bunga favorit, ucapan di kartu, dan permintaan lain"
+                            />
+                        )}
+                    </FormField>
+
+                    {errors.product && (
+                        <p
+                            role="alert"
+                            className="text-sm font-medium text-red-700"
+                        >
+                            {errors.product}
+                        </p>
+                    )}
+
+                    <BrandButton
+                        type="submit"
+                        size="lg"
+                        disabled={processing}
+                        className="w-full sm:w-auto sm:self-start"
+                    >
+                        {processing ? 'Mengirim…' : 'Kirim Permintaan'}
+                    </BrandButton>
+                </>
+            )}
+        </Form>
     );
 }
