@@ -1,6 +1,12 @@
 import { site } from '@/config/site';
-import type { Product } from '@/types';
+import type { OrderSummary, Product } from '@/types';
 import { formatPrice, formatRupiah } from '@/lib/format';
+
+function formatIndoDate(isoDate: string): string {
+    return new Intl.DateTimeFormat('id-ID', {
+        dateStyle: 'long',
+    }).format(new Date(`${isoDate}T00:00:00`));
+}
 
 /**
  * Membuat tautan wa.me dengan pesan awal.
@@ -47,9 +53,7 @@ export type CustomRequest = {
 
 /** Pesan WhatsApp dari formulir buket custom (/buket-custom). */
 export function customRequestMessage(request: CustomRequest): string {
-    const date = new Intl.DateTimeFormat('id-ID', {
-        dateStyle: 'long',
-    }).format(new Date(`${request.neededAt}T00:00:00`));
+    const date = formatIndoDate(request.neededAt);
 
     const lines = [
         `Halo ${site.name}, saya ingin memesan buket custom:`,
@@ -65,6 +69,37 @@ export function customRequestMessage(request: CustomRequest): string {
     }
 
     lines.push('Mohon info ketersediaan dan harga akhirnya. Terima kasih.');
+
+    return lines.join('\n');
+}
+
+/** Pesan WhatsApp lanjutan dari halaman konfirmasi pesanan (US-14). */
+export function orderFollowUpMessage(order: OrderSummary): string {
+    const lines = [
+        `Halo ${site.name}, saya sudah mengirim pesanan nomor ${order.orderNumber}.`,
+        `• Nama: ${order.customerName}`,
+        `• Tanggal dibutuhkan: ${formatIndoDate(order.neededAt)}`,
+    ];
+
+    if (order.items.length > 0) {
+        lines.push('• Rincian pesanan:');
+
+        for (const item of order.items) {
+            const amount =
+                item.subtotal === null
+                    ? 'Harga via WhatsApp'
+                    : formatRupiah(item.subtotal);
+
+            lines.push(`  - ${item.name} × ${item.quantity} (${amount})`);
+        }
+    }
+
+    lines.push(
+        order.totalAmount === null
+            ? '• Total: dikonfirmasi admin'
+            : `• Total: ${formatRupiah(order.totalAmount)}`,
+    );
+    lines.push('Mohon konfirmasi detail dan harganya. Terima kasih.');
 
     return lines.join('\n');
 }

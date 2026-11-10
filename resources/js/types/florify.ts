@@ -45,3 +45,25 @@ export type OrderStep = {
 };
 
 export type Tone = 'blush' | 'cream' | 'sun' | 'sage' | 'lilac';
+
+export type OrderSummary = {
+    orderNumber: string;
+    customerName: string;
+    /** Nomor WhatsApp tersamar, mis. "6281****6789". */
+    customerPhoneMasked: string;
+    /** Tanggal dibutuhkan, format YYYY-MM-DD. */
+    neededAt: string;
+    notes: string | null;
+    statusLabel: string;
+    paymentStatusLabel: string;
+    items: {
+        name: string;
+        quantity: number;
+        unitPrice: number | null;
+        subtotal: number | null;
+    }[];
+    /** `null` jika ada item berharga "via WhatsApp". */
+    totalAmount: number | null;
+    /** ISO 8601. */
+    createdAt: string;
+};
