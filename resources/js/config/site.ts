@@ -14,6 +14,14 @@ export const site = {
         '',
     ),
     address: null as string | null,
+    /**
+     * Lokasi toko untuk Google Maps di profil (beranda #tentang) dan /informasi#kontak.
+     * `mapsQuery`: alamat lengkap atau "Nama Toko, Kota" persis seperti di Google Maps.
+     *   Kosong (`null`) = memakai `address`; keduanya kosong = peta disembunyikan.
+     * `mapsUrl`: link "Bagikan" dari aplikasi Google Maps (mis. https://maps.app.goo.gl/...).
+     */
+    mapsQuery: null as string | null,
+    mapsUrl: null as string | null,
     openingHours: null as string | null,
     instagram: null as string | null,
     tiktok: null as string | null,
@@ -25,6 +33,4 @@ export const site = {
             | null,
         about: '/images/banners/about-aweflorist.webp' as string | null,
     },
-    /** Tampilkan catatan bahwa produk & harga masih data contoh Sprint 1. */
-    isSampleData: true,
 };

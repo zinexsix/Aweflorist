@@ -26,7 +26,7 @@ export default function Home({
             <Head title="Beranda">
                 <meta
                     name="description"
-                    content="AweFlorist — buket bunga segar, buket uang, dan buket custom untuk wisuda, ulang tahun, dan anniversary. Pesan mudah lewat WhatsApp."
+                    content="AweFlorist — buket mulai Rp15.000 dan buket custom untuk wisuda dan momen lainnya. Pesan mudah lewat WhatsApp."
                 />
             </Head>
             <HeroSection />

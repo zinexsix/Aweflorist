@@ -25,9 +25,9 @@ export function HeroSection() {
                             Rangkaian bunga untuk setiap momen berharga
                         </h1>
                         <p className="max-w-xl text-base leading-relaxed text-pretty text-ink-muted sm:text-lg">
-                            Buket bunga segar, buket uang, dan buket custom
-                            untuk wisuda, ulang tahun, hingga anniversary. Pilih
-                            di katalog, lalu pesan lewat WhatsApp.
+                            Buket mulai Rp15.000 dan buket custom untuk wisuda
+                            maupun momen lainnya. Pilih sesuai harga di katalog,
+                            lalu pesan lewat WhatsApp.
                         </p>
                         <div className="flex w-full flex-col gap-3 min-[420px]:w-auto min-[420px]:flex-row min-[420px]:flex-wrap">
                             <BrandButton asChild size="lg">

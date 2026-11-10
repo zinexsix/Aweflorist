@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react';
 import { FaqList } from '@/components/florify/faq-list';
+import { LocationMap } from '@/components/florify/location-map';
 import { OrderSteps } from '@/components/florify/order-steps';
 import { PageHeader } from '@/components/florify/page-header';
 import { Eyebrow, Section, SectionHeading } from '@/components/florify/section';
@@ -10,8 +11,8 @@ import { home } from '@/routes';
 
 /**
  * Halaman informasi: cara pemesanan, FAQ, kontak (pemilik: Prety). US-08.
- * TODO Prety: lengkapi kontak (alamat, jam buka, media sosial) di
- * config/site.ts setelah dikonfirmasi; tambahkan peta lokasi bila disetujui.
+ * Kontak (alamat, jam buka, media sosial) dan peta Google Maps diisi di
+ * config/site.ts; bagian yang kosong otomatis disembunyikan.
  */
 export default function Info() {
     const contacts = [
@@ -85,6 +86,7 @@ export default function Info() {
                             produk dan pemesanan.
                         </p>
                     )}
+                    <LocationMap />
                     <WhatsAppButton size="lg">Chat WhatsApp</WhatsAppButton>
                 </div>
             </Section>

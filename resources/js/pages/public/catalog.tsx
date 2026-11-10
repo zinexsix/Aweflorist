@@ -1,11 +1,10 @@
 import { Head, Link } from '@inertiajs/react';
 import { BrandButton } from '@/components/florify/brand-button';
-import { EmptyState, Notice } from '@/components/florify/empty-state';
+import { EmptyState } from '@/components/florify/empty-state';
 import { FormField } from '@/components/florify/form-field';
 import { PageHeader } from '@/components/florify/page-header';
 import { ProductGrid } from '@/components/florify/product-card';
 import { Section } from '@/components/florify/section';
-import { site } from '@/config/site';
 import { home } from '@/routes';
 import { index as catalog } from '@/routes/catalog';
 import type { Occasion, Product, ProductCategory } from '@/types';
@@ -62,15 +61,9 @@ export default function Catalog({
                 title={
                     activeFilter ? `Katalog · ${activeFilter}` : 'Katalog Bunga'
                 }
-                description="Pilih rangkaian sesuai momen. Klik produk untuk melihat detail, lalu pesan langsung lewat WhatsApp."
+                description="Pilih buket sesuai harga. Klik produk untuk melihat detail, lalu pesan lewat formulir dan WhatsApp."
             />
             <Section flush aria-label="Daftar produk">
-                {site.isSampleData && (
-                    <Notice className="mb-6">
-                        Produk dan harga masih data contoh Sprint 1, belum harga
-                        resmi {site.name}.
-                    </Notice>
-                )}
                 <form
                     method="get"
                     action={catalog.url()}
@@ -99,7 +92,7 @@ export default function Catalog({
                                 name="q"
                                 defaultValue={filters.q ?? ''}
                                 maxLength={100}
-                                placeholder="Contoh: mawar"
+                                placeholder="Contoh: 75.000"
                             />
                         )}
                     </FormField>
