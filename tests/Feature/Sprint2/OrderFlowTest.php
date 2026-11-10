@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Category;
+use App\Enums\CustomRequestApproval;
 use App\Models\Customer;
 use App\Models\CustomRequest;
 use App\Models\Order;
@@ -24,7 +24,7 @@ function sprint2OrderPayload(array $overrides = []): array
     ], $overrides);
 }
 
-test('pengunjung memesan produk dari katalog sampai halaman konfirmasi', function () {
+test('pengunjung memesan produk dari katalog, tersimpan, lalu langsung ke WhatsApp', function () {
     $product = Product::factory()->create([
         'name' => 'Buket Mawar Merah',
         'slug' => 'buket-mawar-merah',
@@ -54,11 +54,13 @@ test('pengunjung memesan produk dari katalog sampai halaman konfirmasi', functio
         sprint2OrderPayload(['quantity' => 2]),
     );
 
-    $response->assertRedirectContains('/pesanan/AWF-');
+    $message = whatsappMessageFrom($response);
 
     $order = Order::sole();
 
-    $this->get($response->headers->get('Location'))
+    expect($message)->toContain($order->order_number);
+
+    $this->get(confirmationLinkFrom($message))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('public/order-confirmation')
@@ -70,34 +72,31 @@ test('pengunjung memesan produk dari katalog sampai halaman konfirmasi', functio
         );
 });
 
-test('permintaan buket custom tersimpan dan tampil di konfirmasi', function () {
+test('permintaan buket custom tersimpan menunggu persetujuan lalu langsung ke WhatsApp', function () {
     if (! Route::has('custom.store') || ! Route::has('custom.confirmation')) {
         $this->markTestSkipped('Menunggu US-15 (Prety) di-merge.');
     }
 
-    $category = Category::factory()->create([
-        'name' => 'Buket Bunga Segar',
-        'slug' => 'buket-bunga-segar',
-    ]);
-
     $response = $this->post(route('custom.store'), [
         'name' => 'Nabila',
         'phone' => '0812-3456-7890',
-        'bouquet_type' => $category->name,
+        'bouquet_type' => 'Wisuda',
         'budget' => 250000,
         'theme_color' => 'Biru pastel',
         'needed_at' => now()->addDays(5)->toDateString(),
         'notes' => 'Tema wisuda',
     ]);
 
-    $response->assertRedirectContains('/buket-custom/terkirim/CST-');
+    $message = whatsappMessageFrom($response);
 
     $customRequest = CustomRequest::sole();
 
     expect($customRequest->request_number)->toStartWith('CST-')
-        ->and($customRequest->customer->phone)->toBe('6281234567890');
+        ->and($customRequest->customer->phone)->toBe('6281234567890')
+        ->and($customRequest->approval_status)->toBe(CustomRequestApproval::Menunggu)
+        ->and($message)->toContain($customRequest->request_number);
 
-    $this->get($response->headers->get('Location'))
+    $this->get(confirmationLinkFrom($message))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('public/custom-confirmation')

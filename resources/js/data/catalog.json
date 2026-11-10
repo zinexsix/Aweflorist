@@ -1,0 +1,781 @@
+{
+    "_catatan": "Sumber data katalog AweFlorist (foto & harga dari Google Drive pemilik, 10 Nov 2026). Dipakai CatalogSeeder dan build statis. Ubah di sini, lalu jalankan php artisan db:seed --class=CatalogSeeder.",
+    "categories": [
+        {
+            "slug": "harga-di-bawah-50rb",
+            "name": "Di bawah Rp50.000",
+            "description": "Buket hemat Rp15.000 dan Rp35.000."
+        },
+        {
+            "slug": "harga-50rb-75rb",
+            "name": "Rp50.000 – Rp75.000",
+            "description": "Buket Rp50.000, Rp55.000, Rp70.000, dan Rp75.000."
+        },
+        {
+            "slug": "harga-80rb-100rb",
+            "name": "Rp80.000 – Rp100.000",
+            "description": "Buket Rp80.000, Rp90.000, dan Rp100.000."
+        },
+        {
+            "slug": "harga-di-atas-100rb",
+            "name": "Rp100.000 ke atas",
+            "description": "Buket pilihan mulai Rp100.000 sampai Rp150.000."
+        },
+        {
+            "slug": "harga-premium",
+            "name": "Premium (di bawah Rp350.000)",
+            "description": "Buket besar di bawah Rp350.000; harga pasti dikonfirmasi admin."
+        }
+    ],
+    "occasions": [
+        {
+            "slug": "wisuda",
+            "name": "Wisuda",
+            "description": "Hadiah untuk momen kelulusan."
+        },
+        {
+            "slug": "other-occasion",
+            "name": "Other Occasion",
+            "description": "Ulang tahun, anniversary, dan momen lainnya."
+        }
+    ],
+    "products": [
+        {
+            "slug": "buket-15rb-01",
+            "name": "Buket Rp15.000 · 01",
+            "category": "harga-di-bawah-50rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp15.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 15000,
+            "priceFrom": false,
+            "image": "/images/products/buket-15rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-35rb-01",
+            "name": "Buket Rp35.000 · 01",
+            "category": "harga-di-bawah-50rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp35.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 35000,
+            "priceFrom": false,
+            "image": "/images/products/buket-35rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-50rb-01",
+            "name": "Buket Rp50.000 · 01",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp50.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 50000,
+            "priceFrom": false,
+            "image": "/images/products/buket-50rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-50rb-02",
+            "name": "Buket Rp50.000 · 02",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp50.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 50000,
+            "priceFrom": false,
+            "image": "/images/products/buket-50rb-02.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-50rb-03",
+            "name": "Buket Rp50.000 · 03",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp50.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 50000,
+            "priceFrom": false,
+            "image": "/images/products/buket-50rb-03.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-50rb-04",
+            "name": "Buket Rp50.000 · 04",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp50.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 50000,
+            "priceFrom": false,
+            "image": "/images/products/buket-50rb-04.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-50rb-05",
+            "name": "Buket Rp50.000 · 05",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp50.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 50000,
+            "priceFrom": false,
+            "image": "/images/products/buket-50rb-05.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-50rb-06",
+            "name": "Buket Rp50.000 · 06",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp50.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 50000,
+            "priceFrom": false,
+            "image": "/images/products/buket-50rb-06.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-50rb-07",
+            "name": "Buket Rp50.000 · 07",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp50.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 50000,
+            "priceFrom": false,
+            "image": "/images/products/buket-50rb-07.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-50rb-08",
+            "name": "Buket Rp50.000 · 08",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp50.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 50000,
+            "priceFrom": false,
+            "image": "/images/products/buket-50rb-08.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-50rb-09",
+            "name": "Buket Rp50.000 · 09",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp50.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 50000,
+            "priceFrom": false,
+            "image": "/images/products/buket-50rb-09.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-50rb-10",
+            "name": "Buket Rp50.000 · 10",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp50.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 50000,
+            "priceFrom": false,
+            "image": "/images/products/buket-50rb-10.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-50rb-11",
+            "name": "Buket Rp50.000 · 11",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp50.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 50000,
+            "priceFrom": false,
+            "image": "/images/products/buket-50rb-11.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-55rb-01",
+            "name": "Buket Rp55.000 · 01",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp55.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 55000,
+            "priceFrom": false,
+            "image": "/images/products/buket-55rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-55rb-02",
+            "name": "Buket Rp55.000 · 02",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp55.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 55000,
+            "priceFrom": false,
+            "image": "/images/products/buket-55rb-02.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-55rb-03",
+            "name": "Buket Rp55.000 · 03",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp55.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 55000,
+            "priceFrom": false,
+            "image": "/images/products/buket-55rb-03.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-55rb-04",
+            "name": "Buket Rp55.000 · 04",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp55.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 55000,
+            "priceFrom": false,
+            "image": "/images/products/buket-55rb-04.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-55rb-05",
+            "name": "Buket Rp55.000 · 05",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp55.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 55000,
+            "priceFrom": false,
+            "image": "/images/products/buket-55rb-05.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-55rb-06",
+            "name": "Buket Rp55.000 · 06",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp55.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 55000,
+            "priceFrom": false,
+            "image": "/images/products/buket-55rb-06.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-70rb-01",
+            "name": "Buket Rp70.000 · 01",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp70.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 70000,
+            "priceFrom": false,
+            "image": "/images/products/buket-70rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-70rb-02",
+            "name": "Buket Rp70.000 · 02",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp70.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 70000,
+            "priceFrom": false,
+            "image": "/images/products/buket-70rb-02.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-70rb-03",
+            "name": "Buket Rp70.000 · 03",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp70.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 70000,
+            "priceFrom": false,
+            "image": "/images/products/buket-70rb-03.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-75rb-01",
+            "name": "Buket Rp75.000 · 01",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp75.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 75000,
+            "priceFrom": false,
+            "image": "/images/products/buket-75rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-75rb-02",
+            "name": "Buket Rp75.000 · 02",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp75.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 75000,
+            "priceFrom": false,
+            "image": "/images/products/buket-75rb-02.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-75rb-03",
+            "name": "Buket Rp75.000 · 03",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp75.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 75000,
+            "priceFrom": false,
+            "image": "/images/products/buket-75rb-03.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-75rb-04",
+            "name": "Buket Rp75.000 · 04",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp75.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 75000,
+            "priceFrom": false,
+            "image": "/images/products/buket-75rb-04.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-75rb-05",
+            "name": "Buket Rp75.000 · 05",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp75.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 75000,
+            "priceFrom": false,
+            "image": "/images/products/buket-75rb-05.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-75rb-06",
+            "name": "Buket Rp75.000 · 06",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp75.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 75000,
+            "priceFrom": false,
+            "image": "/images/products/buket-75rb-06.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-75rb-07",
+            "name": "Buket Rp75.000 · 07",
+            "category": "harga-50rb-75rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp75.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 75000,
+            "priceFrom": false,
+            "image": "/images/products/buket-75rb-07.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-80rb-01",
+            "name": "Buket Rp80.000 · 01",
+            "category": "harga-80rb-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp80.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 80000,
+            "priceFrom": false,
+            "image": "/images/products/buket-80rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-80rb-02",
+            "name": "Buket Rp80.000 · 02",
+            "category": "harga-80rb-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp80.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 80000,
+            "priceFrom": false,
+            "image": "/images/products/buket-80rb-02.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-90rb-01",
+            "name": "Buket Rp90.000 · 01",
+            "category": "harga-80rb-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp90.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 90000,
+            "priceFrom": false,
+            "image": "/images/products/buket-90rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-90rb-02",
+            "name": "Buket Rp90.000 · 02",
+            "category": "harga-80rb-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp90.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 90000,
+            "priceFrom": false,
+            "image": "/images/products/buket-90rb-02.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-90rb-03",
+            "name": "Buket Rp90.000 · 03",
+            "category": "harga-80rb-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp90.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 90000,
+            "priceFrom": false,
+            "image": "/images/products/buket-90rb-03.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-100rb-01",
+            "name": "Buket Rp100.000 · 01",
+            "category": "harga-80rb-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp100.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": false,
+            "image": "/images/products/buket-100rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-100rb-02",
+            "name": "Buket Rp100.000 · 02",
+            "category": "harga-80rb-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp100.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": false,
+            "image": "/images/products/buket-100rb-02.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-mulai-100rb-01",
+            "name": "Buket Pilihan Rp100.000+ · 01",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": true,
+            "image": "/images/products/buket-mulai-100rb-01.webp",
+            "featured": true
+        },
+        {
+            "slug": "buket-mulai-100rb-02",
+            "name": "Buket Pilihan Rp100.000+ · 02",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": true,
+            "image": "/images/products/buket-mulai-100rb-02.webp",
+            "featured": true
+        },
+        {
+            "slug": "buket-mulai-100rb-03",
+            "name": "Buket Pilihan Rp100.000+ · 03",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": true,
+            "image": "/images/products/buket-mulai-100rb-03.webp",
+            "featured": true
+        },
+        {
+            "slug": "buket-mulai-100rb-04",
+            "name": "Buket Pilihan Rp100.000+ · 04",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": true,
+            "image": "/images/products/buket-mulai-100rb-04.webp",
+            "featured": true
+        },
+        {
+            "slug": "buket-mulai-100rb-05",
+            "name": "Buket Pilihan Rp100.000+ · 05",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": true,
+            "image": "/images/products/buket-mulai-100rb-05.webp",
+            "featured": true
+        },
+        {
+            "slug": "buket-mulai-100rb-06",
+            "name": "Buket Pilihan Rp100.000+ · 06",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": true,
+            "image": "/images/products/buket-mulai-100rb-06.webp",
+            "featured": true
+        },
+        {
+            "slug": "buket-mulai-100rb-07",
+            "name": "Buket Pilihan Rp100.000+ · 07",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": true,
+            "image": "/images/products/buket-mulai-100rb-07.webp",
+            "featured": true
+        },
+        {
+            "slug": "buket-mulai-100rb-08",
+            "name": "Buket Pilihan Rp100.000+ · 08",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": true,
+            "image": "/images/products/buket-mulai-100rb-08.webp",
+            "featured": true
+        },
+        {
+            "slug": "buket-mulai-100rb-09",
+            "name": "Buket Pilihan Rp100.000+ · 09",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": true,
+            "image": "/images/products/buket-mulai-100rb-09.webp",
+            "featured": true
+        },
+        {
+            "slug": "buket-mulai-100rb-10",
+            "name": "Buket Pilihan Rp100.000+ · 10",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 100000,
+            "priceFrom": true,
+            "image": "/images/products/buket-mulai-100rb-10.webp",
+            "featured": true
+        },
+        {
+            "slug": "buket-110rb-01",
+            "name": "Buket Rp110.000 · 01",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp110.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 110000,
+            "priceFrom": false,
+            "image": "/images/products/buket-110rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-110rb-02",
+            "name": "Buket Rp110.000 · 02",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp110.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 110000,
+            "priceFrom": false,
+            "image": "/images/products/buket-110rb-02.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-110rb-03",
+            "name": "Buket Rp110.000 · 03",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp110.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 110000,
+            "priceFrom": false,
+            "image": "/images/products/buket-110rb-03.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-120rb-01",
+            "name": "Buket Rp120.000 · 01",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp120.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 120000,
+            "priceFrom": false,
+            "image": "/images/products/buket-120rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-120rb-02",
+            "name": "Buket Rp120.000 · 02",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp120.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 120000,
+            "priceFrom": false,
+            "image": "/images/products/buket-120rb-02.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-125rb-01",
+            "name": "Buket Rp125.000 · 01",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp125.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 125000,
+            "priceFrom": false,
+            "image": "/images/products/buket-125rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-150rb-01",
+            "name": "Buket Rp150.000 · 01",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp150.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 150000,
+            "priceFrom": false,
+            "image": "/images/products/buket-150rb-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-150rb-02",
+            "name": "Buket Rp150.000 · 02",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp150.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 150000,
+            "priceFrom": false,
+            "image": "/images/products/buket-150rb-02.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-150rb-03",
+            "name": "Buket Rp150.000 · 03",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp150.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 150000,
+            "priceFrom": false,
+            "image": "/images/products/buket-150rb-03.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-150rb-04",
+            "name": "Buket Rp150.000 · 04",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp150.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 150000,
+            "priceFrom": false,
+            "image": "/images/products/buket-150rb-04.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-150rb-05",
+            "name": "Buket Rp150.000 · 05",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp150.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 150000,
+            "priceFrom": false,
+            "image": "/images/products/buket-150rb-05.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-150rb-06",
+            "name": "Buket Rp150.000 · 06",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp150.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 150000,
+            "priceFrom": false,
+            "image": "/images/products/buket-150rb-06.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-150rb-07",
+            "name": "Buket Rp150.000 · 07",
+            "category": "harga-di-atas-100rb",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket seharga Rp150.000 seperti pada foto. Ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": 150000,
+            "priceFrom": false,
+            "image": "/images/products/buket-150rb-07.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-premium-01",
+            "name": "Buket Premium · 01",
+            "category": "harga-premium",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket premium seperti pada foto, harga di bawah Rp350.000. Harga pasti dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": null,
+            "priceFrom": false,
+            "image": "/images/products/buket-premium-01.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-premium-02",
+            "name": "Buket Premium · 02",
+            "category": "harga-premium",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket premium seperti pada foto, harga di bawah Rp350.000. Harga pasti dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": null,
+            "priceFrom": false,
+            "image": "/images/products/buket-premium-02.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-premium-03",
+            "name": "Buket Premium · 03",
+            "category": "harga-premium",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket premium seperti pada foto, harga di bawah Rp350.000. Harga pasti dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": null,
+            "priceFrom": false,
+            "image": "/images/products/buket-premium-03.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-premium-04",
+            "name": "Buket Premium · 04",
+            "category": "harga-premium",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket premium seperti pada foto, harga di bawah Rp350.000. Harga pasti dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": null,
+            "priceFrom": false,
+            "image": "/images/products/buket-premium-04.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-premium-05",
+            "name": "Buket Premium · 05",
+            "category": "harga-premium",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket premium seperti pada foto, harga di bawah Rp350.000. Harga pasti dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": null,
+            "priceFrom": false,
+            "image": "/images/products/buket-premium-05.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-premium-06",
+            "name": "Buket Premium · 06",
+            "category": "harga-premium",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket premium seperti pada foto, harga di bawah Rp350.000. Harga pasti dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": null,
+            "priceFrom": false,
+            "image": "/images/products/buket-premium-06.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-premium-07",
+            "name": "Buket Premium · 07",
+            "category": "harga-premium",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket premium seperti pada foto, harga di bawah Rp350.000. Harga pasti dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": null,
+            "priceFrom": false,
+            "image": "/images/products/buket-premium-07.webp",
+            "featured": false
+        },
+        {
+            "slug": "buket-premium-08",
+            "name": "Buket Premium · 08",
+            "category": "harga-premium",
+            "occasions": ["wisuda", "other-occasion"],
+            "description": "Buket premium seperti pada foto, harga di bawah Rp350.000. Harga pasti dan ketersediaan dikonfirmasi admin lewat WhatsApp.",
+            "price": null,
+            "priceFrom": false,
+            "image": "/images/products/buket-premium-08.webp",
+            "featured": false
+        }
+    ]
+}

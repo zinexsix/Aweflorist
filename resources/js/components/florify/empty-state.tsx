@@ -36,7 +36,7 @@ export function EmptyState({
     );
 }
 
-/** Catatan kecil di atas daftar produk selama data masih contoh (site.isSampleData). */
+/** Catatan kecil berwarna kuning untuk informasi penting. */
 export function Notice({
     children,
     className,

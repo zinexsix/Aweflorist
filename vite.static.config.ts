@@ -60,11 +60,10 @@ export default defineConfig({
                 ),
             },
             {
-                find: /^@\/routes\/catalog$/,
-                replacement: resolve(
-                    import.meta.dirname,
-                    'resources/js/static/routes/catalog.ts',
-                ),
+                // @/routes/<nama> -> resources/js/static/routes/<nama>.ts
+                // Rute publik baru cukup ditambah sebagai file shim di folder itu.
+                find: /^@\/routes\/(.+)$/,
+                replacement: `${resolve(import.meta.dirname, 'resources/js/static/routes')}/$1.ts`,
             },
             {
                 find: '@',

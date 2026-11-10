@@ -6,10 +6,10 @@ use App\Actions\PlaceOrder;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Public\StoreOrderRequest;
 use App\Models\Product;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\URL;
+use App\Support\WhatsApp;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
  * Halaman formulir dan penyimpanan pesanan produk (US-12, US-13).
@@ -32,14 +32,15 @@ class OrderController extends Controller
     }
 
     /**
-     * Simpan pesanan lalu arahkan ke halaman konfirmasi bertanda tangan.
+     * Simpan pesanan ke database, lalu langsung buka WhatsApp admin dengan
+     * pesan berisi nomor pesanan dan tautan halaman konfirmasi.
      */
-    public function store(StoreOrderRequest $request, Product $product, PlaceOrder $placeOrder): RedirectResponse
+    public function store(StoreOrderRequest $request, Product $product, PlaceOrder $placeOrder): SymfonyResponse
     {
         abort_unless($product->is_active, 404);
 
         $order = $placeOrder->handle($product, $request->validated());
 
-        return redirect()->to(URL::signedRoute('orders.confirmation', $order));
+        return Inertia::location(WhatsApp::url(WhatsApp::orderMessage($order)));
     }
 }

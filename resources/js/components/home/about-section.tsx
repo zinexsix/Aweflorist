@@ -1,3 +1,4 @@
+import { LocationMap, mapsQuery } from '@/components/florify/location-map';
 import { ProductImage } from '@/components/florify/product-image';
 import { Eyebrow, Section } from '@/components/florify/section';
 import { site } from '@/config/site';
@@ -5,11 +6,11 @@ import { site } from '@/config/site';
 const highlights = [
     {
         title: 'Beragam pilihan',
-        description: 'Buket bunga segar, buket uang, satu tangkai, dan custom.',
+        description: 'Buket mulai Rp15.000 hingga premium, juga buket custom.',
     },
     {
         title: 'Untuk setiap acara',
-        description: 'Wisuda, ulang tahun, anniversary, dan momen lainnya.',
+        description: 'Wisuda dan momen lainnya (other occasion).',
     },
     {
         title: 'Komunikasi mudah',
@@ -20,6 +21,7 @@ const highlights = [
 /**
  * Pemilik: Prety. US-02 — profil singkat AweFlorist.
  * Isi cerita/tahun berdiri/lokasi hanya setelah dikonfirmasi Product Owner.
+ * Peta Google Maps tampil otomatis setelah alamat diisi di config/site.ts.
  */
 export function AboutSection() {
     return (
@@ -63,6 +65,14 @@ export function AboutSection() {
                     </ul>
                 </div>
             </div>
+            {mapsQuery() && (
+                <div className="mt-10 flex flex-col gap-4 lg:mt-14">
+                    <h3 className="font-display text-h3 text-brand-900">
+                        Kunjungi toko kami
+                    </h3>
+                    <LocationMap />
+                </div>
+            )}
         </Section>
     );
 }

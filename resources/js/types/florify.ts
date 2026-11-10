@@ -29,7 +29,7 @@ export type Product = {
     price: number | null;
     /** Tampilkan "Mulai dari" sebelum harga. */
     priceFrom?: boolean;
-    /** Path dari folder public, mis. '/images/products/buket-mawar-merah-01.webp'. `null` = pakai placeholder. */
+    /** Path dari folder public, mis. '/images/products/buket-50rb-01.webp'. `null` = pakai placeholder. */
     image: string | null;
     featured?: boolean;
 };
@@ -66,4 +66,20 @@ export type OrderSummary = {
     totalAmount: number | null;
     /** ISO 8601. */
     createdAt: string;
+};
+
+export type CustomRequestSummary = {
+    requestNumber: string;
+    customerName: string;
+    bouquetType: string;
+    budget: number;
+    themeColor: string;
+    /** Tanggal dibutuhkan, format YYYY-MM-DD. */
+    neededAt: string;
+    notes: string | null;
+    referenceProductName: string | null;
+    hasReferenceImage: boolean;
+    statusLabel: string;
+    /** Persetujuan admin (custom_requests.approval_status). */
+    approvalLabel: string;
 };

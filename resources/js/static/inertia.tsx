@@ -4,7 +4,7 @@ import { site } from '@/config/site';
 
 /**
  * Pengganti kecil `@inertiajs/react` untuk build statis (Vercel), tanpa server Laravel.
- * Hanya menyediakan yang dipakai halaman publik: Link, Head, usePage, router.on('navigate').
+ * Hanya menyediakan yang dipakai halaman publik: Link, Head, Form, usePage, router.on('navigate').
  * Dipasang lewat alias di vite.static.config.ts; build Laravel biasa tidak terpengaruh.
  */
 
@@ -140,4 +140,58 @@ export function Link({
     };
 
     return <a href={url} onClick={handleClick} {...props} />;
+}
+
+type FormRenderProps = {
+    processing: boolean;
+    errors: Record<string, string>;
+};
+
+type FormProps = Omit<
+    React.FormHTMLAttributes<HTMLFormElement>,
+    'action' | 'method' | 'children'
+> & {
+    action: string;
+    method?: string;
+    children: React.ReactNode | ((props: FormRenderProps) => React.ReactNode);
+    // Prop khusus Inertia diterima agar kode halaman tidak perlu diubah, tapi diabaikan.
+    resetOnSuccess?: unknown;
+    resetOnError?: unknown;
+    options?: unknown;
+};
+
+/**
+ * Formulir tetap tampil di versi statis, tapi tidak bisa dikirim karena tidak ada
+ * server untuk memvalidasi dan menyimpan data.
+ */
+export function Form({
+    action,
+    method = 'get',
+    children,
+    onSubmit,
+    resetOnSuccess: _resetOnSuccess,
+    resetOnError: _resetOnError,
+    options: _options,
+    ...props
+}: FormProps) {
+    const handleSubmit: React.SubmitEventHandler<HTMLFormElement> = (event) => {
+        onSubmit?.(event);
+        event.preventDefault();
+        window.alert(
+            'Ini versi demo statis. Formulir hanya bisa dikirim di versi Laravel (dengan server).',
+        );
+    };
+
+    return (
+        <form
+            action={action}
+            method={method.toLowerCase() === 'get' ? 'get' : 'post'}
+            onSubmit={handleSubmit}
+            {...props}
+        >
+            {typeof children === 'function'
+                ? children({ processing: false, errors: {} })
+                : children}
+        </form>
+    );
 }

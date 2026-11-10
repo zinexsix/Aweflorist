@@ -1,0 +1,53 @@
+# Database lokal untuk pengembangan Florify (MySQL 8, sama seperti produksi).
+# Jalankan:   docker compose up -d
+# Hentikan:   docker compose stop
+# phpMyAdmin: http://localhost:8788 (login memakai DB_USERNAME / DB_PASSWORD di .env)
+#
+# Kata sandi di bawah hanya untuk laptop masing-masing, bukan untuk server.
+
+services:
+    mysql:
+        image: mysql:8.0
+        container_name: aweflorist-mysql
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: aweflorist
+            MYSQL_USER: aweflorist
+            MYSQL_PASSWORD: aweflorist
+            MYSQL_ROOT_PASSWORD: aweflorist-root
+            TZ: Asia/Jakarta
+        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        ports:
+            - '3307:3306'
+        volumes:
+            - aweflorist-mysql:/var/lib/mysql
+            - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+        healthcheck:
+            test:
+                [
+                    'CMD',
+                    'mysqladmin',
+                    'ping',
+                    '-h',
+                    'localhost',
+                    '-uaweflorist',
+                    '-paweflorist',
+                ]
+            interval: 5s
+            timeout: 5s
+            retries: 20
+
+    phpmyadmin:
+        image: phpmyadmin:latest
+        container_name: aweflorist-phpmyadmin
+        restart: unless-stopped
+        environment:
+            PMA_HOST: mysql
+        ports:
+            - '8788:80'
+        depends_on:
+            mysql:
+                condition: service_healthy
+
+volumes:
+    aweflorist-mysql:

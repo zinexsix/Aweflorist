@@ -16,14 +16,14 @@ export function PromoSection() {
             <PromoBanner
                 eyebrow="Siap untuk momen spesial"
                 title="Punya ide buket sendiri? Kami bantu wujudkan"
-                description="Ceritakan acara, warna favorit, dan anggaran Anda. Admin akan membantu memilih rangkaian yang paling sesuai."
+                description="Pilih acara (wisuda atau other occasion), warna favorit, dan anggaran Anda. Permintaan tersimpan dan langsung diteruskan ke WhatsApp admin untuk disetujui."
                 action={
                     <BrandButton asChild variant="inverse" size="lg">
                         <Link href={custom()}>Pesan Buket Custom</Link>
                     </BrandButton>
                 }
                 aside={
-                    <ul className="grid grid-cols-3 gap-3">
+                    <ul className="grid grid-cols-2 gap-3">
                         {occasions.map((occasion) => (
                             <li
                                 key={occasion.slug}

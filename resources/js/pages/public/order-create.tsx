@@ -39,7 +39,7 @@ export default function OrderCreate({ product }: { product: Product }) {
                     { label: 'Pesan' },
                 ]}
                 title="Formulir Pemesanan"
-                description="Lengkapi data di bawah ini. Admin akan mengonfirmasi ketersediaan dan harga lewat WhatsApp."
+                description="Lengkapi data di bawah ini. Setelah dikirim, pesanan tersimpan dan WhatsApp admin terbuka otomatis dengan nomor pesanan Anda."
             />
             <Section flush aria-label="Formulir pemesanan">
                 <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
@@ -158,12 +158,15 @@ export default function OrderCreate({ product }: { product: Product }) {
                                     disabled={processing}
                                     className="w-full sm:w-auto sm:self-start"
                                 >
-                                    {processing ? 'Mengirim…' : 'Kirim Pesanan'}
+                                    {processing
+                                        ? 'Mengirim…'
+                                        : 'Kirim & Lanjut ke WhatsApp'}
                                 </BrandButton>
 
                                 <Notice>
-                                    Pesanan baru dianggap pasti setelah admin
-                                    mengonfirmasi detail dan harga.
+                                    Setelah WhatsApp terbuka, tekan Kirim agar
+                                    admin menerima pesanan Anda. Pesanan pasti
+                                    setelah admin mengonfirmasi.
                                 </Notice>
                             </>
                         )}

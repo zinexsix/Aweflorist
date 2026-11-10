@@ -58,7 +58,7 @@ export default function OrderConfirmation({ order }: { order: OrderSummary }) {
                                 Nomor pesanan
                             </p>
                             <div className="mt-3 flex flex-wrap items-center gap-3">
-                                <p className="font-display text-[2rem] leading-tight break-all text-brand-900 md:text-[2.5rem]">
+                                <p className="font-display text-[clamp(1.5rem,7vw,2.5rem)] leading-tight break-words text-brand-900">
                                     {order.orderNumber}
                                 </p>
                                 <BrandButton

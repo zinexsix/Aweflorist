@@ -18,11 +18,11 @@ test('catalog page is accessible without login', function () {
 test('product detail page receives the product', function () {
     $this->seed(CatalogSeeder::class);
 
-    $this->get(route('catalog.show', 'buket-mawar-merah'))
+    $this->get(route('catalog.show', 'buket-50rb-01'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('public/product-detail')
-            ->where('product.slug', 'buket-mawar-merah'));
+            ->where('product.slug', 'buket-50rb-01'));
 });
 
 test('product detail rejects invalid slugs', function () {
