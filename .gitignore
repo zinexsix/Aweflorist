@@ -43,3 +43,6 @@ yarn-error.log
 /boost.json
 /opencode.json
 /opencode.jsonc
+
+# Mockup HTML punya repo Git sendiri (qifor27/florify-design); jangan ikut di-commit.
+/doc/florify-html/
