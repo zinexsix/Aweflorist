@@ -19,6 +19,7 @@ function todayIso(): string {
  * Formulir permintaan buket custom (PRD 3.2, FR-19/FR-20, US-15).
  * Dikirim ke server (CustomRequestController@store), divalidasi
  * StoreCustomRequestRequest, lalu diarahkan ke halaman konfirmasi.
+ * Gambar referensi opsional (US-16) ikut terkirim sebagai multipart.
  */
 export function CustomBouquetForm({
     bouquetTypes,
@@ -165,6 +166,22 @@ export function CustomBouquetForm({
                                 rows={4}
                                 maxLength={500}
                                 placeholder="Jenis bunga favorit, ucapan di kartu, dan permintaan lain"
+                            />
+                        )}
+                    </FormField>
+
+                    <FormField
+                        label="Gambar referensi"
+                        hint="JPG, PNG, atau WEBP, maksimal 2 MB."
+                        error={errors.reference_image}
+                    >
+                        {(field) => (
+                            <input
+                                {...field}
+                                type="file"
+                                name="reference_image"
+                                accept="image/jpeg,image/png,image/webp"
+                                className={`${field.className} file:mr-3 file:rounded-full file:border-0 file:bg-brand-100 file:px-4 file:py-1.5 file:text-sm file:font-semibold file:text-brand-700`}
                             />
                         )}
                     </FormField>
