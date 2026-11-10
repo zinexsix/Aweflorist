@@ -50,6 +50,8 @@ class StoreCustomRequestRequest extends FormRequest
                 'string',
                 Rule::exists('products', 'slug')->where('is_active', true),
             ],
+            // Batas 2 MB masih usulan; konfirmasi PO di doc/sprint-2/uji-penerimaan.md (PRD §15 no.6).
+            'reference_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 
@@ -82,6 +84,10 @@ class StoreCustomRequestRequest extends FormRequest
             'notes.max' => 'Catatan maksimal 500 huruf.',
             'product.string' => 'Model acuan tidak valid.',
             'product.exists' => 'Model acuan tidak ditemukan atau sudah tidak tersedia.',
+            'reference_image.image' => 'Gambar referensi harus berupa file gambar.',
+            'reference_image.mimes' => 'Gambar referensi harus berformat JPG, PNG, atau WEBP.',
+            'reference_image.max' => 'Ukuran gambar referensi maksimal 2 MB.',
+            'reference_image.uploaded' => 'Gambar referensi gagal diunggah. Coba file yang lebih kecil.',
         ];
     }
 
@@ -99,6 +105,7 @@ class StoreCustomRequestRequest extends FormRequest
             'needed_at' => 'tanggal dibutuhkan',
             'notes' => 'catatan',
             'product' => 'model acuan',
+            'reference_image' => 'gambar referensi',
         ];
     }
 }

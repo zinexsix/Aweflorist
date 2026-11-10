@@ -14,9 +14,11 @@ use DateTimeInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 use Inertia\Response;
+use Throwable;
 
 /**
  * Permintaan buket custom (US-15): formulir, penyimpanan, dan konfirmasi.
@@ -50,7 +52,30 @@ class CustomRequestController extends Controller
     {
         $data = $request->validated();
 
-        $customRequest = DB::transaction(function () use ($data): CustomRequest {
+        // Nama file dibuat acak oleh Laravel, bukan memakai nama asli dari pelanggan (US-16).
+        $imagePath = $request->file('reference_image')?->store('custom-references', 'public') ?: null;
+
+        try {
+            $customRequest = $this->saveRequest($data, $imagePath);
+        } catch (Throwable $exception) {
+            if ($imagePath !== null) {
+                Storage::disk('public')->delete($imagePath);
+            }
+
+            throw $exception;
+        }
+
+        return redirect()->to(URL::signedRoute('custom.confirmation', $customRequest));
+    }
+
+    /**
+     * Simpan customer dan permintaan dalam satu transaksi.
+     *
+     * @param  array<string, mixed>  $data
+     */
+    private function saveRequest(array $data, ?string $imagePath): CustomRequest
+    {
+        return DB::transaction(function () use ($data, $imagePath): CustomRequest {
             // Nomor yang sama memakai customer yang sudah ada; nama lama tidak ditimpa.
             $customer = Customer::query()->firstOrCreate(
                 ['phone' => Customer::normalizePhone((string) $data['phone'])],
@@ -69,12 +94,11 @@ class CustomRequestController extends Controller
                 'theme_color' => (string) $data['theme_color'],
                 'bouquet_type' => (string) $data['bouquet_type'],
                 'needed_at' => (string) $data['needed_at'],
+                'reference_image_path' => $imagePath,
                 'notes' => $data['notes'] ?? null,
                 'status' => CustomRequestStatus::Baru,
             ]);
         });
-
-        return redirect()->to(URL::signedRoute('custom.confirmation', $customRequest));
     }
 
     /**
