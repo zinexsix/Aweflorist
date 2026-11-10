@@ -12,6 +12,7 @@ import Catalog from '@/pages/public/catalog';
 import CustomBouquet from '@/pages/public/custom-bouquet';
 import Home from '@/pages/public/home';
 import Info from '@/pages/public/info';
+import OrderCreate from '@/pages/public/order-create';
 import ProductDetail from '@/pages/public/product-detail';
 import { Head, Link, useUrl } from './inertia';
 
@@ -84,11 +85,23 @@ function productPage(slug: string): React.ReactNode {
     return <ProductDetail product={product} related={related} />;
 }
 
+function orderPage(slug: string): React.ReactNode {
+    const product = findProduct(slug);
+
+    return product ? <OrderCreate product={product} /> : <NotFound />;
+}
+
 function resolvePage(path: string, params: URLSearchParams): React.ReactNode {
     const productSlug = path.match(/^\/katalog\/([a-z0-9-]+)$/)?.[1];
 
     if (productSlug) {
         return productPage(productSlug);
+    }
+
+    const orderSlug = path.match(/^\/pesan\/([a-z0-9-]+)$/)?.[1];
+
+    if (orderSlug) {
+        return orderPage(orderSlug);
     }
 
     switch (path) {
