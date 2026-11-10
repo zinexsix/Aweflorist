@@ -13,6 +13,21 @@ jobs:
   ci:
     runs-on: ubuntu-latest
 
+    # Sama dengan compose.yaml: .env.example memakai MySQL di port 3307.
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: aweflorist
+          MYSQL_USER: aweflorist
+          MYSQL_PASSWORD: aweflorist
+          MYSQL_ROOT_PASSWORD: aweflorist-root
+        ports:
+          - 3307:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uaweflorist -paweflorist"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
