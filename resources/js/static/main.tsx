@@ -85,6 +85,27 @@ function productPage(slug: string): React.ReactNode {
     return <ProductDetail product={product} related={related} />;
 }
 
+function customPage(params: URLSearchParams): React.ReactNode {
+    const reference = findProduct(params.get('produk') ?? '');
+    const bouquetTypes = [
+        ...categories
+            .filter((category) => category.slug !== 'buket-custom')
+            .map((category) => category.name),
+        'Lainnya (jelaskan di catatan)',
+    ];
+
+    return (
+        <CustomBouquet
+            bouquetTypes={bouquetTypes}
+            reference={
+                reference
+                    ? { slug: reference.slug, name: reference.name }
+                    : null
+            }
+        />
+    );
+}
+
 function orderPage(slug: string): React.ReactNode {
     const product = findProduct(slug);
 
@@ -110,7 +131,7 @@ function resolvePage(path: string, params: URLSearchParams): React.ReactNode {
         case '/katalog':
             return catalogPage(params);
         case '/buket-custom':
-            return <CustomBouquet />;
+            return customPage(params);
         case '/informasi':
             return <Info />;
         default:

@@ -67,3 +67,17 @@ export type OrderSummary = {
     /** ISO 8601. */
     createdAt: string;
 };
+
+export type CustomRequestSummary = {
+    requestNumber: string;
+    customerName: string;
+    bouquetType: string;
+    budget: number;
+    themeColor: string;
+    /** Tanggal dibutuhkan, format YYYY-MM-DD. */
+    neededAt: string;
+    notes: string | null;
+    referenceProductName: string | null;
+    hasReferenceImage: boolean;
+    statusLabel: string;
+};
