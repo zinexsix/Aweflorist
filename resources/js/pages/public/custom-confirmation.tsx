@@ -53,6 +53,7 @@ export default function CustomConfirmation({
             value: formatIndoDate(customRequest.neededAt),
         },
         { label: 'Status', value: customRequest.statusLabel },
+        { label: 'Persetujuan', value: customRequest.approvalLabel },
         ...(customRequest.hasReferenceImage
             ? [{ label: 'Gambar referensi', value: 'Terlampir' }]
             : []),

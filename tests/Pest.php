@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 /*
@@ -44,7 +45,29 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/**
+ * Pesanan/permintaan custom yang tersimpan langsung diarahkan ke wa.me.
+ * Kembalikan isi pesan WhatsApp dari header Location.
+ */
+function whatsappMessageFrom(TestResponse $response): string
 {
-    // ..
+    $location = (string) $response->headers->get('Location');
+
+    expect($location)->toStartWith('https://wa.me/');
+
+    parse_str((string) parse_url($location, PHP_URL_QUERY), $query);
+
+    return (string) ($query['text'] ?? '');
+}
+
+/**
+ * Tautan halaman konfirmasi bertanda tangan yang ikut di pesan WhatsApp.
+ */
+function confirmationLinkFrom(string $message): string
+{
+    preg_match('/^Detail (?:pesanan|permintaan): (\S+)$/m', $message, $match);
+
+    expect($match)->toHaveKey(1);
+
+    return $match[1];
 }

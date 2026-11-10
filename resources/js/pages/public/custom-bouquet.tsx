@@ -26,7 +26,7 @@ export default function CustomBouquet({
                     { label: 'Buket Custom' },
                 ]}
                 title="Pesan Buket Custom"
-                description="Ceritakan buket yang Anda inginkan. Permintaan Anda tersimpan dengan nomor sendiri, lalu admin AweFlorist menghubungi Anda untuk mengonfirmasi detail dan harga."
+                description="Ceritakan buket yang Anda inginkan. Permintaan tersimpan dengan nomor sendiri, lalu WhatsApp admin AweFlorist terbuka otomatis untuk persetujuan."
             />
             <Section flush aria-label="Formulir buket custom">
                 <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-14">
@@ -55,22 +55,24 @@ export default function CustomBouquet({
                             Bagaimana prosesnya?
                         </h2>
                         <ol className="flex list-decimal flex-col gap-2 pl-5 text-[0.9375rem] leading-relaxed text-ink-muted marker:font-semibold marker:text-brand-700">
-                            <li>Isi formulir buket custom.</li>
                             <li>
-                                Anda mendapat nomor permintaan (awalan CST).
+                                Isi formulir: acara (wisuda atau other
+                                occasion), warna, dan anggaran.
                             </li>
                             <li>
-                                Admin menghubungi Anda lewat WhatsApp untuk
-                                membahas detail dan harga.
+                                Permintaan tersimpan dengan nomor CST dan
+                                WhatsApp admin terbuka otomatis. Tekan Kirim di
+                                WhatsApp.
                             </li>
                             <li>
-                                Buket disiapkan setelah detail dan harga
-                                disepakati.
+                                Admin membahas detail dan harga, lalu menyetujui
+                                permintaan Anda.
                             </li>
+                            <li>Buket disiapkan setelah disetujui.</li>
                         </ol>
                         <Notice>
-                            Permintaan custom belum dianggap pesanan final
-                            sebelum Anda dan admin menyepakati detail dan harga.
+                            Permintaan custom berstatus menunggu persetujuan
+                            sampai admin menyetujui detail dan harga.
                         </Notice>
                     </aside>
                 </div>

@@ -2,29 +2,22 @@
 
 namespace App\Support;
 
-use App\Models\Category;
-
 /**
  * Pilihan "jenis buket" di formulir buket custom (US-15).
+ * Sesuai keputusan pemilik (11 Nov 2026): cukup Wisuda dan Other Occasion.
  * Dipakai bersama oleh halaman formulir dan validasi supaya isinya selalu sama.
  */
 class BouquetTypes
 {
-    public const OTHER = 'Lainnya (jelaskan di catatan)';
+    public const WISUDA = 'Wisuda';
+
+    public const OTHER = 'Other Occasion';
 
     /**
-     * Nama kategori dari database (kecuali "Buket Custom") ditambah pilihan "Lainnya".
-     *
      * @return list<string>
      */
     public static function all(): array
     {
-        $names = Category::query()
-            ->where('slug', '!=', 'buket-custom')
-            ->orderBy('id')
-            ->pluck('name')
-            ->all();
-
-        return [...array_values($names), self::OTHER];
+        return [self::WISUDA, self::OTHER];
     }
 }

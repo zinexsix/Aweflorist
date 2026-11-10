@@ -38,7 +38,7 @@ function suciOrderPayload(array $overrides = []): array
     ], $overrides);
 }
 
-test('data valid menyimpan customer, pesanan, dan item lalu mengarah ke konfirmasi', function () {
+test('data valid menyimpan customer, pesanan, dan item lalu langsung ke WhatsApp', function () {
     $product = Product::factory()->create([
         'name' => 'Buket Mawar Merah',
         'price' => 150000,
@@ -49,7 +49,7 @@ test('data valid menyimpan customer, pesanan, dan item lalu mengarah ke konfirma
         'notes' => 'Tolong tulis: Selamat wisuda',
     ]));
 
-    $response->assertRedirectContains('/pesanan/AWF-');
+    $message = whatsappMessageFrom($response);
 
     expect(Customer::count())->toBe(1)
         ->and(Order::count())->toBe(1)
@@ -69,6 +69,40 @@ test('data valid menyimpan customer, pesanan, dan item lalu mengarah ke konfirma
         ->and((float) $item->unit_price_snapshot)->toBe(150000.0)
         ->and($item->quantity)->toBe(2)
         ->and((float) $item->subtotal)->toBe(300000.0);
+
+    expect($message)->toContain('nomor *'.$order->order_number.'*')
+        ->toContain('• Nama: Suci')
+        ->toContain('• Produk: Buket Mawar Merah × 2 (Rp300.000)')
+        ->toContain('• Catatan: Tolong tulis: Selamat wisuda')
+        ->toContain('• Total: Rp300.000')
+        ->toContain('/pesanan/'.$order->order_number.'?signature=');
+});
+
+test('pesanan dikirim ke nomor WhatsApp admin dari konfigurasi', function () {
+    config(['florify.whatsapp_number' => '6281111111111']);
+    $product = Product::factory()->create();
+
+    $response = $this->post(route('orders.store', $product->slug), suciOrderPayload());
+
+    expect($response->headers->get('Location'))->toStartWith('https://wa.me/6281111111111?text=');
+});
+
+test('permintaan Inertia diarahkan ke WhatsApp lewat header X-Inertia-Location', function () {
+    $product = Product::factory()->create();
+
+    $this->post(route('orders.store', $product->slug), suciOrderPayload(), ['X-Inertia' => 'true'])
+        ->assertStatus(409)
+        ->assertHeader('X-Inertia-Location');
+
+    expect(Order::count())->toBe(1);
+});
+
+test('produk harga mulai ditandai di pesan WhatsApp', function () {
+    $product = Product::factory()->create(['price' => 100000, 'price_from' => true]);
+
+    $message = whatsappMessageFrom($this->post(route('orders.store', $product->slug), suciOrderPayload()));
+
+    expect($message)->toContain('• Total: mulai Rp100.000 (dikonfirmasi admin)');
 });
 
 test('data tidak valid kembali ke formulir dengan galat Bahasa Indonesia', function () {

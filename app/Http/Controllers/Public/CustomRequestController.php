@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Public;
 
+use App\Enums\CustomRequestApproval;
 use App\Enums\CustomRequestStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Public\StoreCustomRequestRequest;
@@ -10,14 +11,14 @@ use App\Models\CustomRequest;
 use App\Models\Product;
 use App\Support\BouquetTypes;
 use App\Support\ReferenceNumber;
+use App\Support\WhatsApp;
 use DateTimeInterface;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Throwable;
 
 /**
@@ -48,7 +49,7 @@ class CustomRequestController extends Controller
     /**
      * Simpan permintaan lalu arahkan ke halaman konfirmasi bertanda tangan.
      */
-    public function store(StoreCustomRequestRequest $request): RedirectResponse
+    public function store(StoreCustomRequestRequest $request): SymfonyResponse
     {
         $data = $request->validated();
 
@@ -65,7 +66,8 @@ class CustomRequestController extends Controller
             throw $exception;
         }
 
-        return redirect()->to(URL::signedRoute('custom.confirmation', $customRequest));
+        // Tersimpan dengan status persetujuan "menunggu"; pelanggan langsung dibawa ke WhatsApp admin.
+        return Inertia::location(WhatsApp::url(WhatsApp::customRequestMessage($customRequest)));
     }
 
     /**
@@ -97,6 +99,7 @@ class CustomRequestController extends Controller
                 'reference_image_path' => $imagePath,
                 'notes' => $data['notes'] ?? null,
                 'status' => CustomRequestStatus::Baru,
+                'approval_status' => CustomRequestApproval::Menunggu,
             ]);
         });
     }
@@ -120,6 +123,7 @@ class CustomRequestController extends Controller
                 'referenceProductName' => $customRequest->product?->name,
                 'hasReferenceImage' => $customRequest->reference_image_path !== null,
                 'statusLabel' => $this->statusLabel($customRequest->status),
+                'approvalLabel' => $this->approvalLabel($customRequest->approval_status),
             ],
         ]);
     }
@@ -134,6 +138,16 @@ class CustomRequestController extends Controller
         }
 
         return is_string($value) ? substr($value, 0, 10) : '';
+    }
+
+    private function approvalLabel(mixed $value): string
+    {
+        if ($value instanceof CustomRequestApproval) {
+            return $value->label();
+        }
+
+        return (is_string($value) ? CustomRequestApproval::tryFrom($value) : null)?->label()
+            ?? CustomRequestApproval::Menunggu->label();
     }
 
     private function statusLabel(mixed $value): string

@@ -1,7 +1,7 @@
 <?php
 
+use App\Enums\CustomRequestApproval;
 use App\Enums\CustomRequestStatus;
-use App\Models\Category;
 use App\Models\Customer;
 use App\Models\CustomRequest;
 use App\Models\Product;
@@ -10,11 +10,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Inertia\Testing\AssertableInertia as Assert;
-
-beforeEach(function () {
-    Category::factory()->create(['slug' => 'buket-bunga', 'name' => 'Buket Bunga Segar']);
-    Category::factory()->create(['slug' => 'buket-custom', 'name' => 'Buket Custom']);
-});
 
 /**
  * @param  array<string, mixed>  $overrides
@@ -25,7 +20,7 @@ function customRequestPayload(array $overrides = []): array
     return array_merge([
         'name' => 'Prety',
         'phone' => '0812-3456-7890',
-        'bouquet_type' => 'Buket Bunga Segar',
+        'bouquet_type' => 'Wisuda',
         'budget' => 250000,
         'theme_color' => 'Biru pastel',
         'needed_at' => now()->addDays(5)->toDateString(),
@@ -33,12 +28,12 @@ function customRequestPayload(array $overrides = []): array
     ], $overrides);
 }
 
-test('halaman buket custom mengirim pilihan jenis buket tanpa kategori custom', function () {
+test('halaman buket custom hanya menawarkan Wisuda dan Other Occasion', function () {
     $this->get(route('custom'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('public/custom-bouquet')
-            ->where('bouquetTypes', ['Buket Bunga Segar', BouquetTypes::OTHER])
+            ->where('bouquetTypes', ['Wisuda', 'Other Occasion'])
             ->where('reference', null)
         );
 });
@@ -66,16 +61,18 @@ test('model acuan dari produk nonaktif diabaikan', function () {
         ->assertInertia(fn (Assert $page) => $page->where('reference', null)->etc());
 });
 
-test('data valid menyimpan permintaan custom lalu mengarah ke konfirmasi', function () {
+test('data valid menyimpan permintaan custom menunggu persetujuan lalu langsung ke WhatsApp', function () {
     $response = $this->post(route('custom.store'), customRequestPayload());
 
-    $response->assertRedirectContains('/buket-custom/terkirim/CST-');
+    $message = whatsappMessageFrom($response);
 
     $customRequest = CustomRequest::sole();
 
     expect($customRequest->request_number)->toMatch('/^CST-\d{8}-[A-HJ-NP-Z2-9]{5}$/')
         ->and($customRequest->status)->toBe(CustomRequestStatus::Baru)
-        ->and($customRequest->bouquet_type)->toBe('Buket Bunga Segar')
+        ->and($customRequest->approval_status)->toBe(CustomRequestApproval::Menunggu)
+        ->and($customRequest->approved_at)->toBeNull()
+        ->and($customRequest->bouquet_type)->toBe('Wisuda')
         ->and((int) $customRequest->budget)->toBe(250000)
         ->and($customRequest->theme_color)->toBe('Biru pastel')
         ->and($customRequest->needed_at->toDateString())->toBe(now()->addDays(5)->toDateString())
@@ -83,6 +80,12 @@ test('data valid menyimpan permintaan custom lalu mengarah ke konfirmasi', funct
         ->and($customRequest->product_id)->toBeNull()
         ->and($customRequest->customer->phone)->toBe('6281234567890')
         ->and($customRequest->customer->name)->toBe('Prety');
+
+    expect($message)->toContain('nomor *'.$customRequest->request_number.'*')
+        ->toContain('• Jenis buket: Wisuda')
+        ->toContain('• Anggaran: Rp250.000')
+        ->toContain('• Warna/tema: Biru pastel')
+        ->toContain('/buket-custom/terkirim/'.$customRequest->request_number.'?signature=');
 });
 
 test('data tidak valid kembali ke formulir dan tidak menyimpan apa pun', function () {
@@ -110,13 +113,13 @@ test('data tidak valid kembali ke formulir dan tidak menyimpan apa pun', functio
 });
 
 test('jenis buket di luar daftar ditolak', function () {
-    $this->post(route('custom.store'), customRequestPayload(['bouquet_type' => 'Buket Custom']))
+    $this->post(route('custom.store'), customRequestPayload(['bouquet_type' => 'Ulang Tahun']))
         ->assertSessionHasErrors(['bouquet_type' => 'Pilih jenis buket dari daftar yang tersedia.']);
 
     expect(CustomRequest::count())->toBe(0);
 });
 
-test('pilihan lainnya diterima', function () {
+test('pilihan Other Occasion diterima', function () {
     $this->post(route('custom.store'), customRequestPayload(['bouquet_type' => BouquetTypes::OTHER]))
         ->assertRedirect();
 
@@ -126,10 +129,12 @@ test('pilihan lainnya diterima', function () {
 test('model acuan dari halaman detail ikut tersimpan', function () {
     $product = Product::factory()->create(['slug' => 'buket-custom-foto']);
 
-    $this->post(route('custom.store'), customRequestPayload(['product' => 'buket-custom-foto']))
-        ->assertRedirect();
+    $message = whatsappMessageFrom(
+        $this->post(route('custom.store'), customRequestPayload(['product' => 'buket-custom-foto'])),
+    );
 
-    expect(CustomRequest::sole()->product_id)->toBe($product->id);
+    expect(CustomRequest::sole()->product_id)->toBe($product->id)
+        ->and($message)->toContain('• Model acuan: '.$product->name);
 });
 
 test('model acuan yang nonaktif ditolak', function () {
@@ -167,7 +172,7 @@ test('halaman konfirmasi bertanda tangan menampilkan ringkasan permintaan', func
         'product_id' => $product->id,
         'budget' => 300000,
         'theme_color' => 'Merah muda',
-        'bouquet_type' => 'Buket Bunga Segar',
+        'bouquet_type' => 'Other Occasion',
     ]);
 
     $this->get(URL::signedRoute('custom.confirmation', $customRequest))
@@ -181,7 +186,18 @@ test('halaman konfirmasi bertanda tangan menampilkan ringkasan permintaan', func
             ->where('customRequest.referenceProductName', 'Buket Custom Tema Warna')
             ->where('customRequest.hasReferenceImage', false)
             ->where('customRequest.statusLabel', 'Baru')
+            ->where('customRequest.approvalLabel', 'Menunggu persetujuan admin')
         );
+});
+
+test('konfirmasi menampilkan persetujuan yang diubah admin', function () {
+    $customRequest = CustomRequest::factory()->create([
+        'approval_status' => CustomRequestApproval::Disetujui,
+        'approved_at' => now(),
+    ]);
+
+    $this->get(URL::signedRoute('custom.confirmation', $customRequest))
+        ->assertInertia(fn (Assert $page) => $page->where('customRequest.approvalLabel', 'Disetujui')->etc());
 });
 
 test('halaman konfirmasi tanpa tanda tangan ditolak', function () {
@@ -193,14 +209,16 @@ test('halaman konfirmasi tanpa tanda tangan ditolak', function () {
 test('gambar referensi valid tersimpan dengan nama acak', function () {
     Storage::fake('public');
 
-    $this->post(route('custom.store'), customRequestPayload([
+    $message = whatsappMessageFrom($this->post(route('custom.store'), customRequestPayload([
         'reference_image' => UploadedFile::fake()->image('foto saya.jpg', 800, 1000)->size(500),
-    ]))->assertRedirect();
+    ])));
 
     $path = CustomRequest::sole()->reference_image_path;
 
     expect($path)->toStartWith('custom-references/')
-        ->and($path)->not->toContain('foto saya');
+        ->and($path)->not->toContain('foto saya')
+        ->and($message)->toContain('• Gambar referensi: ')
+        ->and($message)->toContain($path);
 
     Storage::disk('public')->assertExists($path);
 });

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CustomRequestApproval;
 use App\Enums\CustomRequestStatus;
 use Database\Factories\CustomRequestFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['request_number', 'customer_id', 'product_id', 'budget', 'theme_color', 'bouquet_type', 'needed_at', 'reference_image_path', 'notes', 'status'])]
+#[Fillable(['request_number', 'customer_id', 'product_id', 'budget', 'theme_color', 'bouquet_type', 'needed_at', 'reference_image_path', 'notes', 'status', 'approval_status', 'approved_at', 'approval_note'])]
 class CustomRequest extends Model
 {
     /** @use HasFactory<CustomRequestFactory> */
@@ -19,10 +20,21 @@ class CustomRequest extends Model
     {
         return [
             'status' => CustomRequestStatus::class,
+            'approval_status' => CustomRequestApproval::class,
+            'approved_at' => 'datetime',
             'needed_at' => 'date',
             'budget' => 'decimal:2',
         ];
     }
+
+    /**
+     * Permintaan baru selalu menunggu persetujuan admin.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'approval_status' => 'menunggu',
+    ];
 
     public function getRouteKeyName(): string
     {

@@ -14,17 +14,37 @@ use Illuminate\Database\UniqueConstraintViolationException;
 test('catalog seeder creates categories, events, and products', function () {
     $this->seed(CatalogSeeder::class);
 
-    expect(Category::count())->toBe(4)
-        ->and(Event::count())->toBe(3)
-        ->and(Product::count())->toBe(16)
-        ->and(Product::featured()->count())->toBe(4);
+    expect(Category::count())->toBe(5)
+        ->and(Event::pluck('name')->all())->toBe(['Wisuda', 'Other Occasion'])
+        ->and(Product::count())->toBe(67)
+        ->and(Product::featured()->count())->toBe(10)
+        ->and(Product::whereNull('price')->count())->toBe(8);
+});
+
+test('catalog seeder removes old sample data but keeps order history', function () {
+    $old = Product::factory()->create(['slug' => 'buket-mawar-merah', 'name' => 'Buket Mawar Merah']);
+    $item = OrderItem::factory()->create(['product_id' => $old->id, 'product_name_snapshot' => 'Buket Mawar Merah']);
+
+    $this->seed(CatalogSeeder::class);
+
+    expect(Product::where('slug', 'buket-mawar-merah')->exists())->toBeFalse()
+        ->and($item->fresh()->product_id)->toBeNull()
+        ->and($item->fresh()->product_name_snapshot)->toBe('Buket Mawar Merah');
+});
+
+test('every seeded product image exists in public folder', function () {
+    $this->seed(CatalogSeeder::class);
+
+    Product::pluck('image_path')->each(
+        fn (string $path) => expect(public_path(ltrim($path, '/')))->toBeFile(),
+    );
 });
 
 test('catalog seeder can run twice without duplicating data', function () {
     $this->seed(CatalogSeeder::class);
     $this->seed(CatalogSeeder::class);
 
-    expect(Product::count())->toBe(16);
+    expect(Product::count())->toBe(67);
 });
 
 test('product catalog array matches the frontend Product type', function () {
@@ -32,21 +52,21 @@ test('product catalog array matches the frontend Product type', function () {
 
     $product = Product::active()
         ->with(['category', 'events'])
-        ->where('slug', 'buket-mawar-merah')
+        ->where('slug', 'buket-mulai-100rb-01')
         ->firstOrFail();
 
     expect($product->toCatalogArray())->toBe([
-        'slug' => 'buket-mawar-merah',
-        'name' => 'Buket Mawar Merah',
-        'category' => 'buket-bunga',
+        'slug' => 'buket-mulai-100rb-01',
+        'name' => 'Buket Pilihan Rp100.000+ · 01',
+        'category' => 'harga-di-atas-100rb',
         'occasions' => $product->events->pluck('slug')->all(),
-        'description' => 'Rangkaian mawar merah segar dengan wrapping elegan, cocok untuk ungkapan sayang.',
-        'price' => 250000,
-        'priceFrom' => false,
-        'image' => '/images/products/buket-custom-tema-warna-01.webp',
+        'description' => 'Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.',
+        'price' => 100000,
+        'priceFrom' => true,
+        'image' => '/images/products/buket-mulai-100rb-01.webp',
         'featured' => true,
     ])->and($product->events->pluck('slug')->sort()->values()->all())
-        ->toBe(['anniversary', 'ulang-tahun']);
+        ->toBe(['other-occasion', 'wisuda']);
 });
 
 test('product without price returns null price', function () {

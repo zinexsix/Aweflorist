@@ -18,7 +18,7 @@ function todayIso(): string {
 /**
  * Formulir permintaan buket custom (PRD 3.2, FR-19/FR-20, US-15).
  * Dikirim ke server (CustomRequestController@store), divalidasi
- * StoreCustomRequestRequest, lalu diarahkan ke halaman konfirmasi.
+ * StoreCustomRequestRequest, tersimpan, lalu pelanggan langsung dibawa ke WhatsApp admin.
  * Gambar referensi opsional (US-16) ikut terkirim sebagai multipart.
  */
 export function CustomBouquetForm({
@@ -201,7 +201,9 @@ export function CustomBouquetForm({
                         disabled={processing}
                         className="w-full sm:w-auto sm:self-start"
                     >
-                        {processing ? 'Mengirim…' : 'Kirim Permintaan'}
+                        {processing
+                            ? 'Mengirim…'
+                            : 'Kirim & Lanjut ke WhatsApp'}
                     </BrandButton>
                 </>
             )}
