@@ -2,7 +2,6 @@ import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { ProductImage } from '@/components/florify/product-image';
 import { CategoryBadge, PriceLabel } from '@/components/florify/product-meta';
-import { categoryName } from '@/data/catalog';
 import { cn } from '@/lib/utils';
 import { show } from '@/routes/catalog';
 import type { Product } from '@/types';
@@ -28,7 +27,7 @@ export function ProductCard({
         >
             <ProductImage src={product.image} alt={product.name} />
             <div className="flex flex-1 flex-col gap-1.5 px-1.5">
-                <CategoryBadge>{categoryName(product.category)}</CategoryBadge>
+                <CategoryBadge>{product.categoryName}</CategoryBadge>
                 <h3 className="font-display text-h3 text-ink">
                     {product.name}
                 </h3>

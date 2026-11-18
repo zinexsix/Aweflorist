@@ -1,0 +1,115 @@
+// ERD database Florify (AweFlorist) — MySQL 8
+// Salin seluruh isi file ini ke https://dbdiagram.io/d (panel kiri), ERD langsung terbentuk.
+
+Project Florify {
+  database_type: 'MySQL'
+  Note: 'Sistem pemesanan & manajemen pelanggan AweFlorist'
+}
+
+Table categories {
+  id bigint [pk, increment]
+  name varchar(100) [not null, note: 'Kategori berdasarkan harga']
+  slug varchar(100) [not null, unique]
+  description text
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table events {
+  id bigint [pk, increment]
+  name varchar(100) [not null, note: 'Wisuda / Other Occasion']
+  slug varchar(100) [not null, unique]
+  description text
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table products {
+  id bigint [pk, increment]
+  category_id bigint [not null, ref: > categories.id]
+  name varchar(150) [not null]
+  slug varchar(150) [not null, unique]
+  description text [not null]
+  price decimal(12,2) [note: 'NULL = harga dikonfirmasi admin']
+  price_from boolean [not null, default: false]
+  image_path varchar(255)
+  is_featured boolean [not null, default: false]
+  is_active boolean [not null, default: true]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table event_product {
+  event_id bigint [not null, ref: > events.id]
+  product_id bigint [not null, ref: > products.id]
+
+  indexes {
+    (event_id, product_id) [pk]
+  }
+}
+
+Table customers {
+  id bigint [pk, increment]
+  name varchar(100) [not null]
+  phone varchar(20) [not null, note: 'Format 628xxx']
+  email varchar(255)
+  notes text
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table orders {
+  id bigint [pk, increment]
+  order_number varchar(20) [not null, unique, note: 'AWF-YYYYMMDD-XXXXX']
+  customer_id bigint [not null, ref: > customers.id]
+  order_status varchar(30) [not null, default: 'menunggu_konfirmasi']
+  payment_status varchar(30) [not null, default: 'belum_dibayar']
+  needed_at date [not null]
+  notes text
+  total_amount decimal(12,2)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table order_items {
+  id bigint [pk, increment]
+  order_id bigint [not null, ref: > orders.id]
+  product_id bigint [ref: > products.id, note: 'NULL jika produk dihapus']
+  product_name_snapshot varchar(150) [not null]
+  unit_price_snapshot decimal(12,2)
+  quantity smallint [not null]
+  subtotal decimal(12,2)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table custom_requests {
+  id bigint [pk, increment]
+  request_number varchar(20) [not null, unique, note: 'CST-YYYYMMDD-XXXXX']
+  customer_id bigint [not null, ref: > customers.id]
+  product_id bigint [ref: > products.id, note: 'Model acuan (opsional)']
+  budget decimal(12,2) [not null]
+  theme_color varchar(100) [not null]
+  bouquet_type varchar(100) [not null, note: 'Wisuda / Other Occasion']
+  needed_at date [not null]
+  reference_image_path varchar(255)
+  notes text
+  status varchar(30) [not null, default: 'baru']
+  approval_status varchar(20) [not null, default: 'menunggu', note: 'menunggu / disetujui / ditolak']
+  approved_at timestamp
+  approval_note text
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table users {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  email varchar(255) [not null, unique]
+  email_verified_at timestamp
+  password varchar(255) [not null]
+  remember_token varchar(100)
+  created_at timestamp
+  updated_at timestamp
+  Note: 'Akun admin'
+}

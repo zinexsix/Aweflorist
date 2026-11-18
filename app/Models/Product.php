@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\PriceCategory;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
@@ -16,6 +17,31 @@ class Product extends Model
 {
     /** @use HasFactory<ProductFactory> */
     use HasFactory;
+
+    /**
+     * Kategori harga mengikuti harga produk secara otomatis setiap kali harga
+     * disimpan, selama produk memakai kategori harga (lihat PriceCategory).
+     */
+    protected static function booted(): void
+    {
+        static::saving(function (Product $product): void {
+            if (! $product->isDirty(['price', 'price_from', 'category_id'])) {
+                return;
+            }
+
+            $priceCategories = Category::query()->whereIn('slug', PriceCategory::SLUGS)->pluck('id', 'slug');
+
+            if (! $priceCategories->contains($product->category_id)) {
+                return;
+            }
+
+            $categoryId = $priceCategories->get(PriceCategory::slugFor($product->price, (bool) $product->price_from));
+
+            if ($categoryId !== null) {
+                $product->category_id = $categoryId;
+            }
+        });
+    }
 
     protected function casts(): array
     {
@@ -73,6 +99,7 @@ class Product extends Model
             'slug' => $this->slug,
             'name' => $this->name,
             'category' => $this->category->slug,
+            'categoryName' => $this->category->name,
             'occasions' => $this->events->pluck('slug')->all(),
             'description' => $this->description,
             'price' => $this->price === null ? null : (int) $this->price,

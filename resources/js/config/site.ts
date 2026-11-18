@@ -13,15 +13,27 @@ export const site = {
         /\D/g,
         '',
     ),
-    address: null as string | null,
+    address:
+        'Jl. Raya Gadut, Limau Manis Selatan, Kec. Lubuk Kilangan, Kota Padang, Sumatera Barat 25157' as
+            | string
+            | null,
     /**
-     * Lokasi toko untuk Google Maps di profil (beranda #tentang) dan /informasi#kontak.
-     * `mapsQuery`: alamat lengkap atau "Nama Toko, Kota" persis seperti di Google Maps.
-     *   Kosong (`null`) = memakai `address`; keduanya kosong = peta disembunyikan.
-     * `mapsUrl`: link "Bagikan" dari aplikasi Google Maps (mis. https://maps.app.goo.gl/...).
+     * Lokasi toko di Google Maps (profil beranda #tentang dan /informasi#kontak).
+     * Koordinat dan alamat dari pin "Awe florist" di Google Maps (link dari pemilik, 18 Nov 2026).
+     * `null` = peta disembunyikan.
      */
-    mapsQuery: null as string | null,
-    mapsUrl: null as string | null,
+    location: {
+        name: 'Awe florist',
+        latitude: -0.9485417,
+        longitude: 100.4475927,
+        /** Membuka halaman tempat "Awe florist" di aplikasi/situs Google Maps. */
+        mapsUrl: 'https://maps.google.com/?cid=17568107334415383527',
+    } as {
+        name: string;
+        latitude: number;
+        longitude: number;
+        mapsUrl: string;
+    } | null,
     openingHours: null as string | null,
     instagram: null as string | null,
     tiktok: null as string | null,

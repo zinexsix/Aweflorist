@@ -9,17 +9,21 @@ import {
     OrderStepsSection,
 } from '@/components/home/order-info-section';
 import { PromoSection } from '@/components/home/promo-section';
-import type { Product } from '@/types';
+import type { Occasion, Product, ProductCategory } from '@/types';
 
 /**
  * Landing page (pemilik: Rofiq). File ini hanya MENYUSUN section.
  * Isi tiap section diubah di resources/js/components/home/*.
- * Produk unggulan dikirim server lewat HomeController (US-10).
+ * Produk unggulan, kategori harga, dan acara dikirim server lewat HomeController.
  */
 export default function Home({
     featuredProducts,
+    categories,
+    occasions,
 }: {
     featuredProducts: Product[];
+    categories: ProductCategory[];
+    occasions: Occasion[];
 }) {
     return (
         <>
@@ -32,8 +36,8 @@ export default function Home({
             <HeroSection />
             <AboutSection />
             <FeaturedProductsSection products={featuredProducts} />
-            <OccasionsSection />
-            <PromoSection />
+            <OccasionsSection categories={categories} />
+            <PromoSection occasions={occasions} />
             <OrderStepsSection />
             <FaqSection />
             <ContactCtaSection />
