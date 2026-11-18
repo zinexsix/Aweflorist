@@ -3,34 +3,38 @@ import { BrandButton } from '@/components/florify/brand-button';
 import { site } from '@/config/site';
 import { cn } from '@/lib/utils';
 
-/** Kata kunci lokasi toko; `null` bila alamat belum diisi di config/site.ts. */
-export function mapsQuery(): string | null {
-    return site.mapsQuery ?? site.address;
-}
-
 /**
- * Peta Google Maps lokasi AweFlorist (tanpa API key, memakai embed publik).
- * Tidak tampil sama sekali bila alamat belum diisi, supaya tidak ada lokasi karangan.
+ * Peta Google Maps interaktif (bisa digeser dan diperbesar) lokasi AweFlorist.
+ * Memakai embed publik tanpa API key. Tidak tampil bila `site.location` kosong.
  */
-export function LocationMap({ className }: { className?: string }) {
-    const query = mapsQuery();
+export function LocationMap({
+    className,
+    frameClassName = 'aspect-[4/3] sm:aspect-[16/9]',
+}: {
+    className?: string;
+    /** Ukuran kotak peta, mis. disamakan dengan foto yang digantikannya. */
+    frameClassName?: string;
+}) {
+    const location = site.location;
 
-    if (!query) {
+    if (!location) {
         return null;
     }
 
-    const embedUrl = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
-    const openUrl =
-        site.mapsUrl ??
-        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+    // Format embed Google Maps: cari "<nama toko>" di sekitar titik koordinat, zoom 17.
+    const embedUrl =
+        'https://www.google.com/maps/embed?pb=' +
+        `!1m12!1m8!1m3!1d3989.27!2d${location.longitude}!3d${location.latitude}` +
+        `!3m2!1i1024!2i768!4f13.1!2m1!1s${encodeURIComponent(location.name).replace(/%20/g, '+')}` +
+        '!6i17!3m1!1sid!5m1!1sid';
 
     return (
-        <figure className={cn('flex w-full flex-col gap-3', className)}>
+        <figure className={cn('flex w-full min-w-0 flex-col gap-3', className)}>
             <div className="overflow-hidden rounded-panel border border-line bg-surface">
                 <iframe
-                    title={`Lokasi ${site.name} di Google Maps`}
+                    title={`Peta lokasi ${site.name} di Google Maps`}
                     src={embedUrl}
-                    className="aspect-[4/3] w-full sm:aspect-[16/9]"
+                    className={cn('block w-full', frameClassName)}
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     allowFullScreen
@@ -39,10 +43,14 @@ export function LocationMap({ className }: { className?: string }) {
             <figcaption className="flex flex-wrap items-center justify-between gap-3">
                 <span className="flex min-w-0 items-start gap-2 text-sm leading-relaxed text-ink-muted">
                     <MapPin className="mt-0.5 size-4 shrink-0 text-brand-700" />
-                    {site.address ?? query}
+                    {site.address ?? location.name}
                 </span>
                 <BrandButton asChild variant="outline">
-                    <a href={openUrl} target="_blank" rel="noopener noreferrer">
+                    <a
+                        href={location.mapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         Buka di Google Maps
                     </a>
                 </BrandButton>
