@@ -1,14 +1,17 @@
 import { OccasionCard } from '@/components/florify/occasion-card';
 import { Section, SectionHeading } from '@/components/florify/section';
-import { categories, categoryDescription } from '@/data/catalog';
 import { custom } from '@/routes';
 import { index as catalog } from '@/routes/catalog';
-import type { Tone } from '@/types';
+import type { ProductCategory, Tone } from '@/types';
 
 const categoryTones: Tone[] = ['sun', 'blush', 'lilac', 'sage', 'cream'];
 
 /** Pemilik: Prety. FR-06 — kategori berdasarkan harga + buket custom. */
-export function OccasionsSection() {
+export function OccasionsSection({
+    categories,
+}: {
+    categories: ProductCategory[];
+}) {
     return (
         <Section id="kategori" aria-labelledby="kategori-title" flush>
             <SectionHeading
@@ -21,7 +24,7 @@ export function OccasionsSection() {
                     <li key={category.slug}>
                         <OccasionCard
                             title={category.name}
-                            description={categoryDescription(category.slug)}
+                            description={category.description}
                             href={catalog({
                                 query: { kategori: category.slug },
                             })}

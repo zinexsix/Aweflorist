@@ -11,6 +11,7 @@ export type OccasionSlug = string;
 export type ProductCategory = {
     slug: ProductCategorySlug;
     name: string;
+    description?: string;
 };
 
 export type Occasion = {
@@ -23,6 +24,8 @@ export type Product = {
     slug: string;
     name: string;
     category: ProductCategorySlug;
+    /** Nama kategori dari database (mis. "Rp50.000 – Rp75.000"). */
+    categoryName: string;
     occasions: OccasionSlug[];
     description: string;
     /** Harga dalam rupiah. `null` = harga dikonfirmasi admin via WhatsApp. */

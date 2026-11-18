@@ -59,6 +59,7 @@ test('product catalog array matches the frontend Product type', function () {
         'slug' => 'buket-mulai-100rb-01',
         'name' => 'Buket Pilihan Rp100.000+ · 01',
         'category' => 'harga-di-atas-100rb',
+        'categoryName' => 'Rp100.000 ke atas',
         'occasions' => $product->events->pluck('slug')->all(),
         'description' => 'Buket pilihan seperti pada foto, mulai Rp100.000. Harga akhir dan ketersediaan dikonfirmasi admin lewat WhatsApp.',
         'price' => 100000,

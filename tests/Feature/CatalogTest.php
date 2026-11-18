@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Product;
 use Database\Seeders\CatalogSeeder;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -12,9 +13,22 @@ test('home page sends four featured products from the database', function () {
         ->assertInertia(fn (Assert $page) => $page
             ->component('public/home')
             ->has('featuredProducts', 4)
+            ->has('categories', 5)
+            ->where('categories.0.name', 'Di bawah Rp50.000')
+            ->where('categories.0.description', 'Buket hemat Rp15.000 dan Rp35.000.')
+            ->where('occasions.1.name', 'Other Occasion')
+            ->where('featuredProducts.0.categoryName', 'Rp100.000 ke atas')
             ->where('featuredProducts.0.slug', 'buket-mulai-100rb-01')
             ->where('featuredProducts.0.price', 100000)
             ->where('featuredProducts.0.priceFrom', true));
+});
+
+test('home page category cards follow changes in the database', function () {
+    $this->seed(CatalogSeeder::class);
+    Category::where('slug', 'harga-premium')->update(['name' => 'Premium Spesial']);
+
+    $this->get(route('home'))
+        ->assertInertia(fn (Assert $page) => $page->where('categories.4.name', 'Premium Spesial')->etc());
 });
 
 test('home page hides inactive featured products', function () {
