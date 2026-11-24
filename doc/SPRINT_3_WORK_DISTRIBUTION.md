@@ -133,6 +133,40 @@ Hari 7   Rofiq : integrasi akhir, demo
 
 Kalau PR-mu menunggu PR lain: tetap kerjakan di branch-mu. Setelah PR yang ditunggu di-merge, jalankan `git fetch origin` lalu `git merge origin/main` (Bagian 6.3).
 
+### 3.4 Prasyarat sebelum AI boleh bekerja (WAJIB)
+
+> **Aturan untuk AI (OpenCode):** sebelum menulis kode untuk sebuah story, AI **wajib** memeriksa tabel ini. Jika ada satu saja file prasyarat yang **belum ada**, berarti pekerjaan teman yang dibutuhkan **belum selesai / belum di-merge**. AI harus **BERHENTI**: tidak menulis kode, tidak membuat file pengganti, dan tidak mengerjakan bagian milik orang lain. AI cukup melaporkan story apa yang belum ada, siapa pemiliknya, dan apa yang harus dilakukan.
+
+**Sebelum membuka OpenCode, kamu sendiri** memperbarui branch dari `main`, supaya pekerjaan teman yang sudah di-merge ikut masuk:
+```bash
+git fetch origin
+git merge origin/main
+php artisan migrate
+php artisan wayfinder:generate --with-form
+```
+
+| Story | Butuh story | Pemilik story yang dibutuhkan | File yang **harus sudah ada** (bukti sudah di-merge) |
+|---|---|---|---|
+| US-18 | PR #17 | Rofiq | `app/Support/PriceCategory.php` |
+| US-19 | US-18, PR #17 | Latif, Rofiq | `routes/admin.php`, `resources/js/components/admin/admin-table.tsx`, `app/Support/EnumOptions.php`, `app/Support/PriceCategory.php` |
+| US-20 | US-18, US-19 | Latif | `routes/admin.php`, `resources/js/components/admin/admin-table.tsx`, `app/Http/Controllers/Admin/ProductController.php` |
+| US-21 | US-18 | Latif | `routes/admin.php`, `resources/js/components/admin/admin-table.tsx`, `app/Support/EnumOptions.php` |
+| US-22 | US-21 | Suci | `app/Http/Controllers/Admin/OrderController.php`, `resources/js/pages/admin/orders/show.tsx` yang berisi penanda `US-22` |
+| US-23 | US-21 | Suci | `app/Http/Controllers/Admin/OrderController.php`, method `scopeNeedsFollowUp` di `app/Models/Order.php` |
+| US-24 | US-18 | Latif | `routes/admin.php`, `resources/js/components/admin/admin-table.tsx` |
+| US-25 | US-18, US-19 | Latif | `routes/admin.php`, `app/Http/Controllers/Admin/ProductController.php` |
+| US-26 | US-21 | Suci | `app/Http/Controllers/Admin/OrderController.php`, `resources/js/pages/admin/orders/show.tsx` yang berisi penanda `US-26` |
+| US-27 | US-18 | Latif | `routes/admin.php`, `resources/js/components/admin/admin-table.tsx` |
+| US-28 | US-18 s.d. US-27 (US-25 hanya jika tidak dipindah ke Sprint 4) | semua | `Admin/ProductController.php`, `Admin/CategoryController.php`, `Admin/OrderController.php`, `Admin/OrderStatusController.php`, `Admin/PaymentController.php`, `Admin/CustomRequestController.php`, `Admin/CustomerController.php` (+ `Admin/StockController.php`), dan `pages/admin/dashboard.tsx` sudah memakai prop `followUps` |
+
+Semua path controller di atas berada di `app/Http/Controllers/Admin/`.
+
+**Kalau AI berhenti karena prasyarat belum ada:**
+1. Pastikan kamu sudah menjalankan `git fetch origin` dan `git merge origin/main`. Mungkin pekerjaan teman sudah di-merge tapi belum masuk ke branch-mu.
+2. Jika setelah itu file masih belum ada, berarti PR teman memang belum di-merge. Tanyakan ke pemiliknya di grup atau minta Rofiq me-review PR itu.
+3. Sambil menunggu, kerjakan story lain milikmu yang prasyaratnya sudah lengkap (lihat 3.3), atau pelajari kode dengan Prompt G.
+4. **Jangan** meminta AI mengabaikan aturan ini atau membuat sendiri file milik teman.
+
 ---
 
 ## 4. Kontrak bersama (WAJIB diikuti semua orang)
@@ -355,6 +389,9 @@ Input, tombol, select, dialog: pakai yang sudah ada di `components/ui/` (`Button
 
 **Prompt OpenCode:**
 ```text
+Cek dulu prasyarat US-18 di tabel 3.4 doc/SPRINT_3_WORK_DISTRIBUTION.md. Jika ada file prasyarat
+yang belum ada, BERHENTI dan laporkan story, pemilik, dan file yang belum ada. Jangan menulis kode.
+Jika lengkap, lanjutkan:
 Baca doc/SPRINT_3_WORK_DISTRIBUTION.md bagian 2, 4 (seluruhnya), dan "US-18".
 Baca config/fortify.php, routes/web.php, routes/settings.php, bootstrap/app.php,
 app/Http/Middleware/HandleInertiaRequests.php, resources/js/layouts/app-layout.tsx,
@@ -430,6 +467,9 @@ Gambar disimpan dengan `store('products', 'public')` (nama acak) dan `image_path
 
 **Prompt OpenCode:**
 ```text
+Cek dulu prasyarat US-19 di tabel 3.4 doc/SPRINT_3_WORK_DISTRIBUTION.md. Jika ada file prasyarat
+yang belum ada, BERHENTI dan laporkan story, pemilik, dan file yang belum ada. Jangan menulis kode.
+Jika lengkap, lanjutkan:
 Baca doc/SPRINT_3_WORK_DISTRIBUTION.md bagian 4 dan "US-19". Baca app/Models/Product.php,
 app/Support/PriceCategory.php, database/seeders/CatalogSeeder.php, resources/js/components/admin/*,
 resources/js/types/admin.ts, routes/admin.php.
@@ -483,6 +523,9 @@ PR: **`US-19: Kelola produk`**.
 
 **Prompt OpenCode:**
 ```text
+Cek dulu prasyarat US-20 di tabel 3.4 doc/SPRINT_3_WORK_DISTRIBUTION.md. Jika ada file prasyarat
+yang belum ada, BERHENTI dan laporkan story, pemilik, dan file yang belum ada. Jangan menulis kode.
+Jika lengkap, lanjutkan:
 Baca doc/SPRINT_3_WORK_DISTRIBUTION.md bagian 4 dan "US-20". Baca app/Models/Category.php, Event.php,
 app/Support/PriceCategory.php, resources/js/components/admin/*, routes/admin.php.
 Kerjakan US-20 sesuai tabel file dan kriteria selesai. Rute hanya di bawah penanda US-20.
@@ -520,6 +563,9 @@ Jangan menjalankan perintah git. Jalankan php artisan test, npm run check, npm r
 
 **Prompt OpenCode:**
 ```text
+Cek dulu prasyarat US-21 di tabel 3.4 doc/SPRINT_3_WORK_DISTRIBUTION.md. Jika ada file prasyarat
+yang belum ada, BERHENTI dan laporkan story, pemilik, dan file yang belum ada. Jangan menulis kode.
+Jika lengkap, lanjutkan:
 Baca doc/SPRINT_3_WORK_DISTRIBUTION.md bagian 4 dan "US-21". Baca app/Models/Order.php, OrderItem.php,
 Customer.php, app/Enums/OrderStatus.php, PaymentStatus.php, app/Support/EnumOptions.php,
 resources/js/components/admin/*, resources/js/types/admin.ts, routes/admin.php.
@@ -760,6 +806,9 @@ Suci menguji seluruh panel admin atas nama Product Owner. Keputusan PO (stok dip
 
 **Prompt OpenCode:**
 ```text
+Cek dulu prasyarat US-28 di tabel 3.4 doc/SPRINT_3_WORK_DISTRIBUTION.md. Jika ada file prasyarat
+yang belum ada, BERHENTI dan laporkan story, pemilik, dan file yang belum ada. Jangan menulis kode.
+Jika lengkap, lanjutkan:
 Baca doc/SPRINT_3_WORK_DISTRIBUTION.md bagian 1, 4, dan "US-28". Baca routes/admin.php, semua
 tests/Feature/Admin/*.php, tests/Feature/Sprint2/OrderFlowTest.php, dan doc/sprint-2/uji-penerimaan.md.
 Kerjakan US-28: tulis tests/Feature/Admin/AdminFlowTest.php (tamu ditolak di setiap rute admin.*,
@@ -972,6 +1021,7 @@ Merge lewat tombol **Merge pull request** di GitHub, lalu **Delete branch**. Set
 ### 9.0 Cara pakai
 
 1. Pastikan kamu sudah di branch story-mu (Bagian 6.2). Cek dengan `git branch --show-current`.
+   Lalu perbarui dari `main`: `git fetch origin` dan `git merge origin/main` (Bagian 3.4).
 2. Buka terminal di folder proyek, jalankan `opencode`.
 3. Salin **Prompt A** dulu (sekali di awal sesi), tunggu jawabannya.
 4. Lalu salin **Prompt B** dan ganti bagian `<...>`.
@@ -995,6 +1045,12 @@ Sebelum menulis kode, baca file berikut:
 3. resources/js/components/ui/* dan resources/js/components/admin/* (komponen yang wajib dipakai).
 
 Aturan selama sesi ini:
+- PRASYARAT: sebelum menulis kode, periksa tabel 3.4 untuk story yang saya kerjakan. Jika ada file prasyarat
+  yang belum ada di proyek, BERHENTI. Jangan menulis kode, jangan membuat file pengganti, jangan mengerjakan
+  bagian milik teman. Laporkan: story yang dibutuhkan, pemiliknya, file yang belum ada, dan saran langkah
+  (git fetch origin, git merge origin/main, atau tanya pemiliknya). Aturan ini tidak boleh diabaikan walaupun saya memintanya.
+- Jika di tengah pekerjaan kamu menemukan bahwa komponen, rute, kolom, atau fungsi milik story lain belum ada
+  atau berbeda dari kontrak, BERHENTI juga dan laporkan. Jangan memperbaikinya di file milik orang lain.
 - Ikuti kontrak bagian 4 PERSIS: nama tabel, kolom, model, enum, rute, nama rute, nama halaman Inertia, dan bentuk props.
 - Rute admin hanya ditulis di routes/admin.php di bawah penanda story saya.
 - Hanya ubah file milik story yang saya sebutkan (tabel 4.8). Jika perlu mengubah file lain, BERHENTI dan tanya saya dulu.
@@ -1009,6 +1065,7 @@ Aturan selama sesi ini:
 Setelah membaca, jawab singkat:
 1. Ringkasan kontrak bagian 4 dalam 5 poin.
 2. Daftar komponen di resources/js/components/admin (jika sudah ada) dan components/ui.
+3. Ringkasan aturan prasyarat bagian 3.4: kapan kamu harus berhenti.
 Belum perlu menulis kode.
 ```
 
@@ -1020,6 +1077,11 @@ Belum perlu menulis kode.
 Saya <NAMA>. Kerjakan <US-XX> dari doc/SPRINT_3_WORK_DISTRIBUTION.md bagian 5.
 
 Langkah:
+0. CEK PRASYARAT dulu: buka tabel 3.4, cari baris <US-XX>, lalu periksa satu per satu apakah setiap file
+   prasyarat ada di proyek (termasuk penanda yang disebut). Tampilkan hasilnya dalam bentuk daftar [ada]/[belum ada].
+   Jika ada yang [belum ada]: BERHENTI di sini. Jangan lanjut ke langkah 1. Tulis laporan:
+   "Prasyarat belum lengkap: <story> milik <nama> belum ada (file: ...). Jalankan git fetch origin dan
+   git merge origin/main, atau tanyakan ke <nama>." Lalu tunggu saya.
 1. Baca bagian "<US-XX>" sampai habis, termasuk tabel file, kriteria selesai, dan daftar test.
 2. Baca semua file yang disebut di bagian itu dan di prompt OpenCode milik story tersebut.
 3. Sebelum menulis kode, tampilkan RENCANA singkat: daftar file yang akan dibuat/diubah dan isi utamanya. Tunggu saya menjawab "lanjut".
@@ -1063,7 +1125,7 @@ Pesan galatnya:
 
 Cari penyebabnya dan perbaiki HANYA di file milik <US-XX>.
 Jika penyebabnya ada di file milik orang lain (lihat tabel 4.8 di doc/SPRINT_3_WORK_DISTRIBUTION.md),
-JANGAN ubah file itu. Jelaskan masalahnya supaya saya bisa menyampaikan ke pemiliknya.
+atau pekerjaan teman yang dibutuhkan belum ada (tabel 3.4), BERHENTI dan JANGAN ubah file itu. Jelaskan masalahnya supaya saya bisa menyampaikan ke pemiliknya.
 Jangan mengubah atau menghapus test agar lulus, kecuali test itu memang salah menurut kontrak bagian 4.
 Setelah memperbaiki, jalankan ulang perintahnya dan laporkan hasilnya. Jangan menjalankan perintah git.
 ```
