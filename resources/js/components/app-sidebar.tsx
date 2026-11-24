@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { LayoutGrid } from 'lucide-react';
+import { LayoutGrid, Package } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -13,6 +13,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard as adminDashboard } from '@/routes/admin';
+import { index as productsIndex } from '@/routes/admin/products';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -21,7 +22,11 @@ const mainNavItems: NavItem[] = [
         href: adminDashboard(),
         icon: LayoutGrid,
     },
-    // US-19 Latif: Produk
+    {
+        title: 'Produk',
+        href: productsIndex(),
+        icon: Package,
+    },
     // US-20 Latif: Kategori, Acara
     // US-21 Suci: Pesanan
     // US-22 Nabila: Status pesanan

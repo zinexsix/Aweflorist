@@ -1,3 +1,4 @@
+
 <?php
 
 use App\Enums\OrderStatus;
@@ -21,14 +22,21 @@ test('catalog seeder creates categories, events, and products', function () {
         ->and(Product::whereNull('price')->count())->toBe(8);
 });
 
-test('catalog seeder removes old sample data but keeps order history', function () {
-    $old = Product::factory()->create(['slug' => 'buket-mawar-merah', 'name' => 'Buket Mawar Merah']);
-    $item = OrderItem::factory()->create(['product_id' => $old->id, 'product_name_snapshot' => 'Buket Mawar Merah']);
+test('catalog seeder preserves admin products and order history', function () {
+    $old = Product::factory()->create([
+        'slug' => 'buket-mawar-merah',
+        'name' => 'Buket Mawar Merah',
+    ]);
+
+    $item = OrderItem::factory()->create([
+        'product_id' => $old->id,
+        'product_name_snapshot' => 'Buket Mawar Merah',
+    ]);
 
     $this->seed(CatalogSeeder::class);
 
-    expect(Product::where('slug', 'buket-mawar-merah')->exists())->toBeFalse()
-        ->and($item->fresh()->product_id)->toBeNull()
+    expect(Product::where('slug', 'buket-mawar-merah')->exists())->toBeTrue()
+        ->and($item->fresh()->product_id)->toBe($old->id)
         ->and($item->fresh()->product_name_snapshot)->toBe('Buket Mawar Merah');
 });
 
