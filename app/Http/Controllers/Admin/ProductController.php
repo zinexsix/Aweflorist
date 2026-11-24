@@ -89,6 +89,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request): RedirectResponse
     {
         $validated = $request->validated();
+
         $imagePath = $request->hasFile('image')
             ? '/storage/'.$request->file('image')->store('products', 'public')
             : null;
@@ -182,14 +183,16 @@ class ProductController extends Controller
      */
     private function categoryOptions(): array
     {
-        return Category::query()
-            ->orderBy('name')
-            ->get(['id', 'name'])
-            ->map(fn (Category $category): array => [
-                'value' => (string) $category->id,
-                'label' => $category->name,
-            ])
-            ->all();
+        return array_values(
+            Category::query()
+                ->orderBy('name')
+                ->get(['id', 'name'])
+                ->map(fn (Category $category): array => [
+                    'value' => (string) $category->id,
+                    'label' => $category->name,
+                ])
+                ->all()
+        );
     }
 
     /**
@@ -197,14 +200,16 @@ class ProductController extends Controller
      */
     private function occasionOptions(): array
     {
-        return Event::query()
-            ->orderBy('name')
-            ->get(['id', 'name'])
-            ->map(fn (Event $event): array => [
-                'value' => (string) $event->id,
-                'label' => $event->name,
-            ])
-            ->all();
+        return array_values(
+            Event::query()
+                ->orderBy('name')
+                ->get(['id', 'name'])
+                ->map(fn (Event $event): array => [
+                    'value' => (string) $event->id,
+                    'label' => $event->name,
+                ])
+                ->all()
+        );
     }
 
     /**
