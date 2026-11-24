@@ -12,24 +12,6 @@ export type Paginated<T> = {
 };
 
 // US-19 Latif: produk
-
-// US-20 Latif: kategori & acara
-
-// US-21 Suci: pesanan
-
-// US-22 Nabila: status pesanan
-
-// US-23 Suci: dashboard
-
-// US-24 Prety: permintaan custom
-
-// US-25 Prety: stok
-
-// US-26 Nabila: pembayaran
-
-// US-27 Nabila: pelanggan
-
-// US-19 Latif: produk
 export type AdminProductRow = {
     id: number;
     name: string;
@@ -56,3 +38,35 @@ export type AdminProductForm = {
     is_active: boolean;
     occasions: string[];
 };
+
+// US-20 Latif: kategori & acara
+export type AdminCategoryRow = {
+    id: number;
+    name: string;
+    slug: string;
+    description: string | null;
+    productsCount: number;
+    isPriceCategory: boolean;
+};
+
+export type AdminEventRow = {
+    id: number;
+    name: string;
+    slug: string;
+    description: string | null;
+    productsCount: number;
+};
+
+// US-21 Suci: pesanan
+
+// US-22 Nabila: status pesanan
+
+// US-23 Suci: dashboard
+
+// US-24 Prety: permintaan custom
+
+// US-25 Prety: stok
+
+// US-26 Nabila: pembayaran
+
+// US-27 Nabila: pelanggan

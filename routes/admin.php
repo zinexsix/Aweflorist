@@ -1,7 +1,8 @@
-
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,14 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::delete('produk/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
     // --- US-20 Latif: kategori & acara ---
+    Route::get('kategori', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('kategori', [CategoryController::class, 'store'])->name('categories.store');
+    Route::put('kategori/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('kategori/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('acara', [EventController::class, 'index'])->name('events.index');
+    Route::post('acara', [EventController::class, 'store'])->name('events.store');
+    Route::put('acara/{event}', [EventController::class, 'update'])->name('events.update');
+    Route::delete('acara/{event}', [EventController::class, 'destroy'])->name('events.destroy');
 
     // --- US-21 Suci: pesanan ---
 
