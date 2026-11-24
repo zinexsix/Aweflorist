@@ -16,9 +16,9 @@ use RuntimeException;
  * build statis Vercel). Kategori dikelompokkan berdasarkan harga; acara hanya
  * "Wisuda" dan "Other Occasion".
  *
- * Seeder ini aman dijalankan berulang. Produk, kategori, dan acara yang tidak
- * ada lagi di catalog.json (mis. data contoh Sprint 1) dihapus. Riwayat pesanan
- * tetap utuh karena nama dan harga produk disimpan sebagai snapshot.
+ * Seeder ini aman dijalankan berulang. Produk, kategori, dan acara buatan admin
+ * (yang tidak ada di catalog.json) tidak dihapus. Riwayat pesanan tetap utuh
+ * karena nama dan harga produk disimpan sebagai snapshot.
  */
 class CatalogSeeder extends Seeder
 {
@@ -55,10 +55,6 @@ class CatalogSeeder extends Seeder
 
                 $product->events()->sync($eventIds->only($item['occasions'])->all());
             }
-
-            Product::whereNotIn('slug', array_column($data['products'], 'slug'))->delete();
-            Event::whereNotIn('slug', array_column($data['occasions'], 'slug'))->delete();
-            Category::whereNotIn('slug', array_column($data['categories'], 'slug'))->delete();
         });
     }
 

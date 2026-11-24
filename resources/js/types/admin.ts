@@ -28,3 +28,31 @@ export type Paginated<T> = {
 // US-26 Nabila: pembayaran
 
 // US-27 Nabila: pelanggan
+
+// US-19 Latif: produk
+export type AdminProductRow = {
+    id: number;
+    name: string;
+    slug: string;
+    category: string;
+    price: number | null;
+    priceFrom: boolean;
+    image: string | null;
+    isActive: boolean;
+    isFeatured: boolean;
+    canDelete: boolean;
+};
+
+export type AdminProductForm = {
+    id: number;
+    name: string;
+    slug: string;
+    category_id: string;
+    description: string;
+    price: string | null;
+    price_from: boolean;
+    image: string | null;
+    is_featured: boolean;
+    is_active: boolean;
+    occasions: string[];
+};
