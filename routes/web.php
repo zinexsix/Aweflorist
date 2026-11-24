@@ -37,8 +37,6 @@ Route::get('buket-custom/terkirim/{customRequest:request_number}', [CustomReques
     ->middleware('signed')
     ->name('custom.confirmation');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
-});
+Route::redirect('dashboard', '/admin')->name('dashboard');
 
 require __DIR__.'/settings.php';

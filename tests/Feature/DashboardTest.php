@@ -2,15 +2,18 @@
 
 use App\Models\User;
 
-test('guests are redirected to the login page', function () {
-    $response = $this->get(route('dashboard'));
-    $response->assertRedirect(route('login'));
+test('tamu yang membuka dashboard admin diarahkan ke login', function () {
+    $this->get(route('admin.dashboard'))
+        ->assertRedirect(route('login'));
 });
 
-test('authenticated users can visit the dashboard', function () {
-    $user = User::factory()->create();
-    $this->actingAs($user);
+test('admin yang login dapat membuka dashboard', function () {
+    $this->actingAs(User::factory()->create())
+        ->get(route('admin.dashboard'))
+        ->assertOk();
+});
 
-    $response = $this->get(route('dashboard'));
-    $response->assertOk();
+test('rute dashboard bawaan mengarah ke area admin', function () {
+    $this->get(route('dashboard'))
+        ->assertRedirect('/admin');
 });
