@@ -183,16 +183,20 @@ class ProductController extends Controller
      */
     private function categoryOptions(): array
     {
-        return array_values(
-            Category::query()
-                ->orderBy('name')
-                ->get(['id', 'name'])
-                ->map(fn (Category $category): array => [
-                    'value' => (string) $category->id,
-                    'label' => $category->name,
-                ])
-                ->all()
-        );
+        $options = [];
+
+        $categories = Category::query()
+            ->orderBy('name')
+            ->get(['id', 'name']);
+
+        foreach ($categories as $category) {
+            $options[] = [
+                'value' => sprintf('%s', $category->id),
+                'label' => $category->name,
+            ];
+        }
+
+        return $options;
     }
 
     /**
@@ -200,16 +204,20 @@ class ProductController extends Controller
      */
     private function occasionOptions(): array
     {
-        return array_values(
-            Event::query()
-                ->orderBy('name')
-                ->get(['id', 'name'])
-                ->map(fn (Event $event): array => [
-                    'value' => (string) $event->id,
-                    'label' => $event->name,
-                ])
-                ->all()
-        );
+        $options = [];
+
+        $events = Event::query()
+            ->orderBy('name')
+            ->get(['id', 'name']);
+
+        foreach ($events as $event) {
+            $options[] = [
+                'value' => sprintf('%s', $event->id),
+                'label' => $event->name,
+            ];
+        }
+
+        return $options;
     }
 
     /**
