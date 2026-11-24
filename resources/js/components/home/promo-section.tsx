@@ -2,15 +2,15 @@ import { PromoBanner } from '@/components/florify/promo-banner';
 import { Section } from '@/components/florify/section';
 import { Link } from '@inertiajs/react';
 import { BrandButton } from '@/components/florify/brand-button';
-import { occasions } from '@/data/catalog';
 import { custom } from '@/routes';
+import type { Occasion } from '@/types';
 
 /**
  * Pemilik: Prety. US-03 — promo event / informasi unggulan.
  * Ganti teks dengan promo resmi HANYA setelah nama, periode, dan syarat
  * promo dikonfirmasi Product Owner.
  */
-export function PromoSection() {
+export function PromoSection({ occasions }: { occasions: Occasion[] }) {
     return (
         <Section aria-label="Informasi unggulan" flush>
             <PromoBanner

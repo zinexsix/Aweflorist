@@ -1,4 +1,5 @@
 import type { Product } from '@/types';
+import { categoryName } from './catalog';
 import catalog from './catalog.json';
 
 /**
@@ -7,7 +8,10 @@ import catalog from './catalog.json';
  * `php artisan db:seed`. Nama produk sengaja berdasarkan harga, bukan nama bunga.
  * Dipakai oleh build statis Vercel; versi Laravel mengambil data dari database.
  */
-export const products: Product[] = catalog.products;
+export const products: Product[] = catalog.products.map((product) => ({
+    ...product,
+    categoryName: categoryName(product.category),
+}));
 
 export const featuredProducts = products.filter((product) => product.featured);
 

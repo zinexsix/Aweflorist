@@ -123,7 +123,13 @@ function resolvePage(path: string, params: URLSearchParams): React.ReactNode {
 
     switch (path) {
         case '/':
-            return <Home featuredProducts={featuredProducts.slice(0, 4)} />;
+            return (
+                <Home
+                    featuredProducts={featuredProducts.slice(0, 4)}
+                    categories={categories}
+                    occasions={occasions}
+                />
+            );
         case '/katalog':
             return catalogPage(params);
         case '/buket-custom':

@@ -6,7 +6,6 @@ import { ProductImage } from '@/components/florify/product-image';
 import { CategoryBadge, PriceLabel } from '@/components/florify/product-meta';
 import { Section, SectionHeading } from '@/components/florify/section';
 import { WhatsAppButton } from '@/components/florify/whatsapp-button';
-import { categoryName } from '@/data/catalog';
 import { productOrderMessage } from '@/lib/whatsapp';
 import { custom, home } from '@/routes';
 import { index as catalog } from '@/routes/catalog';
@@ -47,7 +46,7 @@ export default function ProductDetail({
                     />
                     <div className="flex min-w-0 flex-col items-start gap-5">
                         <CategoryBadge variant="pill">
-                            {categoryName(product.category)}
+                            {product.categoryName}
                         </CategoryBadge>
                         <h1
                             id="produk-nama"

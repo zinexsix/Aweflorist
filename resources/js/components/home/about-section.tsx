@@ -1,4 +1,4 @@
-import { LocationMap, mapsQuery } from '@/components/florify/location-map';
+import { LocationMap } from '@/components/florify/location-map';
 import { ProductImage } from '@/components/florify/product-image';
 import { Eyebrow, Section } from '@/components/florify/section';
 import { site } from '@/config/site';
@@ -21,19 +21,24 @@ const highlights = [
 /**
  * Pemilik: Prety. US-02 — profil singkat AweFlorist.
  * Isi cerita/tahun berdiri/lokasi hanya setelah dikonfirmasi Product Owner.
- * Peta Google Maps tampil otomatis setelah alamat diisi di config/site.ts.
+ * Kolom kiri: peta Google Maps lokasi toko (site.location). Bila lokasi
+ * kosong, kembali menampilkan foto toko.
  */
 export function AboutSection() {
     return (
         <Section aria-labelledby="tentang-title" id="tentang">
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-                <ProductImage
-                    src={site.images.about}
-                    alt="Toko dan tim AweFlorist"
-                    ratio="landscape"
-                    tone="cream"
-                    className="aspect-[16/9] rounded-panel lg:aspect-[4/3]"
-                />
+                {site.location ? (
+                    <LocationMap frameClassName="aspect-[16/9] lg:aspect-[4/3]" />
+                ) : (
+                    <ProductImage
+                        src={site.images.about}
+                        alt="Toko dan tim AweFlorist"
+                        ratio="landscape"
+                        tone="cream"
+                        className="aspect-[16/9] rounded-panel lg:aspect-[4/3]"
+                    />
+                )}
                 <div className="flex min-w-0 flex-col gap-5">
                     <Eyebrow>Tentang kami</Eyebrow>
                     <h2
@@ -65,14 +70,6 @@ export function AboutSection() {
                     </ul>
                 </div>
             </div>
-            {mapsQuery() && (
-                <div className="mt-10 flex flex-col gap-4 lg:mt-14">
-                    <h3 className="font-display text-h3 text-brand-900">
-                        Kunjungi toko kami
-                    </h3>
-                    <LocationMap />
-                </div>
-            )}
         </Section>
     );
 }
