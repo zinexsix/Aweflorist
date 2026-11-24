@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\EventRequest;
 use App\Models\Event;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
         $events = Event::withCount('products')
             ->orderBy('id')
@@ -27,15 +29,17 @@ class EventController extends Controller
         ]);
     }
 
-    public function store(EventRequest $request)
+    public function store(EventRequest $request): RedirectResponse
     {
         Event::create($request->validated());
 
         return back()->with('success', 'Acara ditambahkan.');
     }
 
-    public function update(EventRequest $request, Event $event)
-    {
+    public function update(
+        EventRequest $request,
+        Event $event
+    ): RedirectResponse {
         $event->update([
             'name' => $request->validated('name'),
             'description' => $request->validated('description'),
@@ -44,7 +48,7 @@ class EventController extends Controller
         return back()->with('success', 'Acara diperbarui.');
     }
 
-    public function destroy(Event $event)
+    public function destroy(Event $event): RedirectResponse
     {
         $event->products()->detach();
         $event->delete();

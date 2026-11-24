@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryRequest;
 use App\Models\Category;
 use App\Support\PriceCategory;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
         $categories = Category::withCount('products')
             ->orderBy('id')
@@ -29,15 +31,17 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request): RedirectResponse
     {
         Category::create($request->validated());
 
         return back()->with('success', 'Kategori ditambahkan.');
     }
 
-    public function update(CategoryRequest $request, Category $category)
-    {
+    public function update(
+        CategoryRequest $request,
+        Category $category
+    ): RedirectResponse {
         $category->update([
             'name' => $request->validated('name'),
             'description' => $request->validated('description'),
@@ -46,7 +50,7 @@ class CategoryController extends Controller
         return back()->with('success', 'Kategori diperbarui.');
     }
 
-    public function destroy(Category $category)
+    public function destroy(Category $category): RedirectResponse
     {
         if (in_array($category->slug, PriceCategory::SLUGS, true)) {
             return back()->with('error', 'Kategori harga bawaan tidak bisa dihapus.');
