@@ -86,13 +86,13 @@ Sumber: PRD §12 "Sprint 3 — Panel Admin dan Operasional", FR-24 s.d. FR-36, �
 | US-19 | Sebagai admin, saya ingin menambah, mengubah, dan menonaktifkan produk agar katalog selalu sesuai toko | **Latif** | Must | 5 | `feature/latif-us19-kelola-produk` |
 | US-20 | Sebagai admin, saya ingin mengelola kategori dan acara agar pengelompokan produk tetap rapi | **Latif** | Must (kategori) / Should (acara) | 2 | `feature/latif-us20-kategori-acara` |
 | US-21 | Sebagai admin, saya ingin melihat daftar dan detail pesanan agar tahu pesanan yang masuk | **Suci** | Must | 3 | `feature/suci-us21-daftar-pesanan` |
-| US-22 | Sebagai admin, saya ingin mengubah status pesanan agar progres pesanan tercatat | **Suci** | Must | 3 | `feature/suci-us22-status-pesanan` |
+| US-22 | Sebagai admin, saya ingin mengubah status pesanan agar progres pesanan tercatat | **Nabila** | Must | 3 | `feature/nabila-us22-status-pesanan` |
 | US-23 | Sebagai admin, saya ingin dashboard ringkas dan daftar tindak lanjut agar tahu apa yang harus dikerjakan hari ini | **Suci** | Must | 3 | `feature/suci-us23-dashboard` |
 | US-24 | Sebagai admin, saya ingin melihat dan menyetujui/menolak permintaan buket custom dari panel admin | **Prety** | Must | 5 | `feature/prety-us24-kelola-custom` |
 | US-25 | Sebagai admin, saya ingin mencatat stok produk agar tahu sisa barang | **Prety** | Should | 3 | `feature/prety-us25-stok` |
 | US-26 | Sebagai admin, saya ingin mencatat pembayaran dan memverifikasinya agar status bayar jelas | **Nabila** | Must | 5 | `feature/nabila-us26-pembayaran` |
 | US-27 | Sebagai admin, saya ingin melihat riwayat pesanan per pelanggan | **Nabila** | Must | 2 | `feature/nabila-us27-riwayat-pelanggan` |
-| US-28 | Sebagai Product Owner, saya ingin alur admin diuji agar siap didemokan | **Nabila** | Must | 2 | `feature/nabila-us28-uji-admin` |
+| US-28 | Sebagai Product Owner, saya ingin alur admin diuji agar siap didemokan | **Suci** | Must | 2 | `feature/suci-us28-uji-admin` |
 
 Total: **36 SP** (Must 33, Should 3). Velocity Sprint 2 = **31 SP** (semua story Sprint 2 selesai). Jika kapasitas tidak cukup saat Sprint Planning, **US-25 (stok) dipindah ke Sprint 4**, apalagi bila PO memutuskan AweFlorist tidak memakai stok (PRD §15).
 
@@ -101,9 +101,9 @@ Total: **36 SP** (Must 33, Should 3). Velocity Sprint 2 = **31 SP** (semua story
 | Orang | Story | SP | Fokus |
 |---|---|---|---|
 | **Latif** | US-18, US-19, US-20 | 10 | Area admin + komponen bersama, kelola produk, kategori & acara |
-| **Suci** | US-21, US-22, US-23 | 9 | Daftar/detail pesanan, ubah status, dashboard & tindak lanjut |
+| **Suci** | US-21, US-23, US-28 | 8 | Daftar/detail pesanan, dashboard & tindak lanjut, pengujian alur admin (story terakhir) |
 | **Prety** | US-24, US-25 | 8 | Kelola permintaan custom + persetujuan, stok sederhana |
-| **Nabila** | US-26, US-27, US-28 | 9 | Pembayaran, riwayat pelanggan, pengujian alur admin (sebagai PO) |
+| **Nabila** | US-22, US-26, US-27 | 10 | Ubah status pesanan, pembayaran, riwayat pelanggan; sebagai PO memberi keputusan untuk uji US-28 |
 | **Rofiq** | — | — | Dokumen ini, review & merge PR, hosting, akun admin, koordinasi (Bagian 8) |
 
 ### 3.3 Urutan kerja & urutan merge
@@ -114,11 +114,11 @@ Hari 1   Latif: US-18 (area admin + komponen bersama) ── PR ── Rofiq rev
 
 Hari 2-4 (paralel, semua mulai dari main yang sudah berisi US-18)
          Latif  : US-19 → lalu US-20
-         Suci   : US-21 → lalu US-22 → lalu US-23
+         Suci   : US-21 → lalu US-23
          Prety  : US-24 → lalu US-25
-         Nabila : US-27 → lalu US-26 (tunggu US-21 di-merge)
+         Nabila : US-27 → lalu US-22 dan US-26 (tunggu US-21 di-merge)
 
-Hari 5-6 Nabila: US-28 (pengujian alur admin ujung-ke-ujung)
+Hari 5-6 Suci  : US-28 (pengujian alur admin ujung-ke-ujung, story paling akhir)
 Hari 7   Rofiq : integrasi akhir, demo
 ```
 
@@ -126,10 +126,10 @@ Hari 7   Rofiq : integrasi akhir, demo
 
 1. **US-18** (semua bergantung padanya)
 2. **US-19**, **US-21**, **US-24**, **US-27** (boleh urutan mana saja)
-3. **US-20** setelah US-19 · **US-22** dan **US-23** setelah US-21
-4. **US-26** setelah US-21 (menambah bagian pembayaran di halaman detail pesanan)
+3. **US-20** setelah US-19 · **US-23** setelah US-21
+4. **US-22** dan **US-26** (Nabila) setelah US-21 (keduanya menambah bagian di halaman detail pesanan)
 5. **US-25** setelah US-19
-6. **US-28** paling akhir
+6. **US-28** (Suci) paling akhir
 
 Kalau PR-mu menunggu PR lain: tetap kerjakan di branch-mu. Setelah PR yang ditunggu di-merge, jalankan `git fetch origin` lalu `git merge origin/main` (Bagian 6.3).
 
@@ -191,7 +191,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     // --- US-19 Latif: produk ---
     // --- US-20 Latif: kategori & acara ---
     // --- US-21 Suci: pesanan ---
-    // --- US-22 Suci: status pesanan ---
+    // --- US-22 Nabila: status pesanan ---
     // --- US-26 Nabila: pembayaran ---
     // --- US-24 Prety: permintaan custom ---
     // --- US-27 Nabila: pelanggan ---
@@ -306,14 +306,14 @@ Input, tombol, select, dialog: pakai yang sudah ada di `components/ui/` (`Button
 | `components/app-sidebar.tsx` | Latif (US-18) | setiap story menambah **satu** item menu di bawah penandanya |
 | `Admin/ProductController`, `pages/admin/products/*`, `CatalogSeeder` | Latif (US-19) | |
 | `Admin/CategoryController`, `Admin/EventController`, `pages/admin/categories/*`, `pages/admin/events/*` | Latif (US-20) | |
-| `Admin/OrderController`, `pages/admin/orders/index.tsx`, `pages/admin/orders/show.tsx`, `Order::scopeNeedsFollowUp` | Suci (US-21) | US-22 dan US-26 menambah bagian di `show.tsx` di bawah penanda |
-| `Admin/OrderStatusController`, `components/admin/order-status-form.tsx` | Suci (US-22) | |
+| `Admin/OrderController`, `pages/admin/orders/index.tsx`, `pages/admin/orders/show.tsx`, `Order::scopeNeedsFollowUp` | Suci (US-21) | Nabila (US-22, US-26) menambah bagian di `show.tsx` di bawah penanda |
+| `Admin/OrderStatusController`, `components/admin/order-status-form.tsx` | Nabila (US-22) | |
 | `Admin/DashboardController`, `pages/admin/dashboard.tsx` | Suci (US-23) | US-18 membuat versi kosongnya |
 | `Admin/CustomRequestController`, `pages/admin/custom-requests/*` | Prety (US-24) | |
 | migration stok, `StockMovement`, `Admin/StockController`, `pages/admin/stock/*` | Prety (US-25) | |
 | migration `payments`, `Payment`, `PaymentMethod`, `Admin/PaymentController`, `components/admin/order-payments.tsx` | Nabila (US-26) | |
 | `Admin/CustomerController`, `pages/admin/customers/*` | Nabila (US-27) | |
-| `tests/Feature/Admin/AdminFlowTest.php`, `doc/sprint-3/uji-penerimaan.md` | Nabila (US-28) | |
+| `tests/Feature/Admin/AdminFlowTest.php`, `doc/sprint-3/uji-penerimaan.md` | Suci (US-28) | keputusan PO diisi bersama Nabilla |
 
 ---
 
@@ -546,7 +546,7 @@ PR: **`US-21: Daftar dan detail pesanan`**.
 
 ---
 
-### US-22 — Ubah status pesanan (Suci)
+### US-22 — Ubah status pesanan (Nabila)
 
 **Story:** Sebagai admin, saya ingin mengubah status pesanan agar progres pesanan tercatat.
 **Prioritas:** Must · **SP:** 3 · **Butuh:** US-21
@@ -567,7 +567,7 @@ PR: **`US-21: Daftar dan detail pesanan`**.
 
 **Test (`tests/Feature/Admin/OrderStatusTest.php`):** tamu → login; ubah status; payment_status tetap; tolak dari selesai/dibatalkan; tolak nilai asing.
 
-**Git (Suci):** branch `feature/suci-us22-status-pesanan`; commit `feat(admin): ubah status pesanan (US-22)` dan `test(admin): uji ubah status pesanan (US-22)`. PR: **`US-22: Ubah status pesanan`**.
+**Git (Nabila):** branch `feature/nabila-us22-status-pesanan` (mulai setelah US-21 di-merge); commit `feat(admin): ubah status pesanan (US-22)` dan `test(admin): uji ubah status pesanan (US-22)`. PR: **`US-22: Ubah status pesanan`**. Jika US-26 dikerjakan bersamaan, keduanya menambah bagian berbeda di `orders/show.tsx`; pertahankan keduanya saat konflik.
 
 ---
 
@@ -738,10 +738,12 @@ PR: **`US-26: Pencatatan pembayaran`**. Tulis di deskripsi PR: *"Merge setelah U
 
 ---
 
-### US-28 — Pengujian alur admin (Nabila)
+### US-28 — Pengujian alur admin (Suci)
 
 **Story:** Sebagai Product Owner, saya ingin alur admin diuji agar siap didemokan.
-**Prioritas:** Must · **SP:** 2 · **Butuh:** semua story lain di-merge
+**Prioritas:** Must · **SP:** 2 · **Butuh:** semua story lain di-merge · **Dikerjakan paling akhir**
+
+Suci menguji seluruh panel admin atas nama Product Owner. Keputusan PO (stok dipakai atau tidak, status pesanan sudah sesuai toko atau belum) ditanyakan ke Nabilla lalu dicatat Suci.
 **PRD:** §12 DoD Sprint 3, §13.2, §13.4
 
 **Yang dibuat:**
@@ -756,7 +758,29 @@ PR: **`US-26: Pencatatan pembayaran`**. Tulis di deskripsi PR: *"Merge setelah U
 - [ ] Uji manual semua menu admin di HP dan laptop tercatat.
 - [ ] Bug yang ditemukan dibuat Issue dan diberikan ke pemilik story.
 
-**Git (Nabila):** branch `feature/nabila-us28-uji-admin`; commit `test(admin): uji alur admin ujung-ke-ujung (US-28)` dan `docs(sprint-3): hasil uji penerimaan (US-28)`. PR: **`US-28: Pengujian alur admin`**.
+**Prompt OpenCode:**
+```text
+Baca doc/SPRINT_3_WORK_DISTRIBUTION.md bagian 1, 4, dan "US-28". Baca routes/admin.php, semua
+tests/Feature/Admin/*.php, tests/Feature/Sprint2/OrderFlowTest.php, dan doc/sprint-2/uji-penerimaan.md.
+Kerjakan US-28: tulis tests/Feature/Admin/AdminFlowTest.php (tamu ditolak di setiap rute admin.*,
+alur pesanan sampai Lunas, alur custom sampai Disetujui) dan kerangka doc/sprint-3/uji-penerimaan.md.
+Jangan mengubah kode aplikasi; jika menemukan bug, laporkan ke saya beserta file dan pemiliknya (tabel 4.8).
+Jangan menjalankan perintah git. Jalankan php artisan test dan laporkan hasilnya.
+```
+
+**Git (Suci):**
+```bash
+git switch main && git pull origin main          # pastikan semua story lain sudah di-merge
+git switch -c feature/suci-us28-uji-admin
+# ... kerjakan, uji manual di HP dan laptop ...
+php artisan test && npm run check && npm run types:check
+git add tests/Feature/Admin/AdminFlowTest.php
+git commit -m "test(admin): uji alur admin ujung-ke-ujung (US-28)"
+git add doc/sprint-3/uji-penerimaan.md
+git commit -m "docs(sprint-3): hasil uji penerimaan (US-28)"
+git push -u origin feature/suci-us28-uji-admin
+```
+PR: **`US-28: Pengujian alur admin`**.
 
 ---
 
@@ -1024,7 +1048,7 @@ Ingat aturan Prompt A. Jangan menjalankan perintah git.
 | Prety | `Saya Prety. Kerjakan US-24 dari doc/SPRINT_3_WORK_DISTRIBUTION.md bagian 5.` |
 | Nabila | `Saya Nabila. Kerjakan US-27 dari doc/SPRINT_3_WORK_DISTRIBUTION.md bagian 5.` |
 
-Story berikutnya: Latif US-19 lalu US-20 · Suci US-22 lalu US-23 · Prety US-25 · Nabila US-26 lalu US-28.
+Story berikutnya: Latif US-19 lalu US-20 · Suci US-23 lalu US-28 (paling akhir) · Prety US-25 · Nabila US-22 dan US-26.
 
 ---
 
