@@ -104,6 +104,13 @@ export type AdminOrderDetail = {
 // US-22 Nabila: status pesanan
 
 // US-23 Suci: dashboard
+export type AdminDashboardStats = {
+    ordersByStatus: (Option & { count: number })[];
+    needsFollowUp: number;
+    unpaid: number;
+    customPending: number;
+    ordersThisMonth: number;
+};
 
 // US-24 Prety: permintaan custom
 
