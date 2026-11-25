@@ -3,12 +3,13 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     // --- US-23 Suci: dashboard ---
-    // Diisi oleh US-23.
+    // Rute admin.dashboard ('/') sengaja didaftarkan di akhir grup (dibuat US-18); isinya di DashboardController.
 
     // --- US-19 Latif: produk ---
     Route::get('produk', [ProductController::class, 'index'])->name('products.index');
@@ -29,6 +30,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::delete('acara/{event}', [EventController::class, 'destroy'])->name('events.destroy');
 
     // --- US-21 Suci: pesanan ---
+    Route::get('pesanan', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('pesanan/{order}', [OrderController::class, 'show'])->name('orders.show');
 
     // --- US-22 Nabila: status pesanan ---
 
