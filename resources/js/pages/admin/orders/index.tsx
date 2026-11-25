@@ -1,5 +1,4 @@
 import { Link, router } from '@inertiajs/react';
-import { Eye } from 'lucide-react';
 import AdminPage from '@/components/admin/admin-page';
 import AdminTable, {
     type AdminTableColumn,
@@ -7,7 +6,6 @@ import AdminTable, {
 import FilterBar from '@/components/admin/filter-bar';
 import Pagination from '@/components/admin/pagination';
 import StatusBadge from '@/components/admin/status-badge';
-import { buttonVariants } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import {
@@ -105,7 +103,7 @@ export default function OrdersIndex({
                 <div className="space-y-0.5">
                     <Link
                         href={ordersShow(order.orderNumber)}
-                        className="font-medium whitespace-nowrap text-primary underline-offset-4 hover:underline"
+                        className="font-medium whitespace-nowrap underline decoration-muted-foreground/50 underline-offset-4 hover:decoration-foreground"
                     >
                         {order.orderNumber}
                     </Link>
@@ -129,7 +127,7 @@ export default function OrdersIndex({
         {
             header: 'Produk',
             cell: (order) => (
-                <span className="block min-w-48">{order.itemsSummary}</span>
+                <span className="block min-w-36">{order.itemsSummary}</span>
             ),
         },
         {
@@ -164,21 +162,6 @@ export default function OrdersIndex({
                     status={order.paymentStatus.value}
                     label={order.paymentStatus.label}
                 />
-            ),
-        },
-        {
-            header: <span className="sr-only">Aksi</span>,
-            cell: (order) => (
-                <Link
-                    href={ordersShow(order.orderNumber)}
-                    className={buttonVariants({
-                        variant: 'outline',
-                        size: 'sm',
-                    })}
-                >
-                    <Eye className="size-4" aria-hidden="true" />
-                    Detail
-                </Link>
             ),
         },
     ];
