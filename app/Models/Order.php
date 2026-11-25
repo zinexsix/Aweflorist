@@ -6,6 +6,7 @@ use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,6 +31,23 @@ class Order extends Model
     public function getRouteKeyName(): string
     {
         return 'order_number';
+    }
+
+    /**
+     * Pesanan yang perlu ditindaklanjuti admin (US-21, kontrak §4.6):
+     * belum dikonfirmasi, atau belum lunas selama pesanan belum selesai/dibatalkan.
+     *
+     * @param  Builder<Order>  $query
+     */
+    public function scopeNeedsFollowUp(Builder $query): void
+    {
+        $query->where(function (Builder $query): void {
+            $query->whereIn('order_status', [OrderStatus::Baru, OrderStatus::MenungguKonfirmasi])
+                ->orWhere(function (Builder $query): void {
+                    $query->whereIn('payment_status', [PaymentStatus::BelumDibayar, PaymentStatus::Dp])
+                        ->whereNotIn('order_status', [OrderStatus::Selesai, OrderStatus::Dibatalkan]);
+                });
+        });
     }
 
     /**
