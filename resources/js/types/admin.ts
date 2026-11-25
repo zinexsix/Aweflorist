@@ -58,6 +58,48 @@ export type AdminEventRow = {
 };
 
 // US-21 Suci: pesanan
+export type AdminOrderRow = {
+    orderNumber: string;
+    /** ISO 8601 */
+    createdAt: string | null;
+    /** YYYY-MM-DD */
+    neededAt: string | null;
+    customerName: string;
+    customerPhone: string;
+    itemsSummary: string;
+    /** `null` = harga dikonfirmasi admin */
+    totalAmount: number | null;
+    status: Option;
+    paymentStatus: Option;
+};
+
+export type AdminOrderItem = {
+    id: number;
+    name: string;
+    unitPrice: number | null;
+    quantity: number;
+    subtotal: number | null;
+    productSlug: string | null;
+    productActive: boolean | null;
+};
+
+export type AdminOrderDetail = {
+    orderNumber: string;
+    createdAt: string | null;
+    neededAt: string | null;
+    notes: string | null;
+    totalAmount: number | null;
+    status: Option;
+    paymentStatus: Option;
+    needsFollowUp: boolean;
+    customer: {
+        id: number;
+        name: string;
+        phone: string;
+        email: string | null;
+    };
+    items: AdminOrderItem[];
+};
 
 // US-22 Nabila: status pesanan
 

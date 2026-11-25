@@ -1,5 +1,11 @@
 import { Link } from '@inertiajs/react';
-import { CalendarDays, FolderTree, LayoutGrid, Package } from 'lucide-react';
+import {
+    CalendarDays,
+    FolderTree,
+    LayoutGrid,
+    Package,
+    ReceiptText,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -15,6 +21,7 @@ import {
 import { dashboard as adminDashboard } from '@/routes/admin';
 import { index as categoriesIndex } from '@/routes/admin/categories';
 import { index as eventsIndex } from '@/routes/admin/events';
+import { index as ordersIndex } from '@/routes/admin/orders';
 import { index as productsIndex } from '@/routes/admin/products';
 import type { NavItem } from '@/types';
 
@@ -42,6 +49,11 @@ const mainNavItems: NavItem[] = [
         icon: CalendarDays,
     },
     // US-21 Suci: Pesanan
+    {
+        title: 'Pesanan',
+        href: ordersIndex(),
+        icon: ReceiptText,
+    },
     // US-22 Nabila: Status pesanan (bagian dari detail pesanan)
     // US-23 Suci: Dashboard (sudah tersedia)
     // US-24 Prety: Buket Custom
