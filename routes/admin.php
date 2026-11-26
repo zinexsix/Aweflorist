@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\StockController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
@@ -39,6 +40,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     // --- US-27 Nabila: pelanggan ---
 
     // --- US-25 Prety: stok ---
+    Route::get('stok', [StockController::class, 'index'])->name('stock.index');
+    Route::post('produk/{product}/stok', [StockController::class, 'store'])->name('stock.store');
 
     Route::get('/', DashboardController::class)->name('dashboard');
 });

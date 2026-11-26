@@ -66,6 +66,23 @@ export type AdminEventRow = {
 // US-24 Prety: permintaan custom
 
 // US-25 Prety: stok
+export type AdminStockRow = {
+    id: number;
+    name: string;
+    category: string;
+    stock: number | null;
+    isActive: boolean;
+};
+
+export type AdminStockMovement = {
+    id: number;
+    productName: string;
+    userName: string | null;
+    quantityChange: number;
+    stockAfter: number;
+    reason: string;
+    createdAt: string;
+};
 
 // US-26 Nabila: pembayaran
 
