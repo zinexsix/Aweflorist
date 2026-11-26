@@ -11,8 +11,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['category_id', 'name', 'slug', 'description', 'price', 'price_from', 'image_path', 'is_featured', 'is_active'])]
+#[Fillable(['category_id', 'name', 'slug', 'description', 'price', 'price_from', 'image_path', 'is_featured', 'is_active', 'stock'])]
 class Product extends Model
 {
     /** @use HasFactory<ProductFactory> */
@@ -50,6 +51,7 @@ class Product extends Model
             'price_from' => 'boolean',
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
+            'stock' => 'integer',
         ];
     }
 
@@ -67,6 +69,14 @@ class Product extends Model
     public function events(): BelongsToMany
     {
         return $this->belongsToMany(Event::class);
+    }
+
+    /**
+     * @return HasMany<StockMovement, $this>
+     */
+    public function stockMovements(): HasMany
+    {
+        return $this->hasMany(StockMovement::class);
     }
 
     /**
