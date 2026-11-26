@@ -1,5 +1,12 @@
 import { Link } from '@inertiajs/react';
-import { CalendarDays, FolderTree, LayoutGrid, Package } from 'lucide-react';
+import {
+    Boxes,
+    CalendarDays,
+    Flower2,
+    FolderTree,
+    LayoutGrid,
+    Package,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -14,8 +21,10 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard as adminDashboard } from '@/routes/admin';
 import { index as categoriesIndex } from '@/routes/admin/categories';
+import { index as customRequestsIndex } from '@/routes/admin/custom-requests';
 import { index as eventsIndex } from '@/routes/admin/events';
 import { index as productsIndex } from '@/routes/admin/products';
+import { index as stockIndex } from '@/routes/admin/stock';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -45,7 +54,17 @@ const mainNavItems: NavItem[] = [
     // US-22 Nabila: Status pesanan (bagian dari detail pesanan)
     // US-23 Suci: Dashboard (sudah tersedia)
     // US-24 Prety: Buket Custom
+    {
+        title: 'Buket Custom',
+        href: customRequestsIndex(),
+        icon: Flower2,
+    },
     // US-25 Prety: Stok
+    {
+        title: 'Stok',
+        href: stockIndex(),
+        icon: Boxes,
+    },
     // US-26 Nabila: Pembayaran (bagian dari detail pesanan)
     // US-27 Nabila: Pelanggan
 ];
