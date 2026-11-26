@@ -1,6 +1,5 @@
 import { Link } from '@inertiajs/react';
 import {
-    Boxes,
     CalendarDays,
     Flower2,
     FolderTree,
@@ -24,7 +23,6 @@ import { index as categoriesIndex } from '@/routes/admin/categories';
 import { index as customRequestsIndex } from '@/routes/admin/custom-requests';
 import { index as eventsIndex } from '@/routes/admin/events';
 import { index as productsIndex } from '@/routes/admin/products';
-import { index as stockIndex } from '@/routes/admin/stock';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -60,11 +58,6 @@ const mainNavItems: NavItem[] = [
         icon: Flower2,
     },
     // US-25 Prety: Stok
-    {
-        title: 'Stok',
-        href: stockIndex(),
-        icon: Boxes,
-    },
     // US-26 Nabila: Pembayaran (bagian dari detail pesanan)
     // US-27 Nabila: Pelanggan
 ];
