@@ -34,7 +34,7 @@ export function CustomBouquetForm({
 }) {
     return (
         <Form
-            {...store.form()}
+            action={store()}
             className={cn(
                 'flex flex-col gap-6 rounded-panel border border-line bg-surface p-5 sm:p-8',
                 className,

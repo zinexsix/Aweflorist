@@ -10,7 +10,8 @@
         "dev": "vp dev",
         "check": "vp check",
         "check:fix": "vp check --fix",
-        "types:check": "tsc --noEmit"
+        "types:check": "tsc --noEmit",
+        "push": "node scripts/push.mjs"
     },
     "dependencies": {
         "@inertiajs/react": "^3.0.0",

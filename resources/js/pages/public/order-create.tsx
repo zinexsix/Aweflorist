@@ -62,7 +62,7 @@ export default function OrderCreate({ product }: { product: Product }) {
                     </aside>
 
                     <Form
-                        {...store.form(product.slug)}
+                        action={store(product.slug)}
                         className="flex flex-col gap-6 rounded-panel border border-line bg-surface p-5 sm:p-8"
                     >
                         {({ processing, errors }) => (
